@@ -79,7 +79,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
             if (element.tagName().equals("img") && element.attr("src") != null) {
                 Log.v(TAG, element.attr("src"));
             } else if (element.hasText()) {
-                Log.v(TAG, element.tagName() + ": " + element.text());
+                Log.v(TAG, element.tagName() + ": " + element.html());
             }
         }
     }
