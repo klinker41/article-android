@@ -86,15 +86,6 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
     @Override
     public void onArticleParsed(Elements elements) {
         adapter.addElements(elements);
-
-        for (Element element : elements) {
-            if (element.tagName().equals("img") && element.attr("src") != null) {
-                Log.v(TAG, element.attr("src"));
-            } else if (element.hasText()) {
-                Log.v(TAG, element.tagName() + ": " + element.html());
-            }
-        }
-
     }
 
 }
