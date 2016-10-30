@@ -16,6 +16,8 @@
 
 package xyz.klinker.android.article;
 
+import org.jsoup.select.Elements;
+
 import xyz.klinker.android.article.api.Article;
 
 /**
@@ -24,5 +26,6 @@ import xyz.klinker.android.article.api.Article;
 public interface ArticleLoadedListener {
 
     void onArticleLoaded(Article article);
+    void onArticleParsed(Elements elements);
 
 }

@@ -18,6 +18,8 @@ package xyz.klinker.android.article;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import org.jsoup.nodes.Element;
@@ -40,6 +42,8 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
     private static final boolean DEBUG = true;
 
     private ArticleUtils utils;
+    private RecyclerView recyclerView;
+    private ArticleAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,11 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
 
         this.utils = new ArticleUtils();
         this.utils.loadArticle(url, this);
+
+        recyclerView = new RecyclerView(this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        setContentView(recyclerView);
     }
 
     @Override
@@ -68,12 +77,15 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
             Log.v(TAG, "\t" + article.description);
         }
 
-        long startTime = System.currentTimeMillis();
-        Elements elements = utils.parseArticleContent(article);
+        adapter = new ArticleAdapter(article);
+        recyclerView.setAdapter(adapter);
 
-        if (DEBUG) {
-            Log.v(TAG, "time to parse: " + (System.currentTimeMillis() - startTime) + " ms");
-        }
+        utils.parseArticleContent(article, this);
+    }
+
+    @Override
+    public void onArticleParsed(Elements elements) {
+        adapter.addElements(elements);
 
         for (Element element : elements) {
             if (element.tagName().equals("img") && element.attr("src") != null) {
@@ -82,5 +94,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
                 Log.v(TAG, element.tagName() + ": " + element.html());
             }
         }
+
     }
+
 }

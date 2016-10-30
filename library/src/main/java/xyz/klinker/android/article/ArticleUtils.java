@@ -68,10 +68,27 @@ public class ArticleUtils {
      * Parses the article content into a elements object using jsoup and the @link{SELECTOR}.
      *
      * @param article the article to parse content from.
-     * @return the elements that match the selector.
+     * @param callback the callback to receive after parsing completes.
      */
-    public Elements parseArticleContent(Article article) {
-        Document doc = Jsoup.parse(article.content);
-        return doc.select(SELECTOR);
+    public void parseArticleContent(final Article article, final ArticleLoadedListener callback) {
+        final Handler handler = new Handler();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Document doc = Jsoup.parse(article.content);
+                final Elements elements = doc.select(SELECTOR);
+
+                if (callback != null) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onArticleParsed(elements);
+                        }
+                    });
+                }
+            }
+        }).start();
+
     }
 }
