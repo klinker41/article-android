@@ -16,4 +16,12 @@
 
 <resources>
     <string name="app_name">Article Sample</string>
+
+    <string name="link1">http://www.androidpolice.com/2016/10/29/chrome-home-flag-hidden-chrome-devcanary-moves-address-bar-bottom/</string>
+    <string name="link2">http://www.androidcentral.com/best-photo-editor-your-chromebook</string>
+    <string name="link3">http://www.cbsnews.com/news/cbs-battleground-poll-partisans-divide-on-news-of-fbi-emails/</string>
+    <string name="link4">http://www.polygon.com/2016/10/18/13325000/destiny-rise-of-iron-raid-heroic-mode-completion</string>
+    <string name="link5">http://www.theverge.com/2016/10/27/13419182/apple-new-macbook-pro-video-photos-hands-on</string>
+    <string name="link6">http://www.google.com/</string>
+
 </resources>
