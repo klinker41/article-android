@@ -14,22 +14,23 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.library'
+package xyz.klinker.android.article.api;
 
-android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+/**
+ * Model holding all possible elements in a response from the server.
+ */
+public class Article {
 
-    defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
-    }
-}
+    public String alias;
+    public String url;
+    public String[] canonicals;
+    public String title;
+    public String description;
+    public String image;
+    public String content;
+    public String author;
+    public String source;
+    public String domain;
+    public int duration;
 
-dependencies {
-    compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
 }

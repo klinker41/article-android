@@ -14,22 +14,14 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.library'
+package xyz.klinker.android.article.api;
 
-android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
-    defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
-    }
-}
+public interface ArticleService {
 
-dependencies {
-    compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    @GET("parse")
+    Article parse(@Query("url") String url);
+
 }

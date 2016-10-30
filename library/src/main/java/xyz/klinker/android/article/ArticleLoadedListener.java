@@ -14,22 +14,15 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.library'
+package xyz.klinker.android.article;
 
-android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+import xyz.klinker.android.article.api.Article;
 
-    defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
-    }
-}
+/**
+ * Listener for waiting for article loaded events.
+ */
+public interface ArticleLoadedListener {
 
-dependencies {
-    compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    void onArticleLoaded(Article article);
+
 }
