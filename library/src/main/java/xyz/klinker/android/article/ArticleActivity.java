@@ -20,6 +20,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import xyz.klinker.android.article.api.Article;
 
 /**
@@ -63,6 +66,21 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
             Log.v(TAG, "\t" + article.title);
             Log.v(TAG, "\t" + article.author);
             Log.v(TAG, "\t" + article.description);
+        }
+
+        long startTime = System.currentTimeMillis();
+        Elements elements = utils.parseArticleContent(article);
+
+        if (DEBUG) {
+            Log.v(TAG, "time to parse: " + (System.currentTimeMillis() - startTime) + " ms");
+        }
+
+        for (Element element : elements) {
+            if (element.tagName().equals("img") && element.attr("src") != null) {
+                Log.v(TAG, element.attr("src"));
+            } else if (element.hasText()) {
+                Log.v(TAG, element.tagName() + ": " + element.text());
+            }
         }
     }
 }

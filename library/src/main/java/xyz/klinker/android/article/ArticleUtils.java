@@ -18,6 +18,10 @@ package xyz.klinker.android.article;
 
 import android.os.Handler;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
 import xyz.klinker.android.article.api.Api;
 import xyz.klinker.android.article.api.Article;
 
@@ -25,6 +29,8 @@ import xyz.klinker.android.article.api.Article;
  * Helper for working with the article apis.
  */
 public class ArticleUtils {
+
+    private static final String SELECTOR = "p, h1, h2, h3, h4, h5, h6, img, blockquote";
 
     private Api api;
 
@@ -56,5 +62,16 @@ public class ArticleUtils {
                 }
             }
         }).start();
+    }
+
+    /**
+     * Parses the article content into a elements object using jsoup and the @link{SELECTOR}.
+     *
+     * @param article the article to parse content from.
+     * @return the elements that match the selector.
+     */
+    public Elements parseArticleContent(Article article) {
+        Document doc = Jsoup.parse(article.content);
+        return doc.select(SELECTOR);
     }
 }
