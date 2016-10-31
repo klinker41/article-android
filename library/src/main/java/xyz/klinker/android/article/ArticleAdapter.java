@@ -19,6 +19,7 @@ package xyz.klinker.android.article;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,8 @@ import xyz.klinker.android.article.api.Article;
  * 7. Block quotes
  */
 public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final String TAG = "ArticleAdapter";
 
     private static final int TYPE_HEADER_IMAGE = 1;
     private static final int TYPE_TITLE = 2;
@@ -118,13 +121,19 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         int topItemCount = getTopItemCount();
         if (position >= topItemCount) {
             if (holder instanceof ImageViewHolder) {
-                Glide.with(((ImageViewHolder) holder).image.getContext())
-                        .load(elements.get(position - topItemCount).attr("src"))
-                        .into(((ImageViewHolder) holder).image);
+                String src = elements.get(position - topItemCount).attr("src");
+                
+                if (src == null || src.trim().length() == 0 || !isImageUrl(src)) {
+                    ((ImageViewHolder) holder).image.setVisibility(View.GONE);
+                } else {
+                    ((ImageViewHolder) holder).image.setVisibility(View.VISIBLE);
+                    Glide.with(((ImageViewHolder) holder).image.getContext())
+                            .load(src)
+                            .into(((ImageViewHolder) holder).image);
+                }
             } else if (holder instanceof TextViewHolder) {
                 ((TextViewHolder) holder).text.setText(
-                        elements.get(position - topItemCount).text()
-                );
+                        elements.get(position - topItemCount).text().trim());
             }
         } else {
             if (holder instanceof HeaderImageViewHolder) {
@@ -137,6 +146,10 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 ((AuthorTextViewHolder) holder).text.setText(article.author);
             }
         }
+    }
+
+    private boolean isImageUrl(String src) {
+        return src.endsWith(".jpg") || src.endsWith(".png") || src.endsWith(".gif");
     }
 
     @Override
@@ -214,7 +227,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         private ImageViewHolder(View itemView) {
             super(itemView);
-            this.image = (ImageView) itemView;
+            this.image = (ImageView) itemView.findViewById(R.id.image);
         }
     }
 

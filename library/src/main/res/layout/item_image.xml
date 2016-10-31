@@ -15,8 +15,15 @@
   ~ limitations under the License.
   -->
 
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="288dp"
-    android:scaleType="centerCrop"
-    android:contentDescription="@null"/>
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="288dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="@null"
+        android:id="@+id/image"/>
+
+</FrameLayout>

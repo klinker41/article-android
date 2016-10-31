@@ -62,10 +62,10 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
         this.utils = new ArticleUtils();
         this.utils.loadArticle(url, this);
 
-        recyclerView = new RecyclerView(this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        setContentView(R.layout.activity_article);
 
-        setContentView(recyclerView);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override

@@ -26,6 +26,14 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    lintOptions {
+        abortOnError true
+        disable 'InvalidPackage', 'TrustAllX509TrustManager'
+        textOutput 'stdout'
+        xmlReport false
+        htmlReport true
+    }
 }
 
 dependencies {
