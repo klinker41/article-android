@@ -122,7 +122,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (position >= topItemCount) {
             if (holder instanceof ImageViewHolder) {
                 String src = elements.get(position - topItemCount).attr("src");
-                
+
                 if (src == null || src.trim().length() == 0 || !isImageUrl(src)) {
                     ((ImageViewHolder) holder).image.setVisibility(View.GONE);
                 } else {
@@ -149,7 +149,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private boolean isImageUrl(String src) {
-        return src.endsWith(".jpg") || src.endsWith(".png") || src.endsWith(".gif");
+        return src.endsWith("jpg") || src.endsWith("png") || src.endsWith("gif");
     }
 
     @Override

@@ -73,6 +73,18 @@
             android:id="@+id/link8"
             android:text="@string/link8"/>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/link9"
+            android:text="@string/link9"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/link10"
+            android:text="@string/link10"/>
+
     </LinearLayout>
 
 </ScrollView>
