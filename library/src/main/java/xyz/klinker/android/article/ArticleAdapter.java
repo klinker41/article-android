@@ -19,6 +19,7 @@ package xyz.klinker.android.article;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -73,20 +74,42 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
+        View view = LayoutInflater.from(context)
+                .inflate(getItemResourceFromType(viewType),
+                        parent, false);
+
         switch (viewType) {
-            case TYPE_HEADER_IMAGE: return new HeaderImageViewHolder(new ImageView(context));
-            case TYPE_TITLE:        return new TitleTextViewHolder(new TextView(context));
-            case TYPE_AUTHOR:       return new AuthorTextViewHolder(new TextView(context));
-            case TYPE_PARAGRAPH:    return new TextViewHolder(new TextView(context));
-            case TYPE_INLINE_IMAGE: return new ImageViewHolder(new ImageView(context));
-            case TYPE_HEADER_1:     return new TextViewHolder(new TextView(context));
-            case TYPE_HEADER_2:     return new TextViewHolder(new TextView(context));
-            case TYPE_HEADER_3:     return new TextViewHolder(new TextView(context));
-            case TYPE_HEADER_4:     return new TextViewHolder(new TextView(context));
-            case TYPE_HEADER_5:     return new TextViewHolder(new TextView(context));
-            case TYPE_HEADER_6:     return new TextViewHolder(new TextView(context));
-            case TYPE_BLOCKQUOTE:   return new TextViewHolder(new TextView(context));
-            default:                return new TextViewHolder(new TextView(context));
+            case TYPE_HEADER_IMAGE:     return new HeaderImageViewHolder(view);
+            case TYPE_TITLE:            return new TitleTextViewHolder(view);
+            case TYPE_AUTHOR:           return new AuthorTextViewHolder(view);
+            case TYPE_INLINE_IMAGE:     return new ImageViewHolder(view);
+            case TYPE_PARAGRAPH:
+            case TYPE_HEADER_1:
+            case TYPE_HEADER_2:
+            case TYPE_HEADER_3:
+            case TYPE_HEADER_4:
+            case TYPE_HEADER_5:
+            case TYPE_HEADER_6:
+            case TYPE_BLOCKQUOTE:
+            default:                    return new TextViewHolder(view);
+        }
+    }
+
+    private int getItemResourceFromType(int viewType) {
+        switch (viewType) {
+            case TYPE_HEADER_IMAGE:     return R.layout.item_header;
+            case TYPE_TITLE:            return R.layout.item_title;
+            case TYPE_AUTHOR:           return R.layout.item_author;
+            case TYPE_PARAGRAPH:        return R.layout.item_paragraph;
+            case TYPE_INLINE_IMAGE:     return R.layout.item_image;
+            case TYPE_HEADER_1:         return R.layout.item_header_1;
+            case TYPE_HEADER_2:         return R.layout.item_header_2;
+            case TYPE_HEADER_3:         return R.layout.item_header_3;
+            case TYPE_HEADER_4:         return R.layout.item_header_4;
+            case TYPE_HEADER_5:         return R.layout.item_header_5;
+            case TYPE_HEADER_6:         return R.layout.item_header_6;
+            case TYPE_BLOCKQUOTE:       return R.layout.item_blockquote;
+            default:                    return R.layout.item_other;
         }
     }
 
