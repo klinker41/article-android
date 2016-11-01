@@ -29,7 +29,7 @@ android {
 
     lintOptions {
         abortOnError true
-        disable 'InvalidPackage', 'TrustAllX509TrustManager'
+        disable 'InvalidPackage', 'TrustAllX509TrustManager', 'UnusedAttribute'
         textOutput 'stdout'
         xmlReport false
         htmlReport true
