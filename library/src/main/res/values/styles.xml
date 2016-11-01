@@ -15,20 +15,13 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<resources>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:textSize="24sp"
-        android:textColor="@color/primaryText"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:paddingBottom="0dp"
-        android:paddingTop="32dp"
-        android:id="@+id/text"/>
+    <style name="ArticleTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
+    </style>
 
-</FrameLayout>
+</resources>

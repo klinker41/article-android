@@ -39,6 +39,8 @@ public class SampleActivity extends AppCompatActivity {
         final Button link6 = (Button) findViewById(R.id.link6);
         final Button link7 = (Button) findViewById(R.id.link7);
         final Button link8 = (Button) findViewById(R.id.link8);
+        final Button link9 = (Button) findViewById(R.id.link9);
+        final Button link10 = (Button) findViewById(R.id.link10);
 
         link1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +95,20 @@ public class SampleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openArticle(link8.getText().toString());
+            }
+        });
+
+        link9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openArticle(link9.getText().toString());
+            }
+        });
+
+        link10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openArticle(link10.getText().toString());
             }
         });
     }

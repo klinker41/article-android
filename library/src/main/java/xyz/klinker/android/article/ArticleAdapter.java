@@ -18,8 +18,6 @@ package xyz.klinker.android.article;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,8 +43,6 @@ import xyz.klinker.android.article.api.Article;
  * 7. Block quotes
  */
 public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    private static final String TAG = "ArticleAdapter";
 
     private static final int TYPE_HEADER_IMAGE = 1;
     private static final int TYPE_TITLE = 2;
@@ -122,23 +118,62 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (position >= topItemCount) {
             if (holder instanceof ImageViewHolder) {
                 String src = elements.get(position - topItemCount).attr("src");
+                ImageView image = ((ImageViewHolder) holder).image;
+
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)
+                        image.getLayoutParams();
+
+                if (position - topItemCount - 1 > 0 &&
+                        !elements.get(position - topItemCount - 1).tagName().equals("img")) {
+                    params.topMargin = image.getContext().getResources()
+                            .getDimensionPixelSize(R.dimen.extraImagePadding);
+                } else {
+                    params.topMargin = 0;
+                }
+
+                if (position != getItemCount() - 1 &&
+                        !elements.get(position - topItemCount + 1).tagName().equals("img")) {
+                    params.bottomMargin = image.getContext().getResources()
+                            .getDimensionPixelSize(R.dimen.extraImagePadding);
+                } else {
+                    params.bottomMargin = 0;
+                }
 
                 if (src == null || src.trim().length() == 0 || !isImageUrl(src)) {
-                    ((ImageViewHolder) holder).image.setVisibility(View.GONE);
+                    image.setVisibility(View.GONE);
                 } else {
-                    ((ImageViewHolder) holder).image.setVisibility(View.VISIBLE);
+                    image.setVisibility(View.VISIBLE);
                     Glide.with(((ImageViewHolder) holder).image.getContext())
                             .load(src)
-                            .into(((ImageViewHolder) holder).image);
+                            .placeholder(R.color.imageBackground)
+                            .into(image);
                 }
             } else if (holder instanceof TextViewHolder) {
-                ((TextViewHolder) holder).text.setText(
-                        elements.get(position - topItemCount).text().trim());
+                String text = elements.get(position - topItemCount).text().trim();
+                TextView textView = ((TextViewHolder) holder).text;
+
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)
+                        textView.getLayoutParams();
+
+                if (position == getItemCount() - 1) {
+                    params.bottomMargin = textView.getContext().getResources()
+                            .getDimensionPixelSize(R.dimen.extraBottomPadding);
+                } else {
+                    params.bottomMargin = 0;
+                }
+                
+                if (text.length() > 0) {
+                    textView.setText(text);
+                    textView.setVisibility(View.VISIBLE);
+                } else {
+                    textView.setVisibility(View.GONE);
+                }
             }
         } else {
             if (holder instanceof HeaderImageViewHolder) {
                 Glide.with(((HeaderImageViewHolder) holder).image.getContext())
                         .load(article.image)
+                        .placeholder(R.color.imageBackground)
                         .into(((HeaderImageViewHolder) holder).image);
             } else if (holder instanceof TitleTextViewHolder) {
                 ((TitleTextViewHolder) holder).text.setText(article.title);
@@ -149,7 +184,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private boolean isImageUrl(String src) {
-        return src.endsWith("jpg") || src.endsWith("png") || src.endsWith("gif");
+        return src.contains("jpg") || src.contains("png") || src.contains("gif");
     }
 
     @Override
@@ -218,7 +253,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         private TextViewHolder(View itemView) {
             super(itemView);
-            this.text = (TextView) itemView;
+            this.text = (TextView) itemView.findViewById(R.id.text);
         }
     }
 

@@ -21,6 +21,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -66,6 +68,11 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(null);
+        }
     }
 
     @Override
@@ -86,6 +93,22 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
     @Override
     public void onArticleParsed(Elements elements) {
         adapter.addElements(elements);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_article, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+
+        return false;
     }
 
 }
