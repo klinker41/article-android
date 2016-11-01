@@ -123,7 +123,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)
                         image.getLayoutParams();
 
-                if (position - topItemCount - 1 > 0 &&
+                if (position - topItemCount - 1 >= 0 &&
                         !elements.get(position - topItemCount - 1).tagName().equals("img")) {
                     params.topMargin = image.getContext().getResources()
                             .getDimensionPixelSize(R.dimen.extraImagePadding);
@@ -139,15 +139,10 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     params.bottomMargin = 0;
                 }
 
-                if (src == null || src.trim().length() == 0 || !isImageUrl(src)) {
-                    image.setVisibility(View.GONE);
-                } else {
-                    image.setVisibility(View.VISIBLE);
-                    Glide.with(((ImageViewHolder) holder).image.getContext())
-                            .load(src)
-                            .placeholder(R.color.imageBackground)
-                            .into(image);
-                }
+                Glide.with(((ImageViewHolder) holder).image.getContext())
+                        .load(src)
+                        .placeholder(R.color.imageBackground)
+                        .into(image);
             } else if (holder instanceof TextViewHolder) {
                 String text = elements.get(position - topItemCount).text().trim();
                 TextView textView = ((TextViewHolder) holder).text;
@@ -162,12 +157,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     params.bottomMargin = 0;
                 }
 
-                if (text.length() > 0) {
-                    textView.setText(text);
-                    textView.setVisibility(View.VISIBLE);
-                } else {
-                    textView.setVisibility(View.GONE);
-                }
+                textView.setText(text);
             }
         } else {
             if (holder instanceof HeaderImageViewHolder) {
@@ -181,10 +171,6 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 ((AuthorTextViewHolder) holder).text.setText(article.author);
             }
         }
-    }
-
-    private boolean isImageUrl(String src) {
-        return src.contains("jpg") || src.contains("png") || src.contains("gif");
     }
 
     @Override

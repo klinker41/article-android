@@ -20,6 +20,7 @@ import android.os.Handler;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import xyz.klinker.android.article.api.Api;
@@ -79,6 +80,8 @@ public class ArticleUtils {
                 Document doc = Jsoup.parse(article.content);
                 final Elements elements = doc.select(SELECTOR);
 
+                removeUnnecessaryElements(elements, article);
+
                 if (callback != null) {
                     handler.post(new Runnable() {
                         @Override
@@ -89,6 +92,31 @@ public class ArticleUtils {
                 }
             }
         }).start();
-
     }
+
+    private void removeUnnecessaryElements(Elements elements, Article article) {
+        for (int i = 0; i < elements.size(); i++) {
+            Element element = elements.get(i);
+
+            if (element.tagName().equals("img")) {
+                String src = element.attr("src");
+                if (src == null || src.length() == 0 || !isImageUrl(src)) {
+                    elements.remove(i--);
+                }
+            } else {
+                if (element.text().trim().length() == 0) {
+                    elements.remove(i--);
+                } else if (i == 0) {
+                    if (element.text().contains(article.title)) {
+                        elements.remove(i--);
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean isImageUrl(String src) {
+        return src.contains("jpg") || src.contains("png") || src.contains("gif");
+    }
+
 }
