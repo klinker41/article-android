@@ -77,17 +77,24 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
 
     @Override
     public void onArticleLoaded(Article article) {
-        if (DEBUG) {
-            Log.v(TAG, "finished loading article at " + article.url);
-            Log.v(TAG, "\t" + article.title);
-            Log.v(TAG, "\t" + article.author);
-            Log.v(TAG, "\t" + article.description);
+        if (article == null) {
+            if (DEBUG) {
+                Log.v(TAG, "failed to find article in time");
+                // TODO(klinker41): forward to chrome custom tab instead.
+            }
+        } else {
+            if (DEBUG) {
+                Log.v(TAG, "finished loading article at " + article.url);
+                Log.v(TAG, "\t" + article.title);
+                Log.v(TAG, "\t" + article.author);
+                Log.v(TAG, "\t" + article.description);
+            }
+
+            adapter = new ArticleAdapter(article);
+            recyclerView.setAdapter(adapter);
+
+            utils.parseArticleContent(article, this);
         }
-
-        adapter = new ArticleAdapter(article);
-        recyclerView.setAdapter(adapter);
-
-        utils.parseArticleContent(article, this);
     }
 
     @Override

@@ -161,7 +161,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 } else {
                     params.bottomMargin = 0;
                 }
-                
+
                 if (text.length() > 0) {
                     textView.setText(text);
                     textView.setVisibility(View.VISIBLE);

@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import xyz.klinker.android.article.ArticleActivity;
 
@@ -41,6 +42,8 @@ public class SampleActivity extends AppCompatActivity {
         final Button link8 = (Button) findViewById(R.id.link8);
         final Button link9 = (Button) findViewById(R.id.link9);
         final Button link10 = (Button) findViewById(R.id.link10);
+        final EditText url = (EditText) findViewById(R.id.edit_text);
+        final Button go = (Button) findViewById(R.id.go);
 
         link1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +112,15 @@ public class SampleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openArticle(link10.getText().toString());
+            }
+        });
+
+        go.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (url.getText().length() > 0) {
+                    openArticle(url.getText().toString());
+                }
             }
         });
     }

@@ -27,5 +27,7 @@
     <string name="link8">http://www.eurogamer.net/articles/digitalfoundry-2016-three-hours-with-playstation-4-pro</string>
     <string name="link9">http://www.google.com/</string>
     <string name="link10">http://www.facebook.com/</string>
+    <string name="enter_url">Enter URL…</string>
+    <string name="go">Go</string>
 
 </resources>
