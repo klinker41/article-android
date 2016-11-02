@@ -32,5 +32,6 @@ public class Article {
     public String source;
     public String domain;
     public int duration;
+    public boolean isArticle;
 
 }

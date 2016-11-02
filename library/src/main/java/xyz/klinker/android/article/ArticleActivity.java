@@ -24,7 +24,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import xyz.klinker.android.article.api.Article;
@@ -77,11 +76,13 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
 
     @Override
     public void onArticleLoaded(Article article) {
-        if (article == null) {
+        if (article == null || !article.isArticle) {
             if (DEBUG) {
-                Log.v(TAG, "failed to find article in time");
-                // TODO(klinker41): forward to chrome custom tab instead.
+                Log.v(TAG, "not an article or couldn't fetch url");
             }
+
+            // TODO(klinker41): forward to chrome custom tab instead of finishing.
+            finish();
         } else {
             if (DEBUG) {
                 Log.v(TAG, "finished loading article at " + article.url);
