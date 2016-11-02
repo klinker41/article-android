@@ -24,4 +24,8 @@ public interface ArticleService {
     @GET("parse")
     Article parse(@Query("url") String url);
 
+    @GET("parse")
+    Article parse(@Query("url") String url,
+                  @Query("no_cache") boolean noCache);
+
 }
