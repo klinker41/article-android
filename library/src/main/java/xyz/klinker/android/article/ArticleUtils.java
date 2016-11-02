@@ -116,6 +116,12 @@ public class ArticleUtils {
                 }
             }
         }
+
+        String lastTag = elements.last().tagName();
+        while (!lastTag.equals("p") && !lastTag.equals("img")) {
+            elements.remove(elements.size() - 1);
+            lastTag = elements.last().tagName();
+        }
     }
 
     private boolean isImageUrl(String src) {
