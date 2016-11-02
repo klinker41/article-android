@@ -18,9 +18,7 @@ package xyz.klinker.android.article;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,13 +32,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.Resource;
 import com.bumptech.glide.load.model.StreamEncoder;
 import com.bumptech.glide.load.model.stream.StreamStringLoader;
-import com.bumptech.glide.load.model.stream.StreamUriLoader;
 import com.bumptech.glide.load.resource.SimpleResource;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
 
 import org.jsoup.select.Elements;
 
@@ -66,17 +60,16 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private static final int TYPE_HEADER_IMAGE = 1;
     private static final int TYPE_TITLE = 2;
-    private static final int TYPE_AUTHOR = 3;
-    private static final int TYPE_PARAGRAPH = 4;
-    private static final int TYPE_INLINE_IMAGE = 5;
-    private static final int TYPE_HEADER_1 = 6;
-    private static final int TYPE_HEADER_2 = 7;
-    private static final int TYPE_HEADER_3 = 8;
-    private static final int TYPE_HEADER_4 = 9;
-    private static final int TYPE_HEADER_5 = 10;
-    private static final int TYPE_HEADER_6 = 11;
-    private static final int TYPE_BLOCKQUOTE = 12;
-    private static final int TYPE_OTHER = 13;
+    private static final int TYPE_PARAGRAPH = 3;
+    private static final int TYPE_INLINE_IMAGE = 4;
+    private static final int TYPE_HEADER_1 = 5;
+    private static final int TYPE_HEADER_2 = 6;
+    private static final int TYPE_HEADER_3 = 7;
+    private static final int TYPE_HEADER_4 = 8;
+    private static final int TYPE_HEADER_5 = 9;
+    private static final int TYPE_HEADER_6 = 10;
+    private static final int TYPE_BLOCKQUOTE = 11;
+    private static final int TYPE_OTHER = 12;
     private static final int MIN_IMAGE_WIDTH = 200; // px
 
     private Article article;
@@ -114,7 +107,6 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         switch (viewType) {
             case TYPE_HEADER_IMAGE:     return new HeaderImageViewHolder(view);
             case TYPE_TITLE:            return new TitleTextViewHolder(view);
-            case TYPE_AUTHOR:           return new AuthorTextViewHolder(view);
             case TYPE_INLINE_IMAGE:     return new ImageViewHolder(view);
             case TYPE_PARAGRAPH:
             case TYPE_HEADER_1:
@@ -132,7 +124,6 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         switch (viewType) {
             case TYPE_HEADER_IMAGE:     return R.layout.item_header;
             case TYPE_TITLE:            return R.layout.item_title;
-            case TYPE_AUTHOR:           return R.layout.item_author;
             case TYPE_PARAGRAPH:        return R.layout.item_paragraph;
             case TYPE_INLINE_IMAGE:     return R.layout.item_image;
             case TYPE_HEADER_1:         return R.layout.item_header_1;
@@ -218,8 +209,18 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         .into(((HeaderImageViewHolder) holder).image);
             } else if (holder instanceof TitleTextViewHolder) {
                 ((TitleTextViewHolder) holder).text.setText(article.title);
-            } else if (holder instanceof AuthorTextViewHolder) {
-                ((AuthorTextViewHolder) holder).text.setText(article.author);
+
+                if (article.author == null) {
+                    ((TitleTextViewHolder) holder).author.setVisibility(View.GONE);
+                } else {
+                    ((TitleTextViewHolder) holder).author.setText(article.author);
+                }
+
+                if (article.source == null) {
+                    ((TitleTextViewHolder) holder).source.setVisibility(View.GONE);
+                } else {
+                    ((TitleTextViewHolder) holder).source.setText(article.domain);
+                }
             }
         }
     }
@@ -232,10 +233,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         } else {
             if (position == 0) {
                 return TYPE_HEADER_IMAGE;
-            } else if (position == 1 && article.title != null) {
-                return TYPE_TITLE;
             } else {
-                return TYPE_AUTHOR;
+                return TYPE_TITLE;
             }
         }
     }
@@ -258,11 +257,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (article != null) {
             count += 1; // header image always present at top, even when one isn't available.
 
-            if (article.title != null) {
-                count += 1;
-            }
-
-            if (article.author != null) {
+            if (article.title != null || article.author != null) {
                 count += 1;
             }
         }
@@ -310,14 +305,13 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private class TitleTextViewHolder extends TextViewHolder {
+        public TextView author;
+        public TextView source;
+
         private TitleTextViewHolder(View itemView) {
             super(itemView);
-        }
-    }
-
-    private class AuthorTextViewHolder extends TextViewHolder {
-        private AuthorTextViewHolder(View itemView) {
-            super(itemView);
+            author = (TextView) itemView.findViewById(R.id.author);
+            source = (TextView) itemView.findViewById(R.id.source);
         }
     }
 

@@ -15,9 +15,23 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:paddingTop="32dp"
+    android:paddingBottom="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textSize="14sp"
+        android:textColor="@color/primaryText"
+        android:id="@+id/source"
+        android:visibility="gone"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -25,10 +39,14 @@
         android:fontFamily="sans-serif-light"
         android:textSize="24sp"
         android:textColor="@color/primaryText"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:paddingBottom="0dp"
-        android:paddingTop="32dp"
         android:id="@+id/text"/>
 
-</FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textSize="12sp"
+        android:textColor="@color/primaryText"
+        android:id="@+id/author"/>
+
+</LinearLayout>
