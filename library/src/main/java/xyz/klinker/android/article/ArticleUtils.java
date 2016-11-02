@@ -98,6 +98,11 @@ public class ArticleUtils {
         for (int i = 0; i < elements.size(); i++) {
             Element element = elements.get(i);
 
+            if (i == 0 && (!element.tagName().equals("p") || element.text().contains(article.title))) {
+                elements.remove(i--);
+                continue;
+            }
+
             if (element.tagName().equals("img")) {
                 String src = element.attr("src");
                 if (src == null || src.length() == 0 || !isImageUrl(src) ||
@@ -105,12 +110,9 @@ public class ArticleUtils {
                     elements.remove(i--);
                 }
             } else {
-                if (element.text().trim().length() == 0) {
+                String text = element.text().trim();
+                if (text.length() == 0 || text.equals("Advertisement") || text.equals("Sponsored") ) {
                     elements.remove(i--);
-                } else if (i == 0) {
-                    if (element.text().contains(article.title)) {
-                        elements.remove(i--);
-                    }
                 }
             }
         }
