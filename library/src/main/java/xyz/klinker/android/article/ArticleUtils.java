@@ -100,7 +100,8 @@ public class ArticleUtils {
 
             if (element.tagName().equals("img")) {
                 String src = element.attr("src");
-                if (src == null || src.length() == 0 || !isImageUrl(src)) {
+                if (src == null || src.length() == 0 || !isImageUrl(src) ||
+                        src.equals(article.image)) {
                     elements.remove(i--);
                 }
             } else {

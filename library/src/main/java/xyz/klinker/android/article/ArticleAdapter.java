@@ -17,16 +17,36 @@
 package xyz.klinker.android.article;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.GenericRequestBuilder;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.ResourceDecoder;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.Resource;
+import com.bumptech.glide.load.model.StreamEncoder;
+import com.bumptech.glide.load.model.stream.StreamStringLoader;
+import com.bumptech.glide.load.model.stream.StreamUriLoader;
+import com.bumptech.glide.load.resource.SimpleResource;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 
 import org.jsoup.select.Elements;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import xyz.klinker.android.article.api.Article;
 
@@ -57,12 +77,26 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int TYPE_HEADER_6 = 11;
     private static final int TYPE_BLOCKQUOTE = 12;
     private static final int TYPE_OTHER = 13;
+    private static final int MIN_IMAGE_WIDTH = 200; // px
 
     private Article article;
     private Elements elements;
+    private GenericRequestBuilder<String, InputStream, BitmapFactory.Options, BitmapFactory.Options>
+            sizeRequest;
 
     public ArticleAdapter(Article article) {
         this.article = article;
+    }
+
+    private void initSizeRequest(Context context) {
+        sizeRequest = Glide // cache for effectiveness (re-use in lists for example) and readability at usage
+                .with(context)
+                .using(new StreamStringLoader(context), InputStream.class)
+                .from(String.class)
+                .as(BitmapFactory.Options.class)
+                .sourceEncoder(new StreamEncoder())
+                .cacheDecoder(new BitmapSizeDecoder())
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE);
     }
 
     public void addElements(Elements elements) {
@@ -118,7 +152,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (position >= topItemCount) {
             if (holder instanceof ImageViewHolder) {
                 String src = elements.get(position - topItemCount).attr("src");
-                ImageView image = ((ImageViewHolder) holder).image;
+                final ImageView image = ((ImageViewHolder) holder).image;
+                image.setVisibility(View.VISIBLE);
 
                 ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)
                         image.getLayoutParams();
@@ -139,10 +174,26 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     params.bottomMargin = 0;
                 }
 
-                Glide.with(((ImageViewHolder) holder).image.getContext())
+                if (sizeRequest == null) {
+                    initSizeRequest(image.getContext());
+                }
+
+                sizeRequest.load(src)
+                        .into(new SimpleTarget<BitmapFactory.Options>() {
+                            @Override
+                            public void onResourceReady(BitmapFactory.Options resource,
+                                                        GlideAnimation<? super BitmapFactory.Options> glideAnimation) {
+                                if (resource.outWidth < MIN_IMAGE_WIDTH) {
+                                    image.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+
+                Glide.with(image.getContext())
                         .load(src)
                         .placeholder(R.color.imageBackground)
                         .into(image);
+
             } else if (holder instanceof TextViewHolder) {
                 String text = elements.get(position - topItemCount).text().trim();
                 TextView textView = ((TextViewHolder) holder).text;
@@ -267,6 +318,23 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private class AuthorTextViewHolder extends TextViewHolder {
         private AuthorTextViewHolder(View itemView) {
             super(itemView);
+        }
+    }
+
+    private class BitmapSizeDecoder implements ResourceDecoder<File, BitmapFactory.Options> {
+        @Override
+        public Resource<BitmapFactory.Options> decode(File source,
+                                                      int width,
+                                                      int height) throws IOException {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(source.getAbsolutePath(), options);
+            return new SimpleResource<>(options);
+        }
+
+        @Override
+        public String getId() {
+            return getClass().getName();
         }
     }
 
