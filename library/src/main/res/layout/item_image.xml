@@ -19,7 +19,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <xyz.klinker.android.article.view.ParallaxImageView
+    <com.fmsirvent.ParallaxEverywhere.PEWImageView
         android:layout_width="match_parent"
         android:layout_height="@dimen/imageHeight"
         android:scaleType="centerCrop"
