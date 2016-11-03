@@ -71,6 +71,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addOnScrollListener(new ArticleScrollListener(toolbar));
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

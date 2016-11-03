@@ -25,15 +25,13 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="-80dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:behavior_overlapTop="?attr/actionBarSize"/>
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:background="@color/toolbarBackground"
+        android:background="@android:color/transparent"
         android:layout_marginTop="24dp"
         app:elevation="0dp">
 
@@ -41,9 +39,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/transparent"
+            android:background="@color/toolbarBackground"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:layout_scrollFlags="scroll|enterAlways|snap" />
+            app:layout_scrollFlags="" />
 
     </android.support.design.widget.AppBarLayout>
 
