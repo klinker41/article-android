@@ -25,5 +25,4 @@
     <color name="secondaryText">#8C000000</color>
     <color name="codeblockBackground">#EEEEEE</color>
     <color name="toolbarBackground">#33000000</color>
-    <color name="statusBarBackground">#77000000</color>
 </resources>
