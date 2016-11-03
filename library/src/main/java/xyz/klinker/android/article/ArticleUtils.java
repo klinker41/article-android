@@ -31,7 +31,7 @@ import xyz.klinker.android.article.api.Article;
  */
 public class ArticleUtils {
 
-    private static final String SELECTOR = "p, h1, h2, h3, h4, h5, h6, img, blockquote";
+    private static final String SELECTOR = "p, h1, h2, h3, h4, h5, h6, img, blockquote, pre";
 
     private Api api;
 

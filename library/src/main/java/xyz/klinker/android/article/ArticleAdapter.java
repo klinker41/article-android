@@ -69,7 +69,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int TYPE_HEADER_5 = 9;
     private static final int TYPE_HEADER_6 = 10;
     private static final int TYPE_BLOCKQUOTE = 11;
-    private static final int TYPE_OTHER = 12;
+    private static final int TYPE_PRE = 12;
+    private static final int TYPE_OTHER = 13;
     private static final int MIN_IMAGE_WIDTH = 200; // px
 
     private Article article;
@@ -116,6 +117,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             case TYPE_HEADER_5:
             case TYPE_HEADER_6:
             case TYPE_BLOCKQUOTE:
+            case TYPE_PRE:
             default:                    return new TextViewHolder(view);
         }
     }
@@ -133,6 +135,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             case TYPE_HEADER_5:         return R.layout.item_header_5;
             case TYPE_HEADER_6:         return R.layout.item_header_6;
             case TYPE_BLOCKQUOTE:       return R.layout.item_blockquote;
+            case TYPE_PRE:              return R.layout.item_pre;
             default:                    return R.layout.item_other;
         }
     }
@@ -276,6 +279,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             case "h6":          return TYPE_HEADER_6;
             case "img":         return TYPE_INLINE_IMAGE;
             case "blockquote":  return TYPE_BLOCKQUOTE;
+            case "pre":         return TYPE_PRE;
             default:            return TYPE_OTHER;
         }
     }

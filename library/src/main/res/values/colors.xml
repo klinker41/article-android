@@ -23,4 +23,5 @@
     <color name="imageBackground">#E5E5E5</color>
     <color name="primaryText">#E2000000</color>
     <color name="secondaryText">#8C000000</color>
+    <color name="codeblockBackground">#EEEEEE</color>
 </resources>
