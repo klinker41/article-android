@@ -19,9 +19,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <xyz.klinker.android.article.view.ParallaxImageView
         android:layout_width="match_parent"
-        android:layout_height="288dp"
+        android:layout_height="@dimen/imageHeight"
         android:scaleType="centerCrop"
         android:contentDescription="@null"
         android:id="@+id/image"/>

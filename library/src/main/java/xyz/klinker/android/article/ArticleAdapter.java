@@ -17,8 +17,10 @@
 package xyz.klinker.android.article;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +79,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private Elements elements;
     private GenericRequestBuilder<String, InputStream, BitmapFactory.Options, BitmapFactory.Options>
             sizeRequest;
+    private int recyclerWidth;
 
     public ArticleAdapter(Article article) {
         this.article = article;
@@ -183,8 +186,15 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             }
                         });
 
+                // add extra height to the image so that it can have a parallax effect
+                // when scrolling
+                Resources resources = image.getContext().getResources();
+                int height = resources.getDimensionPixelSize(R.dimen.imageParallax) +
+                        resources.getDimensionPixelSize(R.dimen.imageHeight);
+
                 Glide.with(image.getContext())
                         .load(src)
+                        .override(recyclerWidth, height)
                         .placeholder(R.color.imageBackground)
                         .into(image);
 
@@ -206,10 +216,16 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
         } else {
             if (holder instanceof HeaderImageViewHolder) {
-                Glide.with(((HeaderImageViewHolder) holder).image.getContext())
+                ImageView image = ((HeaderImageViewHolder) holder).image;
+                Resources resources = image.getContext().getResources();
+                int height = resources.getDimensionPixelSize(R.dimen.imageParallax) +
+                        resources.getDimensionPixelSize(R.dimen.imageHeight);
+
+                Glide.with(image.getContext())
                         .load(article.image)
+                        .override(recyclerWidth, height)
                         .placeholder(R.color.imageBackground)
-                        .into(((HeaderImageViewHolder) holder).image);
+                        .into(image);
             } else if (holder instanceof TitleTextViewHolder) {
                 ((TitleTextViewHolder) holder).text.setText(article.title);
 
@@ -282,6 +298,13 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             case "pre":         return TYPE_PRE;
             default:            return TYPE_OTHER;
         }
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        Log.v("ArticleActivity", "width: " + recyclerView.getWidth());
+        recyclerWidth = recyclerView.getWidth();
     }
 
     private class TextViewHolder extends RecyclerView.ViewHolder {
