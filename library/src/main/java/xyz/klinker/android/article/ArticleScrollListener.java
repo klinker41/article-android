@@ -21,9 +21,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
+import java.lang.Math;
+
 public class ArticleScrollListener extends RecyclerView.OnScrollListener {
 
-    private static final int ANIMATION_DURATION = 50;
+    private static final int ANIMATION_DURATION = 100;
 
     private Toolbar toolbar;
 
@@ -34,6 +36,13 @@ public class ArticleScrollListener extends RecyclerView.OnScrollListener {
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
+
+        int minDistance = toolbar.getContext().getResources()
+                .getDimensionPixelSize(R.dimen.minToolbarScroll);
+        if (Math.abs(dy) < minDistance) {
+            return;
+        }
+
         if (dy > 0 && toolbar.getTranslationY() == 0) {
             toolbar.animate()
                     .translationY(-1 * toolbar.getHeight())
