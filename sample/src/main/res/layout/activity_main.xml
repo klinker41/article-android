@@ -39,7 +39,8 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginEnd="16dp"
                 android:id="@+id/edit_text"
-                android:hint="@string/enter_url"/>
+                android:hint="@string/enter_url"
+                android:inputType="textWebEmailAddress"/>
 
             <Button
                 android:layout_width="wrap_content"

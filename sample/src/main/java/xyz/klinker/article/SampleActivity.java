@@ -19,9 +19,12 @@ package xyz.klinker.article;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.util.regex.Matcher;
 
 import xyz.klinker.android.article.ArticleActivity;
 
@@ -123,6 +126,8 @@ public class SampleActivity extends AppCompatActivity {
                 }
             }
         });
+
+        handleIntent();
     }
 
     private void openArticle(String url) {
@@ -134,6 +139,21 @@ public class SampleActivity extends AppCompatActivity {
                 getResources().getColor(R.color.articleAccent));
         intent.putExtra(ArticleActivity.EXTRA_THEME, ArticleActivity.THEME_AUTO);
         startActivity(intent);
+    }
+
+    private void handleIntent() {
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+
+        if (Intent.ACTION_SEND.equals(action) && "text/plain".equals(type)) {
+            String text = intent.getStringExtra(Intent.EXTRA_TEXT);
+            Matcher matcher = Patterns.WEB_URL.matcher(text);
+            if (matcher.find()) {
+                String url = matcher.group();
+                openArticle(url);
+            }
+        }
     }
 
 }
