@@ -40,6 +40,8 @@ import xyz.klinker.android.article.api.Article;
 public class ArticleActivity extends AppCompatActivity implements ArticleLoadedListener {
 
     public static final String EXTRA_URL = "url";
+    public static final String EXTRA_PRIMARY_COLOR = "primary_color";
+    public static final String EXTRA_ACCENT_COLOR = "accent_color";
 
     private static final String TAG = "ArticleActivity";
     private static final boolean DEBUG = true;
@@ -67,8 +69,10 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
         this.utils = new ArticleUtils();
         this.utils.loadArticle(url, this);
 
-        this.primaryColor = getResources().getColor(R.color.colorPrimary);
-        this.accentColor = getResources().getColor(R.color.colorAccent);
+        this.primaryColor = getIntent().getIntExtra(EXTRA_PRIMARY_COLOR,
+                getResources().getColor(R.color.colorPrimary));
+        this.accentColor = getIntent().getIntExtra(EXTRA_ACCENT_COLOR,
+                getResources().getColor(R.color.colorAccent));
 
         setContentView(R.layout.activity_article);
 
@@ -81,6 +85,8 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addOnScrollListener(
                 new ArticleScrollListener(toolbar, statusBar, primaryColor));
+
+        Utils.changeRecyclerOverscrollColors(recyclerView, primaryColor);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -105,7 +111,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
                 Log.v(TAG, "\t" + article.description);
             }
 
-            adapter = new ArticleAdapter(article);
+            adapter = new ArticleAdapter(article, accentColor);
             recyclerView.setAdapter(adapter);
 
             utils.parseArticleContent(article, this);

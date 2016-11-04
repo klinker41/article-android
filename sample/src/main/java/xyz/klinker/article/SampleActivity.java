@@ -128,6 +128,10 @@ public class SampleActivity extends AppCompatActivity {
     private void openArticle(String url) {
         Intent intent = new Intent(this, ArticleActivity.class);
         intent.putExtra(ArticleActivity.EXTRA_URL, url);
+        intent.putExtra(ArticleActivity.EXTRA_PRIMARY_COLOR,
+                getResources().getColor(R.color.articlePrimary));
+        intent.putExtra(ArticleActivity.EXTRA_ACCENT_COLOR,
+                getResources().getColor(R.color.articleAccent));
         startActivity(intent);
     }
 

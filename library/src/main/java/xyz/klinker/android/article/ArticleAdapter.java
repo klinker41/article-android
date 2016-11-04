@@ -80,13 +80,15 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private GenericRequestBuilder<String, InputStream, BitmapFactory.Options, BitmapFactory.Options>
             sizeRequest;
     private int recyclerWidth;
+    private int accentColor;
 
-    public ArticleAdapter(Article article) {
+    public ArticleAdapter(Article article, int accentColor) {
         this.article = article;
+        this.accentColor = accentColor;
     }
 
     private void initSizeRequest(Context context) {
-        sizeRequest = Glide // cache for effectiveness (re-use in lists for example) and readability at usage
+        sizeRequest = Glide
                 .with(context)
                 .using(new StreamStringLoader(context), InputStream.class)
                 .from(String.class)
@@ -112,6 +114,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             case TYPE_HEADER_IMAGE:     return new HeaderImageViewHolder(view);
             case TYPE_TITLE:            return new TitleTextViewHolder(view);
             case TYPE_INLINE_IMAGE:     return new ImageViewHolder(view);
+            case TYPE_BLOCKQUOTE:       return new BlockQuoteViewHolder(view, accentColor);
             case TYPE_PARAGRAPH:
             case TYPE_HEADER_1:
             case TYPE_HEADER_2:
@@ -119,7 +122,6 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             case TYPE_HEADER_4:
             case TYPE_HEADER_5:
             case TYPE_HEADER_6:
-            case TYPE_BLOCKQUOTE:
             case TYPE_PRE:
             default:                    return new TextViewHolder(view);
         }
@@ -313,6 +315,13 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         private TextViewHolder(View itemView) {
             super(itemView);
             this.text = (TextView) itemView.findViewById(R.id.text);
+        }
+    }
+
+    private class BlockQuoteViewHolder extends TextViewHolder {
+        private BlockQuoteViewHolder(View itemView, int accentColor) {
+            super(itemView);
+            text.setTextColor(accentColor);
         }
     }
 
