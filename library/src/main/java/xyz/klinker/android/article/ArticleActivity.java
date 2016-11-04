@@ -16,6 +16,7 @@
 
 package xyz.klinker.android.article;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
@@ -52,6 +53,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
     private static final String TAG = "ArticleActivity";
     private static final boolean DEBUG = true;
 
+    private String url;
     private ArticleUtils utils;
     private RecyclerView recyclerView;
     private ArticleAdapter adapter;
@@ -66,7 +68,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String url = getIntent().getStringExtra(EXTRA_URL);
+        this.url = getIntent().getStringExtra(EXTRA_URL);
 
         if (url == null) {
             throw new RuntimeException("EXTRA_URL must not be null.");
@@ -120,8 +122,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
                 Log.v(TAG, "not an article or couldn't fetch url");
             }
 
-            // TODO(klinker41): forward to chrome custom tab instead of finishing.
-            finish();
+            openChromeCustomTab();
         } else {
             if (DEBUG) {
                 Log.v(TAG, "finished loading article at " + article.url);
@@ -152,10 +153,23 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
-            return true;
+        } else if (item.getItemId() == R.id.share) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, url);
+            sendIntent.setType("text/plain");
+            startActivity(Intent.createChooser(sendIntent,
+                    getResources().getText(R.string.share_with)));
+        } else if (item.getItemId() == R.id.open_in_chrome) {
+            openChromeCustomTab();
         }
 
-        return false;
+        return true;
+    }
+
+    private void openChromeCustomTab() {
+        // TODO(klinker41): open in custom tab instead of finishing
+        finish();
     }
 
 }
