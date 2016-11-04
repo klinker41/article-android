@@ -16,21 +16,49 @@
 
 package xyz.klinker.android.article;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-
-import java.lang.Math;
+import android.view.animation.Interpolator;
 
 public class ArticleScrollListener extends RecyclerView.OnScrollListener {
 
-    private static final int ANIMATION_DURATION = 100;
+    private static final int ANIMATION_DURATION = 200;
 
     private Toolbar toolbar;
+    private View statusBar;
+    private int primaryColor;
+    private int transparentColor;
+    private boolean transparentBackground = true;
+    private boolean isUpdatingTranslation = false;
+    private boolean isUpdatingBackground = false;
 
-    public ArticleScrollListener(Toolbar toolbar) {
+    public ArticleScrollListener(Toolbar toolbar, View statusBar, int primaryColor) {
         this.toolbar = toolbar;
+        this.statusBar = statusBar;
+        this.primaryColor = primaryColor;
+        this.transparentColor = toolbar.getContext().getResources()
+                .getColor(R.color.toolbarBackground);
+    }
+
+    @Override
+    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+        super.onScrollStateChanged(recyclerView, newState);
+
+        LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        int firstItem = manager.findFirstCompletelyVisibleItemPosition();
+        if (newState == RecyclerView.SCROLL_STATE_IDLE &&!transparentBackground &&
+                firstItem == 0 && !isUpdatingBackground) {
+            animateBackgroundColor(primaryColor, transparentColor, new DecelerateInterpolator());
+            transparentBackground = true;
+        }
     }
 
     @Override
@@ -44,19 +72,71 @@ public class ArticleScrollListener extends RecyclerView.OnScrollListener {
         }
 
         if (dy > 0 && toolbar.getTranslationY() == 0) {
-            toolbar.animate()
-                    .translationY(-1 * toolbar.getHeight())
-                    .setDuration(ANIMATION_DURATION)
-                    .setInterpolator(new AccelerateInterpolator());
-        } else if (dy < 0 && toolbar.getTranslationY() != 0) {
-            toolbar.animate()
-                    .translationY(0)
-                    .setDuration(ANIMATION_DURATION)
-                    .setInterpolator(new DecelerateInterpolator());
-        }
+            Interpolator interpolator = new AccelerateInterpolator();
 
-        // TODO(klinker41): change the color of the toolbar and status bar as it scrolls up
-        //                  to the primary color and if we scroll down and the first item is
-        //                  visible, change back to transparent.
+            if (!isUpdatingTranslation) {
+                animateTranslation(-1 * toolbar.getHeight(), interpolator);
+            }
+
+            if (transparentBackground && !isUpdatingBackground) {
+                animateBackgroundColor(transparentColor, primaryColor, interpolator);
+                transparentBackground = false;
+            }
+        } else if (dy < 0 && toolbar.getTranslationY() != 0) {
+            Interpolator interpolator = new DecelerateInterpolator();
+
+            if (!isUpdatingTranslation) {
+                animateTranslation(0, interpolator);
+            }
+
+            LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+            int firstItem = manager.findFirstVisibleItemPosition();
+            if (!transparentBackground && firstItem == 0 && !isUpdatingBackground) {
+                animateBackgroundColor(primaryColor, transparentColor, interpolator);
+                transparentBackground = true;
+            }
+        }
     }
+
+    private void animateTranslation(int to, Interpolator interpolator) {
+        toolbar.animate()
+                .translationY(to)
+                .setDuration(ANIMATION_DURATION)
+                .setInterpolator(interpolator)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        isUpdatingTranslation = false;
+                    }
+                })
+                .start();
+        isUpdatingTranslation = true;
+    }
+
+    private void animateBackgroundColor(int from, int to, Interpolator interpolator) {
+        ValueAnimator anim = new ValueAnimator();
+        anim.setIntValues(from, to);
+        anim.setEvaluator(new ArgbEvaluator());
+        anim.setInterpolator(interpolator);
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                toolbar.setBackgroundColor((Integer)valueAnimator.getAnimatedValue());
+                statusBar.setBackgroundColor((Integer)valueAnimator.getAnimatedValue());
+            }
+        });
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                isUpdatingBackground = false;
+            }
+        });
+
+        anim.setDuration(ANIMATION_DURATION);
+        anim.start();
+        isUpdatingBackground = true;
+    }
+
 }

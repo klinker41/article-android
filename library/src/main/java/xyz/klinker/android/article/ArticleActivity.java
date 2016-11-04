@@ -24,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import org.jsoup.select.Elements;
 
@@ -46,6 +47,8 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
     private ArticleUtils utils;
     private RecyclerView recyclerView;
     private ArticleAdapter adapter;
+    private int primaryColor;
+    private int accentColor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,14 +67,20 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
         this.utils = new ArticleUtils();
         this.utils.loadArticle(url, this);
 
+        this.primaryColor = getResources().getColor(R.color.colorPrimary);
+        this.accentColor = getResources().getColor(R.color.colorAccent);
+
         setContentView(R.layout.activity_article);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        View statusBar = findViewById(R.id.status_bar);
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addOnScrollListener(new ArticleScrollListener(toolbar));
+        recyclerView.addOnScrollListener(
+                new ArticleScrollListener(toolbar, statusBar, primaryColor));
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

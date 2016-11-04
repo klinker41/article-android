@@ -28,6 +28,12 @@
         android:scrollbars="vertical"
         app:behavior_overlapTop="?attr/actionBarSize"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:id="@+id/status_bar"
+        android:background="@color/toolbarBackground"/>
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
