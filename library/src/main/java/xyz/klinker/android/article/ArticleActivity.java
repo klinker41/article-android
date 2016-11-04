@@ -18,6 +18,7 @@ package xyz.klinker.android.article;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -42,6 +43,11 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
     public static final String EXTRA_URL = "url";
     public static final String EXTRA_PRIMARY_COLOR = "primary_color";
     public static final String EXTRA_ACCENT_COLOR = "accent_color";
+    public static final String EXTRA_THEME = "theme";
+
+    public static final int THEME_LIGHT = 1;
+    public static final int THEME_DARK = 2;
+    public static final int THEME_AUTO = 3;
 
     private static final String TAG = "ArticleActivity";
     private static final boolean DEBUG = true;
@@ -64,6 +70,15 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
 
         if (DEBUG) {
             Log.v(TAG, "loading article: " + url);
+        }
+
+        int theme = getIntent().getIntExtra(EXTRA_THEME, THEME_AUTO);
+        if (theme == THEME_LIGHT) {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } else if (theme == THEME_DARK) {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
         }
 
         this.utils = new ArticleUtils();

@@ -16,13 +16,9 @@
   -->
 
 <resources>
-
-    <style name="ArticleTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/windowBackground</item>
-        <item name="android:windowTranslucentStatus">true</item>
-    </style>
-
+    <color name="windowBackground">#374248</color>
+    <color name="imageBackground">#202B30</color>
+    <color name="primaryText">#FFFFFFFF</color>
+    <color name="secondaryText">#B2FFFFFF</color>
+    <color name="codeblockBackground">#283338</color>
 </resources>

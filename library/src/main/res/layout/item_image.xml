@@ -26,6 +26,7 @@
         android:scaleType="centerCrop"
         android:contentDescription="@null"
         android:id="@+id/image"
+        android:src="@color/imageBackground"
         pew:reverse="reverseY"/>
 
 </FrameLayout>

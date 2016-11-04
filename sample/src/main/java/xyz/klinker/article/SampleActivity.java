@@ -132,6 +132,7 @@ public class SampleActivity extends AppCompatActivity {
                 getResources().getColor(R.color.articlePrimary));
         intent.putExtra(ArticleActivity.EXTRA_ACCENT_COLOR,
                 getResources().getColor(R.color.articleAccent));
+        intent.putExtra(ArticleActivity.EXTRA_THEME, ArticleActivity.THEME_AUTO);
         startActivity(intent);
     }
 
