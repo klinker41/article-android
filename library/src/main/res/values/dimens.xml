@@ -18,7 +18,7 @@
 <resources>
     <dimen name="extraImagePadding">16dp</dimen>
     <dimen name="extraBottomPadding">16dp</dimen>
-    <dimen name="imageParallax">64dp</dimen>
+    <dimen name="imageParallax">96dp</dimen>
     <dimen name="imageHeight">288dp</dimen>
     <dimen name="minToolbarScroll">4dp</dimen>
 </resources>
