@@ -58,6 +58,10 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
     private int primaryColor;
     private int accentColor;
 
+    static {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
