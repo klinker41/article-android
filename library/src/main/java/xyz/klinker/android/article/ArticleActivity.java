@@ -52,7 +52,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
     public static final int THEME_AUTO = 3;
 
     private static final String TAG = "ArticleActivity";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private String url;
     private ArticleUtils utils;
