@@ -17,9 +17,13 @@
 package xyz.klinker.android.article;
 
 import android.annotation.TargetApi;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EdgeEffect;
+import android.widget.ProgressBar;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -71,6 +75,19 @@ public class Utils {
                 }
             }
         });
+    }
+
+    /**
+     * Changes the progress bar's color.
+     */
+    public static void changeProgressBarColors(ProgressBar progressBar, int color) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            Drawable wrapDrawable = DrawableCompat.wrap(progressBar.getIndeterminateDrawable());
+            DrawableCompat.setTint(wrapDrawable, color);
+            progressBar.setIndeterminateDrawable(DrawableCompat.unwrap(wrapDrawable));
+        } else {
+            progressBar.getIndeterminateDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+        }
     }
 
 }

@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import org.jsoup.select.Elements;
 
@@ -57,6 +58,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
     private ArticleUtils utils;
     private RecyclerView recyclerView;
     private ArticleAdapter adapter;
+    private ProgressBar progressBar;
     private int primaryColor;
     private int accentColor;
 
@@ -107,7 +109,10 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
         recyclerView.addOnScrollListener(
                 new ArticleScrollListener(toolbar, statusBar, primaryColor));
 
+        progressBar = (ProgressBar) findViewById(R.id.loading);
+
         Utils.changeRecyclerOverscrollColors(recyclerView, primaryColor);
+        Utils.changeProgressBarColors(progressBar, primaryColor);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -135,6 +140,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
             recyclerView.setAdapter(adapter);
 
             utils.parseArticleContent(article, this);
+            progressBar.setVisibility(View.GONE);
         }
     }
 
