@@ -152,6 +152,7 @@ public class SampleActivity extends AppCompatActivity {
             if (matcher.find()) {
                 String url = matcher.group();
                 openArticle(url);
+                finish();
             }
         }
     }
