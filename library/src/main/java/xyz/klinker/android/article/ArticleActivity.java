@@ -118,6 +118,9 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(null);
         }
+
+        findViewById(R.id.transparent_side_1).setOnClickListener(sideClickListener);
+        findViewById(R.id.transparent_side_2).setOnClickListener(sideClickListener);
     }
 
     @Override
@@ -177,5 +180,12 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
         // TODO(klinker41): open in custom tab instead of finishing
         finish();
     }
+
+    private View.OnClickListener sideClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            finish();
+        }
+    };
 
 }

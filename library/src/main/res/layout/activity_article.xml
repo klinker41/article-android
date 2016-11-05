@@ -15,49 +15,71 @@
   ~ limitations under the License.
   -->
 
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        app:behavior_overlapTop="?attr/actionBarSize"/>
-
-    <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="244dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/loading"
-        android:indeterminate="true"/>
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:id="@+id/status_bar"
-        android:background="@color/toolbarBackground"/>
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/transparentSideBackground"
+        android:id="@+id/transparent_side_1"/>
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:background="@android:color/transparent"
-        android:layout_marginTop="24dp"
-        app:elevation="0dp">
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="@dimen/articleWidth"
+        android:layout_height="match_parent"
+        android:background="@color/windowBackground">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/toolbarBackground"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:layout_scrollFlags="" />
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            app:behavior_overlapTop="?attr/actionBarSize"/>
 
-    </android.support.design.widget.AppBarLayout>
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="244dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/loading"
+            android:indeterminate="true"/>
 
-</android.support.design.widget.CoordinatorLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:id="@+id/status_bar"
+            android:background="@color/toolbarBackground"/>
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="24dp"
+            app:elevation="0dp">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/toolbarBackground"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_scrollFlags="" />
+
+        </android.support.design.widget.AppBarLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/transparentSideBackground"
+        android:id="@+id/transparent_side_2"/>
+
+</LinearLayout>

@@ -16,19 +16,5 @@
   -->
 
 <resources>
-
-    <style name="ArticleTheme.Base" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:backgroundDimEnabled">false</item>
-    </style>
-
-    <style name="ArticleTheme" parent="ArticleTheme.Base">
-
-    </style>
-
+    <dimen name="articleWidth">432dp</dimen>
 </resources>

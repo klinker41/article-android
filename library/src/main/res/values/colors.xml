@@ -20,6 +20,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="toolbarBackground">#33000000</color>
+    <color name="transparentSideBackground">#AA000000</color>
 
     <color name="windowBackground">@android:color/white</color>
     <color name="imageBackground">#E5E5E5</color>
