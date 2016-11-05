@@ -22,7 +22,8 @@
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
     android:paddingTop="32dp"
-    android:paddingBottom="16dp">
+    android:paddingBottom="16dp"
+    android:layout_marginTop="-32dp">
 
     <TextView
         android:layout_width="match_parent"
@@ -30,8 +31,7 @@
         android:fontFamily="sans-serif-light"
         android:textSize="14sp"
         android:textColor="@color/primaryText"
-        android:id="@+id/source"
-        android:visibility="gone"/>
+        android:id="@+id/source"/>
 
     <TextView
         android:layout_width="match_parent"
