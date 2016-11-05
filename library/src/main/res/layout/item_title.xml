@@ -47,6 +47,7 @@
         android:fontFamily="sans-serif-light"
         android:textSize="12sp"
         android:textColor="@color/primaryText"
-        android:id="@+id/author"/>
+        android:id="@+id/author"
+        android:visibility="gone"/>
 
 </LinearLayout>
