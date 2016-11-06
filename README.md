@@ -27,25 +27,25 @@ intent.launchUrl(this, Uri.parse(url));
 
 My goal was to enable you to simply swap out the `CustomTabIntent` class for `ArticleIntent`, meaning the the previous example would be invoked like the following for this library:
 
-```java
-**ArticleIntent** intent = new **ArticleIntent**.Builder(**this**)
+<pre>
+<b>ArticleIntent</b> intent = new <b>ArticleIntent</b>.Builder(<b>this</b>)
         .setToolbarColor(primaryColor)
         .build();
 
 intent.launchUrl(this, Uri.parse(url));
-```
+</pre>
 
 Simple, right? You can pass any parameters into the builder that you would normally use in a custom tab such as colors and toolbar actions (however, many of those actions are not currently supported by this library, though they will be displayed if the library ends up opening a custom tab instead of displaying the article natively). I also added on a few extras to the builder that you can use to customize the UI more to your liking:
 
-```java
+<pre>
 ArticleIntent intent = new ArticleIntent.Builder(this)
         .setToolbarColor(primaryColor)
-        **.setAccentColor(accentColor)**
-        **.setTheme(ArticleIntent.THEME_DARK)**
+        <b>.setAccentColor(accentColor)</b>
+        <b>.setTheme(ArticleIntent.THEME_DARK)</b>
         .build();
 
 intent.launchUrl(this, Uri.parse(url));
-```
+</pre>
 
 You can check out the sample application for more information and implementation notes.
 
@@ -59,8 +59,8 @@ There are quite a few benefits that I see from using this library over just simp
 
 Benefits:
 * Save user's time and data
-** responses are smaller since all of the extra junk (ads, other articles, etc) is taken out
-** can load significanly faster than a full webpage when article is already cached
+ * responses are smaller since all of the extra junk (ads, other articles, etc) is taken out
+ * can load significanly faster than a full webpage when article is already cached
 * Consistent (and beautiful) UI accress all of the articles that you send to it
 * Keeps your users inside and enjoying your app instead of sending them elseware to view an article
 
