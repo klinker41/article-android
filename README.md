@@ -1,3 +1,5 @@
+![feature graphic](artwork/sample.png)
+
 # Android Article Viewer
 
 This library is an attempt to build on top of the concept of Chrome Custom Tabs - taking it one step further and creating a consistent experience for news/article viewing. It's main goal is to detect whether a URL is a link to an article somewhere on the web and if it is, parse that article and display it in a RecyclerView. If it isn't, then open the link in a Chrome Custom Tab instead.
@@ -27,7 +29,7 @@ intent.launchUrl(this, Uri.parse(url));
 
 My goal was to enable you to simply swap out the `CustomTabIntent` class for `ArticleIntent`, meaning the the previous example would be invoked like the following for this library:
 
-<pre>
+<pre lang="java">
 <b>ArticleIntent</b> intent = new <b>ArticleIntent</b>.Builder(<b>this</b>)
         .setToolbarColor(primaryColor)
         .build();
@@ -37,7 +39,7 @@ intent.launchUrl(this, Uri.parse(url));
 
 Simple, right? You can pass any parameters into the builder that you would normally use in a custom tab such as colors and toolbar actions (however, many of those actions are not currently supported by this library, though they will be displayed if the library ends up opening a custom tab instead of displaying the article natively). I also added on a few extras to the builder that you can use to customize the UI more to your liking:
 
-<pre>
+<pre lang="java">
 ArticleIntent intent = new ArticleIntent.Builder(this)
         .setToolbarColor(primaryColor)
         <b>.setAccentColor(accentColor)</b>
