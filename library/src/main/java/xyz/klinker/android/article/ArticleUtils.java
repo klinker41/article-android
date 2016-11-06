@@ -23,20 +23,20 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import xyz.klinker.android.article.api.Api;
+import xyz.klinker.android.article.api.ArticleApi;
 import xyz.klinker.android.article.api.Article;
 
 /**
  * Helper for working with the article apis.
  */
-public class ArticleUtils {
+class ArticleUtils {
 
     private static final String SELECTOR = "p, h1, h2, h3, h4, h5, h6, img, blockquote, pre";
 
-    private Api api;
+    private ArticleApi api;
 
-    public ArticleUtils() {
-        this.api = new Api();
+    ArticleUtils() {
+        this.api = new ArticleApi();
     }
 
     /**
@@ -45,7 +45,7 @@ public class ArticleUtils {
      * @param url the url to load the article from.
      * @param callback the callback to receive after loading completes.
      */
-    public void loadArticle(final String url, final ArticleLoadedListener callback) {
+    void loadArticle(final String url, final ArticleLoadedListener callback) {
         final Handler handler = new Handler();
 
         new Thread(new Runnable() {
@@ -71,7 +71,7 @@ public class ArticleUtils {
      * @param article the article to parse content from.
      * @param callback the callback to receive after parsing completes.
      */
-    public void parseArticleContent(final Article article, final ArticleLoadedListener callback) {
+    void parseArticleContent(final Article article, final ArticleLoadedListener callback) {
         final Handler handler = new Handler();
 
         new Thread(new Runnable() {

@@ -28,12 +28,15 @@ import android.widget.ProgressBar;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-public class Utils {
+/**
+ * Utilities we use, mostly for UI modification.
+ */
+class Utils {
 
     /**
      * Changes the overscroll highlight effect on a recyclerview to be the given color.
      */
-    public static void changeRecyclerOverscrollColors(RecyclerView recyclerView, final int color) {
+    static void changeRecyclerOverscrollColors(RecyclerView recyclerView, final int color) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             return;
         }
@@ -80,7 +83,7 @@ public class Utils {
     /**
      * Changes the progress bar's color.
      */
-    public static void changeProgressBarColors(ProgressBar progressBar, int color) {
+    static void changeProgressBarColors(ProgressBar progressBar, int color) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             Drawable wrapDrawable = DrawableCompat.wrap(progressBar.getIndeterminateDrawable());
             DrawableCompat.setTint(wrapDrawable, color);

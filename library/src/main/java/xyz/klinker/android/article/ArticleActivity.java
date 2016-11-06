@@ -17,7 +17,9 @@
 package xyz.klinker.android.article;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,19 +39,12 @@ import xyz.klinker.android.article.api.Article;
  * Activity that will display an article grabbed from the server or redirect to a chrome custom
  * tab if the article cannot be displayed appropriately or the content is not an article at all.
  *
- * Requires a string extra in the Intent of type ArticleActivity.EXTRA_URL which is the URL of the
- * article you wish to load.
+ * You should create this activity using the {@link ArticleIntent.Builder}, not invoke it directly.
+ *
+ * NOTE: Not all options in the builder by be applied in this activity. However, all options will
+ * be forwarded to a chrome custom tab if the user chooses to view it there.
  */
 public class ArticleActivity extends AppCompatActivity implements ArticleLoadedListener {
-
-    public static final String EXTRA_URL = "url";
-    public static final String EXTRA_PRIMARY_COLOR = "primary_color";
-    public static final String EXTRA_ACCENT_COLOR = "accent_color";
-    public static final String EXTRA_THEME = "theme";
-
-    public static final int THEME_LIGHT = 1;
-    public static final int THEME_DARK = 2;
-    public static final int THEME_AUTO = 3;
 
     private static final String TAG = "ArticleActivity";
     private static final boolean DEBUG = false;
@@ -70,7 +65,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.url = getIntent().getStringExtra(EXTRA_URL);
+        this.url = getIntent().getDataString();
 
         if (url == null) {
             throw new RuntimeException("EXTRA_URL must not be null.");
@@ -80,10 +75,10 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
             Log.v(TAG, "loading article: " + url);
         }
 
-        int theme = getIntent().getIntExtra(EXTRA_THEME, THEME_AUTO);
-        if (theme == THEME_LIGHT) {
+        int theme = getIntent().getIntExtra(ArticleIntent.EXTRA_THEME, ArticleIntent.THEME_AUTO);
+        if (theme == ArticleIntent.THEME_LIGHT) {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        } else if (theme == THEME_DARK) {
+        } else if (theme == ArticleIntent.THEME_DARK) {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
@@ -92,9 +87,9 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
         this.utils = new ArticleUtils();
         this.utils.loadArticle(url, this);
 
-        this.primaryColor = getIntent().getIntExtra(EXTRA_PRIMARY_COLOR,
+        this.primaryColor = getIntent().getIntExtra(ArticleIntent.EXTRA_TOOLBAR_COLOR,
                 getResources().getColor(R.color.colorPrimary));
-        this.accentColor = getIntent().getIntExtra(EXTRA_ACCENT_COLOR,
+        this.accentColor = getIntent().getIntExtra(ArticleIntent.EXTRA_ACCENT_COLOR,
                 getResources().getColor(R.color.colorAccent));
 
         setContentView(R.layout.activity_article);
@@ -181,7 +176,17 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
     }
 
     private void openChromeCustomTab() {
-        // TODO(klinker41): open in custom tab instead of finishing
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        CustomTabsIntent intent = builder.build();
+
+        // get the extras that we passed into this activity (these will be all that were created
+        // in the intent builder)
+        intent.intent.putExtras(getIntent().getExtras());
+
+        // launch the url with the specified intent
+        intent.launchUrl(this, Uri.parse(url));
+
+        // finish the current activity so that the back button takes us back
         finish();
     }
 

@@ -17,6 +17,7 @@
 package xyz.klinker.article;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
@@ -26,7 +27,7 @@ import android.widget.EditText;
 
 import java.util.regex.Matcher;
 
-import xyz.klinker.android.article.ArticleActivity;
+import xyz.klinker.android.article.ArticleIntent;
 
 public class SampleActivity extends AppCompatActivity {
 
@@ -131,14 +132,13 @@ public class SampleActivity extends AppCompatActivity {
     }
 
     private void openArticle(String url) {
-        Intent intent = new Intent(this, ArticleActivity.class);
-        intent.putExtra(ArticleActivity.EXTRA_URL, url);
-        intent.putExtra(ArticleActivity.EXTRA_PRIMARY_COLOR,
-                getResources().getColor(R.color.articlePrimary));
-        intent.putExtra(ArticleActivity.EXTRA_ACCENT_COLOR,
-                getResources().getColor(R.color.articleAccent));
-        intent.putExtra(ArticleActivity.EXTRA_THEME, ArticleActivity.THEME_AUTO);
-        startActivity(intent);
+        ArticleIntent intent = new ArticleIntent.Builder(this)
+                .setToolbarColor(getResources().getColor(R.color.articlePrimary))
+                .setAccentColor(getResources().getColor(R.color.articleAccent))
+                .setTheme(ArticleIntent.THEME_AUTO)
+                .build();
+
+        intent.launchUrl(this, Uri.parse(url));
     }
 
     private void handleIntent() {

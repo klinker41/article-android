@@ -23,7 +23,7 @@ import xyz.klinker.android.article.api.Article;
 /**
  * Listener for waiting for article loaded events.
  */
-public interface ArticleLoadedListener {
+interface ArticleLoadedListener {
 
     void onArticleLoaded(Article article);
     void onArticleParsed(Elements elements);

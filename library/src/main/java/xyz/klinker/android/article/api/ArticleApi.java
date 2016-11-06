@@ -37,7 +37,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Api {
+public class ArticleApi {
 
     private static final String API_DEBUG_URL = "http://192.168.86.146:3000/";
     private static final String API_RELEASE_URL = "https://klinkerapps-article.herokuapp.com/";
@@ -104,7 +104,7 @@ public class Api {
     /**
      * Creates a new API access object with the release environment.
      */
-    public Api() {
+    public ArticleApi() {
         this(Environment.RELEASE);
     }
 
@@ -113,7 +113,7 @@ public class Api {
      *
      * @param environment the Environment to use to connect to the APIs.
      */
-    private Api(Environment environment) {
+    private ArticleApi(Environment environment) {
         this(environment == Environment.DEBUG ? API_DEBUG_URL : API_RELEASE_URL);
     }
 
@@ -121,7 +121,7 @@ public class Api {
      * Creates a new API access object that will automatically attach your API key to all
      * requests.
      */
-    private Api(String baseUrl) {
+    private ArticleApi(String baseUrl) {
         httpClient.addInterceptor(new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {

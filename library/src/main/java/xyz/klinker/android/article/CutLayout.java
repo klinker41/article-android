@@ -32,7 +32,7 @@ import android.widget.FrameLayout;
 /**
  * https://gist.github.com/ZieIony/8480b2d335c1aeb51167
  */
-public class CutLayout extends FrameLayout {
+class CutLayout extends FrameLayout {
 
     private static final int CUT_HEIGHT = 48;
 

@@ -57,7 +57,7 @@ import xyz.klinker.android.article.api.Article;
  * 6. Paragraph Headers
  * 7. Block quotes
  */
-public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE_HEADER_IMAGE = 1;
     private static final int TYPE_TITLE = 2;
@@ -81,7 +81,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private int recyclerWidth;
     private int accentColor;
 
-    public ArticleAdapter(Article article, int accentColor) {
+    ArticleAdapter(Article article, int accentColor) {
         this.article = article;
         this.accentColor = accentColor;
     }
@@ -97,7 +97,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE);
     }
 
-    public void addElements(Elements elements) {
+    void addElements(Elements elements) {
         this.elements = elements;
         notifyItemRangeInserted(getTopItemCount(), elements.size());
     }

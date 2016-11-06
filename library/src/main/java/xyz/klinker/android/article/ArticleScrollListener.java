@@ -28,9 +28,13 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
-public class ArticleScrollListener extends RecyclerView.OnScrollListener {
+/**
+ * Scroll listener for interacting with the toolbar when the recyclerview scrolls. This includes
+ * hiding the toolbar and showing it again when appropriate, along with changing the colors.
+ */
+class ArticleScrollListener extends RecyclerView.OnScrollListener {
 
-    private static final int ANIMATION_DURATION = 200;
+    private static final int ANIMATION_DURATION = 200; // ms
 
     private Toolbar toolbar;
     private View statusBar;
@@ -40,7 +44,7 @@ public class ArticleScrollListener extends RecyclerView.OnScrollListener {
     private boolean isUpdatingTranslation = false;
     private boolean isUpdatingBackground = false;
 
-    public ArticleScrollListener(Toolbar toolbar, View statusBar, int primaryColor) {
+    ArticleScrollListener(Toolbar toolbar, View statusBar, int primaryColor) {
         this.toolbar = toolbar;
         this.statusBar = statusBar;
         this.primaryColor = primaryColor;
