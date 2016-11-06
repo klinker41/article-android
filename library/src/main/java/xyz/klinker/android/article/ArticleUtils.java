@@ -117,10 +117,12 @@ public class ArticleUtils {
             }
         }
 
-        String lastTag = elements.last().tagName();
-        while (!lastTag.equals("p") && !lastTag.equals("img")) {
-            elements.remove(elements.size() - 1);
-            lastTag = elements.last().tagName();
+        if (elements.size() > 0) {
+            String lastTag = elements.last().tagName();
+            while (!lastTag.equals("p") && !lastTag.equals("img")) {
+                elements.remove(elements.size() - 1);
+                lastTag = elements.last().tagName();
+            }
         }
     }
 
