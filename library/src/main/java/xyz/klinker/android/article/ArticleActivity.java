@@ -49,6 +49,8 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
     private static final String TAG = "ArticleActivity";
     private static final boolean DEBUG = false;
 
+    private static final int MIN_NUM_ELEMENTS = 3;
+
     private String url;
     private ArticleUtils utils;
     private RecyclerView recyclerView;
@@ -144,7 +146,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
 
     @Override
     public void onArticleParsed(Elements elements) {
-        if (elements.size() > 0) {
+        if (elements.size() >= MIN_NUM_ELEMENTS) {
             adapter.addElements(elements);
         } else {
             openChromeCustomTab();
