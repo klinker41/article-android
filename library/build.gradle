@@ -17,14 +17,14 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    compileSdkVersion Integer.parseInt(project.COMPILE_SDK)
+    buildToolsVersion project.BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion Integer.parseInt(project.MIN_SDK)
+        targetSdkVersion Integer.parseInt(project.TARGET_SDK)
+        versionCode Integer.parseInt(project.VERSION_CODE)
+        versionName project.VERSION_NAME
     }
 
     lintOptions {
@@ -37,10 +37,10 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.android.support:design:25.0.0'
-    compile 'com.android.support:recyclerview-v7:25.0.0'
-    compile 'com.android.support:customtabs:25.0.0'
+    compile "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
+    compile "com.android.support:design:${ANDROID_SUPPORT_VERSION}"
+    compile "com.android.support:recyclerview-v7:${ANDROID_SUPPORT_VERSION}"
+    compile "com.android.support:customtabs:${ANDROID_SUPPORT_VERSION}"
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'org.jsoup:jsoup:1.10.1'
