@@ -17,17 +17,15 @@
 
 <xyz.klinker.android.article.CutLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:pew="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.fmsirvent.ParallaxEverywhere.PEWImageView
+    <xyz.klinker.android.article.PEWImageView
         android:layout_width="match_parent"
         android:layout_height="@dimen/imageHeight"
         android:scaleType="centerCrop"
         android:contentDescription="@null"
         android:id="@+id/image"
-        android:src="@color/imageBackground"
-        pew:reverse="reverseY"/>
+        android:src="@color/imageBackground" />
 
 </xyz.klinker.android.article.CutLayout>
