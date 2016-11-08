@@ -17,8 +17,10 @@
 package xyz.klinker.android.article;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -193,6 +195,7 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 int height = resources.getDimensionPixelSize(R.dimen.imageParallax) +
                         resources.getDimensionPixelSize(R.dimen.imageHeight);
 
+                ((ImageViewHolder) holder).url = src;
                 Glide.with(image.getContext())
                         .load(src)
                         .override(recyclerWidth, height)
@@ -222,6 +225,7 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 int height = resources.getDimensionPixelSize(R.dimen.imageParallax) +
                         resources.getDimensionPixelSize(R.dimen.imageHeight);
 
+                ((HeaderImageViewHolder) holder).url = article.image;
                 Glide.with(image.getContext())
                         .load(article.image)
                         .override(recyclerWidth, height)
@@ -325,10 +329,20 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private class ImageViewHolder extends RecyclerView.ViewHolder {
         public ImageView image;
+        public String url;
 
         private ImageViewHolder(View itemView) {
             super(itemView);
             this.image = (ImageView) itemView.findViewById(R.id.image);
+
+            this.image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(image.getContext(), ImageViewActivity.class);
+                    intent.setData(Uri.parse(url));
+                    image.getContext().startActivity(intent);
+                }
+            });
         }
     }
 

@@ -31,4 +31,8 @@
 
     </style>
 
+    <style name="ImageViewTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+
 </resources>

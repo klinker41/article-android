@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (C) 2016 Jacob Klinker
   ~
@@ -14,16 +15,15 @@
   ~ limitations under the License.
   -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="xyz.klinker.android.article">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uk.co.senab.photoview.PhotoView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:id="@+id/image_view"/>
 
-    <application>
-        <activity android:name=".ArticleActivity"
-            android:theme="@style/ArticleTheme"/>
-        <activity android:name=".ImageViewActivity"
-            android:theme="@style/ImageViewTheme"/>
-    </application>
-
-</manifest>
+</LinearLayout>
