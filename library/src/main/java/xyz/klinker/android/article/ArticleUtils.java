@@ -113,6 +113,8 @@ class ArticleUtils {
                 String text = element.text().trim();
                 if (text.length() == 0 || text.equals("Advertisement") || text.equals("Sponsored") ) {
                     elements.remove(i--);
+                } else if (i > 0 && text.equals(elements.get(i-1).text().trim())) {
+                    elements.remove(i--);
                 }
             }
         }
