@@ -13,7 +13,7 @@ To include it in your project, add this to your `build.gradle` file:
 ```groovy
 dependencies {
 	...
-	compile 'com.klinkerapps:article_viewer:0.5.0'
+	compile 'com.klinkerapps:article_viewer:0.6.1-SNAPSHOT'
 }
 ```
 
