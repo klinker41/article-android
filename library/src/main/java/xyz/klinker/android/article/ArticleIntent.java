@@ -281,6 +281,7 @@ public final class ArticleIntent {
      */
     public void launchUrl(Context context, Uri url) {
         intent.setData(url);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ContextCompat.startActivity(context, intent, startAnimationBundle);
     }
 
