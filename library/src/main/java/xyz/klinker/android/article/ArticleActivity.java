@@ -146,7 +146,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
 
     @Override
     public void onArticleParsed(Elements elements) {
-        if (elements.size() >= MIN_NUM_ELEMENTS) {
+        if (elements != null && elements.size() >= MIN_NUM_ELEMENTS) {
             adapter.addElements(elements);
         } else {
             openChromeCustomTab();

@@ -17,6 +17,7 @@
 package xyz.klinker.android.article;
 
 import android.os.Handler;
+import android.support.annotation.Nullable;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -78,9 +79,7 @@ class ArticleUtils {
             @Override
             public void run() {
                 Document doc = Jsoup.parse(article.content);
-                final Elements elements = doc.select(SELECTOR);
-
-                removeUnnecessaryElements(elements, article);
+                final Elements elements = removeUnnecessaryElements(doc.select(SELECTOR), article);
 
                 if (callback != null) {
                     handler.post(new Runnable() {
@@ -94,7 +93,8 @@ class ArticleUtils {
         }).start();
     }
 
-    private void removeUnnecessaryElements(Elements elements, Article article) {
+    @Nullable
+    private Elements removeUnnecessaryElements(Elements elements, Article article) {
         for (int i = 0; i < elements.size(); i++) {
             Element element = elements.get(i);
 
@@ -125,7 +125,14 @@ class ArticleUtils {
                 elements.remove(elements.size() - 1);
                 lastTag = elements.last().tagName();
             }
+
+            // if not many paragraphs and text is small, then don't show anything
+            if (elements.size() < 7 && elements.text().trim().length() < 100) {
+                elements = null;
+            }
         }
+
+        return elements;
     }
 
     private boolean isImageUrl(String src) {
