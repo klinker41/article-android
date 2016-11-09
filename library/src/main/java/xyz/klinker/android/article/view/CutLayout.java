@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package xyz.klinker.android.article;
+package xyz.klinker.android.article.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;

@@ -22,4 +22,5 @@
     <dimen name="imageHeight">288dp</dimen>
     <dimen name="minToolbarScroll">4dp</dimen>
     <dimen name="articleWidth">-1px</dimen> <!-- match_parent -->
+    <dimen name="drag_down_dismiss_distance">192dp</dimen>
 </resources>

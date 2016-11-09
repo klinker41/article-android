@@ -34,6 +34,7 @@ import android.widget.ProgressBar;
 import org.jsoup.select.Elements;
 
 import xyz.klinker.android.article.api.Article;
+import xyz.klinker.android.article.view.ElasticDragDismissFrameLayout;
 
 /**
  * Activity that will display an article grabbed from the server or redirect to a chrome custom
@@ -118,6 +119,16 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
 
         findViewById(R.id.transparent_side_1).setOnClickListener(sideClickListener);
         findViewById(R.id.transparent_side_2).setOnClickListener(sideClickListener);
+
+        ElasticDragDismissFrameLayout dragDismissLayout = (ElasticDragDismissFrameLayout)
+                findViewById(R.id.drag_dismiss_layout);
+        dragDismissLayout.addListener(new ElasticDragDismissFrameLayout.ElasticDragDismissCallback() {
+            @Override
+            public void onDragDismissed() {
+                super.onDragDismissed();
+                finish();
+            }
+        });
     }
 
     @Override

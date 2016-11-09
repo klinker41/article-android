@@ -15,12 +15,12 @@
   ~ limitations under the License.
   -->
 
-<xyz.klinker.android.article.CutLayout
+<xyz.klinker.android.article.view.CutLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <xyz.klinker.android.article.PEWImageView
+    <xyz.klinker.android.article.view.PEWImageView
         android:layout_width="match_parent"
         android:layout_height="@dimen/imageHeight"
         android:scaleType="centerCrop"
@@ -28,4 +28,4 @@
         android:id="@+id/image"
         android:src="@color/imageBackground" />
 
-</xyz.klinker.android.article.CutLayout>
+</xyz.klinker.android.article.view.CutLayout>

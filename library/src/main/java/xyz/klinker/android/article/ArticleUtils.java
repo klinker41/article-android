@@ -24,6 +24,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import xyz.klinker.android.article.ArticleLoadedListener;
 import xyz.klinker.android.article.api.ArticleApi;
 import xyz.klinker.android.article.api.Article;
 
