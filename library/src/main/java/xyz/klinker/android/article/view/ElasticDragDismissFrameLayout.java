@@ -18,6 +18,7 @@ package xyz.klinker.android.article.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Canvas;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
@@ -262,6 +263,13 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
 
     public boolean isDragging() {
         return draggingDown || draggingUp;
+    }
+
+    @Override
+    public void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        // TODO draw the transparent rectangle based on the dragTo distance from dragScale()
     }
 
 }
