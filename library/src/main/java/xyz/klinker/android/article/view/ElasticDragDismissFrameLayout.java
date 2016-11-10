@@ -19,6 +19,8 @@ package xyz.klinker.android.article.view;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
@@ -36,8 +38,12 @@ import xyz.klinker.android.article.R;
  * Applies an elasticity factor to reduce movement as you approach the given dismiss distance.
  * Optionally also scales down content during drag.
  * <p>
+ * Adapted from
  * https://github.com/nickbutcher/plaid/blob/master/app/src/main/java/io/plaidapp/
  *      ui/widget/ElasticDragDismissFrameLayout.java
+ * with some changes so that the background color can be adjusted behind the dragging view.
+ * <p>
+ * This view is required to only have a single child.
  */
 public class ElasticDragDismissFrameLayout extends FrameLayout {
 
@@ -58,6 +64,9 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
     private static Interpolator fastOutSlowInInterpolator;
 
     private List<ElasticDragDismissCallback> callbacks;
+
+    private RectF draggingBackground;
+    private Paint draggingBackgroundPaint;
 
     public ElasticDragDismissFrameLayout(Context context) {
         this(context, null, 0, 0);
@@ -85,6 +94,11 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
                 .getDimensionPixelSize(R.dimen.drag_down_dismiss_distance);
 
         shouldScale = dragDismissScale != 1f;
+
+        draggingBackgroundPaint = new Paint();
+        draggingBackgroundPaint.setColor(getContext().getResources()
+                .getColor(R.color.transparentSideBackground));
+        draggingBackgroundPaint.setStyle(Paint.Style.FILL);
     }
 
     public static abstract class ElasticDragDismissCallback {
@@ -150,7 +164,7 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
                     fastOutSlowInInterpolator = AnimationUtils.loadInterpolator(getContext(),
                             android.R.interpolator.fast_out_slow_in);
                 }
-                animate()
+                getChildAt(0).animate()
                         .translationY(0f)
                         .scaleX(1f)
                         .scaleY(1f)
@@ -198,16 +212,17 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
         if (scroll == 0) return;
 
         totalDrag += scroll;
+        View child = getChildAt(0);
 
         // track the direction & set the pivot point for scaling
         // don't double track i.e. if play dragging down and then reverse, keep tracking as
         // dragging down until they reach the 'natural' position
         if (scroll < 0 && !draggingUp && !draggingDown) {
             draggingDown = true;
-            if (shouldScale) setPivotY(getHeight());
+            if (shouldScale) child.setPivotY(getHeight());
         } else if (scroll > 0 && !draggingDown && !draggingUp) {
             draggingUp = true;
-            if (shouldScale) setPivotY(0f);
+            if (shouldScale) child.setPivotY(0f);
         }
         // how far have we dragged relative to the distance to perform a dismiss
         // (0–1 where 1 = dismiss distance). Decreasing logarithmically as we approach the limit
@@ -221,12 +236,18 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
             // re-apply the drag direction
             dragTo *= -1;
         }
-        setTranslationY(dragTo);
+        child.setTranslationY(dragTo);
+
+        if (draggingBackground == null) {
+            draggingBackground = new RectF();
+            draggingBackground.left = 0;
+            draggingBackground.right = getWidth();
+        }
 
         if (shouldScale) {
             final float scale = 1 - ((1 - dragDismissScale) * dragFraction);
-            setScaleX(scale);
-            setScaleY(scale);
+            child.setScaleX(scale);
+            child.setScaleY(scale);
         }
 
         // if we've reversed direction and gone past the settle point then clear the flags to
@@ -235,10 +256,22 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
                 || (draggingUp && totalDrag <= 0)) {
             totalDrag = dragTo = dragFraction = 0;
             draggingDown = draggingUp = false;
-            setTranslationY(0f);
-            setScaleX(1f);
-            setScaleY(1f);
+            child.setTranslationY(0f);
+            child.setScaleX(1f);
+            child.setScaleY(1f);
         }
+
+        // draw the background above or below the view where it has scrolled at
+        if (draggingUp) {
+            draggingBackground.bottom = getHeight();
+            draggingBackground.top = getHeight() + dragTo;
+            invalidate();
+        } else if (draggingDown) {
+            draggingBackground.top = 0;
+            draggingBackground.bottom = dragTo;
+            invalidate();
+        }
+
         dispatchDragCallback(dragFraction, dragTo,
                 Math.min(1f, Math.abs(totalDrag) / dragDismissDistance), totalDrag);
     }
@@ -266,10 +299,12 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
     }
 
     @Override
-    public void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+    public void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
 
-        // TODO draw the transparent rectangle based on the dragTo distance from dragScale()
+        if (draggingBackground != null) {
+            canvas.drawRect(draggingBackground, draggingBackgroundPaint);
+        }
     }
 
 }
