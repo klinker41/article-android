@@ -16,6 +16,7 @@
 
 package xyz.klinker.android.article.view;
 
+import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -172,6 +173,36 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
                         .setInterpolator(fastOutSlowInInterpolator)
                         .setListener(null)
                         .start();
+
+                ValueAnimator animator = null;
+                if (draggingUp) {
+                    animator = ValueAnimator.ofFloat(draggingBackground.top,
+                            draggingBackground.bottom);
+                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                            draggingBackground.top = (float) valueAnimator.getAnimatedValue();
+                            invalidate();
+                        }
+                    });
+                } else if (draggingDown) {
+                    animator = ValueAnimator.ofFloat(draggingBackground.bottom,
+                            draggingBackground.top);
+                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                            draggingBackground.bottom = (float) valueAnimator.getAnimatedValue();
+                            invalidate();
+                        }
+                    });
+                }
+
+                if (animator != null) {
+                    animator.setInterpolator(fastOutSlowInInterpolator);
+                    animator.setDuration(200L);
+                    animator.start();
+                }
+
                 totalDrag = 0;
                 draggingDown = draggingUp = false;
                 dispatchDragCallback(0f, 0f, 0f, 0f);
