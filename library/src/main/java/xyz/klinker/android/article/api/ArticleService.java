@@ -18,6 +18,7 @@ package xyz.klinker.android.article.api;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import xyz.klinker.android.article.data.Article;
 
 public interface ArticleService {
 

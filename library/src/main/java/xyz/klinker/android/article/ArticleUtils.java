@@ -24,7 +24,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import xyz.klinker.android.article.api.Article;
+import xyz.klinker.android.article.data.Article;
 import xyz.klinker.android.article.api.ArticleApi;
 
 /**

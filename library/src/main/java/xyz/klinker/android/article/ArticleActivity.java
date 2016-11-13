@@ -33,7 +33,7 @@ import android.widget.ProgressBar;
 
 import org.jsoup.select.Elements;
 
-import xyz.klinker.android.article.api.Article;
+import xyz.klinker.android.article.data.Article;
 import xyz.klinker.android.article.view.ElasticDragDismissFrameLayout;
 
 /**

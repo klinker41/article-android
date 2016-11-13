@@ -45,7 +45,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import xyz.klinker.android.article.api.Article;
+import xyz.klinker.android.article.data.Article;
 
 /**
  * Recycler adapter responsible for displaying the article in a recycler view. This will

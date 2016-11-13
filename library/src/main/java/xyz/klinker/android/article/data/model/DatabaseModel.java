@@ -14,24 +14,10 @@
  * limitations under the License.
  */
 
-package xyz.klinker.android.article.api;
+package xyz.klinker.android.article.data.model;
 
-/**
- * Model holding all possible elements in a response from the server.
- */
-public class Article {
+import android.database.Cursor;
 
-    public String alias;
-    public String url;
-    public String[] canonicals;
-    public String title;
-    public String description;
-    public String image;
-    public String content;
-    public String author;
-    public String source;
-    public String domain;
-    public int duration;
-    public boolean isArticle;
-
+public interface DatabaseModel {
+    void fillFromCursor(Cursor cursor);
 }

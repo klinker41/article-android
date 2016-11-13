@@ -14,18 +14,12 @@
  * limitations under the License.
  */
 
-package xyz.klinker.android.article;
+package xyz.klinker.android.article.data.model;
 
-import org.jsoup.select.Elements;
+public interface DatabaseTable {
 
-import xyz.klinker.android.article.data.Article;
-
-/**
- * Listener for waiting for article loaded events.
- */
-interface ArticleLoadedListener {
-
-    void onArticleLoaded(Article article);
-    void onArticleParsed(Elements elements);
+    String getCreateStatement();
+    String getTableName();
+    String[] getIndexStatements();
 
 }
