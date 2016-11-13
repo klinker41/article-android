@@ -1,8 +1,10 @@
 package xyz.klinker.android.article.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -14,6 +16,7 @@ import xyz.klinker.android.article.data.model.ContentModel;
  */
 public class DataSource {
 
+    private static final String TAG = "DataSource";
     private static volatile DataSource instance;
 
     protected Context context;
@@ -118,6 +121,91 @@ public class DataSource {
      */
     public void endTransaction() {
         database.endTransaction();
+    }
+
+    /**
+     * Inserts a single article into the database for caching purposes.
+     */
+    public void insertArticle(Article article) {
+        ContentValues values = new ContentValues(10);
+        values.put(ArticleModel.COLUMN_ALIAS, article.alias);
+        values.put(ArticleModel.COLUMN_URL, article.url);
+        values.put(ArticleModel.COLUMN_TITLE, article.title);
+        values.put(ArticleModel.COLUMN_DESCRIPTION, article.description);
+        values.put(ArticleModel.COLUMN_IMAGE, article.image);
+        values.put(ArticleModel.COLUMN_AUTHOR, article.author);
+        values.put(ArticleModel.COLUMN_SOURCE, article.source);
+        values.put(ArticleModel.COLUMN_DOMAIN, article.domain);
+        values.put(ArticleModel.COLUMN_DURATION, article.duration);
+        values.put(ArticleModel.COLUMN_INSERTED_AT, System.currentTimeMillis());
+        values.put(ArticleModel.COLUMN_IS_ARTICLE, article.isArticle);
+
+        long id = database.insert(ArticleModel.TABLE, null, values);
+
+        values = new ContentValues(2);
+        values.put(ContentModel.COLUMN_ARTICLE_ID, id);
+        values.put(ContentModel.COLUMN_CONTENT, article.content);
+
+        database.insert(ContentModel.TABLE, null, values);
+
+        Log.v(TAG, "inserted article with id " + id);
+    }
+
+    /**
+     * Gets a single article from the database. If there are multiple with the same URL, only the
+     * first is returned.
+     */
+    public Article getArticle(String url) {
+        Cursor cursor = database.query(
+                ArticleModel.TABLE + " a left outer join " + ContentModel.TABLE + " c " +
+                        "on a." + ArticleModel.COLUMN_ID + " = c." + ContentModel.COLUMN_ARTICLE_ID,
+                new String[] {
+                        "a." + ArticleModel.COLUMN_ID + " as " + ArticleModel.COLUMN_ID,
+                        "a." + ArticleModel.COLUMN_ALIAS + " as " + ArticleModel.COLUMN_ALIAS,
+                        "a." + ArticleModel.COLUMN_URL + " as " + ArticleModel.COLUMN_URL,
+                        "a." + ArticleModel.COLUMN_TITLE + " as " + ArticleModel.COLUMN_TITLE,
+                        "a." + ArticleModel.COLUMN_DESCRIPTION + " as " + ArticleModel.COLUMN_DESCRIPTION,
+                        "a." + ArticleModel.COLUMN_IMAGE + " as " + ArticleModel.COLUMN_IMAGE,
+                        "a." + ArticleModel.COLUMN_AUTHOR + " as " + ArticleModel.COLUMN_AUTHOR,
+                        "a." + ArticleModel.COLUMN_SOURCE + " as " + ArticleModel.COLUMN_SOURCE,
+                        "a." + ArticleModel.COLUMN_DOMAIN + " as " + ArticleModel.COLUMN_DOMAIN,
+                        "a." + ArticleModel.COLUMN_DURATION + " as " + ArticleModel.COLUMN_DURATION,
+                        "a." + ArticleModel.COLUMN_INSERTED_AT + " as " + ArticleModel.COLUMN_INSERTED_AT,
+                        "a." + ArticleModel.COLUMN_IS_ARTICLE + " as " + ArticleModel.COLUMN_IS_ARTICLE,
+                        "c." + ContentModel.COLUMN_CONTENT + " as " + ContentModel.COLUMN_CONTENT
+                },
+                ArticleModel.COLUMN_URL + "=?",
+                new String[] { url },
+                null,
+                null,
+                null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            Article article = new Article(cursor);
+            cursor.close();
+
+            Log.v(TAG, "loaded article from cache with url " + url);
+            return article;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Gets all articles in the database.
+     *
+     * NOTE: this method does not return the content associated with the article, that would be
+     *       slow as some articles can get very large.
+     */
+    public Cursor getAllArticles() {
+        return database.query(
+                ArticleModel.TABLE,
+                null,
+                null,
+                null,
+                null,
+                null,
+                ArticleModel.COLUMN_INSERTED_AT + " desc");
     }
 
 }

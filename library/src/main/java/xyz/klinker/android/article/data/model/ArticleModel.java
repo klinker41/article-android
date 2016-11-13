@@ -32,6 +32,7 @@ public class ArticleModel implements DatabaseTable {
     public static final String COLUMN_SOURCE = "source";
     public static final String COLUMN_DOMAIN = "domain";
     public static final String COLUMN_DURATION = "duration";
+    public static final String COLUMN_INSERTED_AT = "inserted_at";
     public static final String COLUMN_IS_ARTICLE = "is_article";
 
     private static final String DATABASE_CREATE = "create table if not exists " +
@@ -46,6 +47,7 @@ public class ArticleModel implements DatabaseTable {
             COLUMN_SOURCE + " text, " +
             COLUMN_DOMAIN + " text, " +
             COLUMN_DURATION + " integer, " +
+            COLUMN_INSERTED_AT + " integer not null, " +
             COLUMN_IS_ARTICLE + " integer not null" +
             ");";
 

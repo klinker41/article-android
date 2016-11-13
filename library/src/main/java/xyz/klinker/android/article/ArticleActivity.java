@@ -34,6 +34,7 @@ import android.widget.ProgressBar;
 import org.jsoup.select.Elements;
 
 import xyz.klinker.android.article.data.Article;
+import xyz.klinker.android.article.data.DataSource;
 import xyz.klinker.android.article.view.ElasticDragDismissFrameLayout;
 
 /**
@@ -59,6 +60,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
     private ProgressBar progressBar;
     private int primaryColor;
     private int accentColor;
+    private DataSource source;
 
     static {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
@@ -83,8 +85,9 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
         }
 
+        this.source = DataSource.getInstance(this);
         this.utils = new ArticleUtils(getIntent().getStringExtra(ArticleIntent.EXTRA_API_TOKEN));
-        this.utils.loadArticle(url, this);
+        this.utils.loadArticle(url, source, this);
 
         this.primaryColor = getIntent().getIntExtra(ArticleIntent.EXTRA_TOOLBAR_COLOR,
                 getResources().getColor(R.color.colorPrimary));

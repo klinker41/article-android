@@ -40,6 +40,14 @@ public class Article implements DatabaseModel {
     public int duration;
     public boolean isArticle;
 
+    public Article() {
+
+    }
+
+    public Article(Cursor cursor) {
+        fillFromCursor(cursor);
+    }
+
     @Override
     public void fillFromCursor(Cursor cursor) {
         for (int i = 0; i < cursor.getColumnCount(); i++) {

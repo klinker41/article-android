@@ -26,6 +26,7 @@ import org.jsoup.select.Elements;
 
 import xyz.klinker.android.article.data.Article;
 import xyz.klinker.android.article.api.ArticleApi;
+import xyz.klinker.android.article.data.DataSource;
 
 /**
  * Helper for working with the article apis.
@@ -44,15 +45,28 @@ class ArticleUtils {
      * Loads an article from the server.
      *
      * @param url the url to load the article from.
+     * @param source the data source.
      * @param callback the callback to receive after loading completes.
      */
-    void loadArticle(final String url, final ArticleLoadedListener callback) {
+    void loadArticle(final String url, final DataSource source,
+                     final ArticleLoadedListener callback) {
         final Handler handler = new Handler();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final Article article = api.article().parse(url);
+                source.open();
+                Article loadedArticle = source.getArticle(url);
+
+                final Article article;
+                if (loadedArticle != null) {
+                    article = loadedArticle;
+                } else {
+                    article = api.article().parse(url);
+                    source.insertArticle(article);
+                }
+
+                source.close();
 
                 if (callback != null) {
                     handler.post(new Runnable() {
