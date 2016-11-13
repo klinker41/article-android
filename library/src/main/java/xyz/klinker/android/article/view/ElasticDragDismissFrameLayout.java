@@ -23,6 +23,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Build;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -130,7 +131,7 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
     @Override
     public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
         if (enabled) {
-            return (nestedScrollAxes & View.SCROLL_AXIS_VERTICAL) != 0;
+            return (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
         } else {
             return false;
         }
