@@ -30,7 +30,7 @@ intent.launchUrl(this, Uri.parse(url));
 My goal was to enable you to simply swap out the `CustomTabIntent` class for `ArticleIntent`, meaning the the previous example would be invoked like the following for this library:
 
 <pre lang="java">
-<b>ArticleIntent</b> intent = new <b>ArticleIntent</b>.Builder(<b>this</b>)
+<b>ArticleIntent</b> intent = new <b>ArticleIntent</b>.Builder(<b>this</b>, apiKey)
         .setToolbarColor(primaryColor)
         .build();
 
