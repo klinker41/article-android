@@ -70,10 +70,6 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
 
         this.url = getIntent().getDataString();
 
-        if (url == null) {
-            throw new RuntimeException("EXTRA_URL must not be null.");
-        }
-
         if (DEBUG) {
             Log.v(TAG, "loading article: " + url);
         }
@@ -87,7 +83,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleLoadedL
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
         }
 
-        this.utils = new ArticleUtils();
+        this.utils = new ArticleUtils(getIntent().getStringExtra(ArticleIntent.EXTRA_API_TOKEN));
         this.utils.loadArticle(url, this);
 
         this.primaryColor = getIntent().getIntExtra(ArticleIntent.EXTRA_TOOLBAR_COLOR,

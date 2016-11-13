@@ -24,9 +24,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import xyz.klinker.android.article.ArticleLoadedListener;
-import xyz.klinker.android.article.api.ArticleApi;
 import xyz.klinker.android.article.api.Article;
+import xyz.klinker.android.article.api.ArticleApi;
 
 /**
  * Helper for working with the article apis.
@@ -37,8 +36,8 @@ class ArticleUtils {
 
     private ArticleApi api;
 
-    ArticleUtils() {
-        this.api = new ArticleApi();
+    ArticleUtils(String apiToken) {
+        this.api = new ArticleApi(apiToken);
     }
 
     /**

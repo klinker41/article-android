@@ -78,6 +78,9 @@ public final class ArticleIntent {
     public static final String EXTRA_ACCENT_COLOR =
             "xyz.klinker.android.article.extra.EXTRA_ACCENT_COLOR";
 
+    public static final String EXTRA_API_TOKEN =
+            "xyz.klinker.android.article.extra.EXTRA_API_TOKEN";
+
     /**
      * Boolean extra that enables the url bar to hide as the user scrolls down the page
      */
@@ -300,8 +303,9 @@ public final class ArticleIntent {
         private ArrayList<Bundle> mActionButtons = null;
         private boolean mInstantAppsEnabled = true;
 
-        public Builder(Context context) {
+        public Builder(Context context, String apiToken) {
             mIntent = new Intent(context, ArticleActivity.class);
+            mIntent.putExtra(EXTRA_API_TOKEN, apiToken);
         }
 
         /**

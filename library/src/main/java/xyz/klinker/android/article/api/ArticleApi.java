@@ -104,8 +104,8 @@ public class ArticleApi {
     /**
      * Creates a new API access object with the release environment.
      */
-    public ArticleApi() {
-        this(Environment.RELEASE);
+    public ArticleApi(String apiToken) {
+        this(Environment.RELEASE, apiToken);
     }
 
     /**
@@ -113,24 +113,27 @@ public class ArticleApi {
      *
      * @param environment the Environment to use to connect to the APIs.
      */
-    private ArticleApi(Environment environment) {
-        this(environment == Environment.DEBUG ? API_DEBUG_URL : API_RELEASE_URL);
+    private ArticleApi(Environment environment, String apiToken) {
+        this(environment == Environment.DEBUG ? API_DEBUG_URL : API_RELEASE_URL, apiToken);
     }
 
     /**
      * Creates a new API access object that will automatically attach your API key to all
      * requests.
      */
-    private ArticleApi(String baseUrl) {
-        httpClient.addInterceptor(new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request request = chain.request();
-                HttpUrl url = request.url().newBuilder().build();
-                request = request.newBuilder().url(url).build();
-                return chain.proceed(request);
-            }
-        });
+    private ArticleApi(String baseUrl, final String apiToken) {
+        if (httpClient.interceptors().size() == 0) {
+            httpClient.addInterceptor(new Interceptor() {
+                @Override
+                public okhttp3.Response intercept(Chain chain) throws IOException {
+                    Request request = chain.request();
+                    HttpUrl url = request.url().newBuilder()
+                            .addQueryParameter("api_token", apiToken).build();
+                    request = request.newBuilder().url(url).build();
+                    return chain.proceed(request);
+                }
+            });
+        }
 
         Retrofit.Builder builder =
                 new Retrofit.Builder()

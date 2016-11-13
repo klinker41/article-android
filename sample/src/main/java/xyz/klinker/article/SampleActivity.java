@@ -132,7 +132,7 @@ public class SampleActivity extends AppCompatActivity {
     }
 
     private void openArticle(String url) {
-        ArticleIntent intent = new ArticleIntent.Builder(this)
+        ArticleIntent intent = new ArticleIntent.Builder(this, BuildConfig.API_KEY)
                 .setToolbarColor(getResources().getColor(R.color.articlePrimary))
                 .setAccentColor(getResources().getColor(R.color.articleAccent))
                 .setTheme(ArticleIntent.THEME_AUTO)
