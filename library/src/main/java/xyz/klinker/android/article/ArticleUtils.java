@@ -16,6 +16,7 @@
 
 package xyz.klinker.android.article;
 
+import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 
@@ -31,7 +32,7 @@ import xyz.klinker.android.article.data.DataSource;
 /**
  * Helper for working with the article apis.
  */
-class ArticleUtils {
+public class ArticleUtils {
 
     private static final String SELECTOR = "p, h1, h2, h3, h4, h5, h6, img, blockquote, pre";
 
@@ -63,6 +64,14 @@ class ArticleUtils {
                     article = loadedArticle;
                 } else {
                     article = api.article().parse(url);
+
+                    // write the url to the article if it isn't there, this will make loading
+                    // from the database easier later so that we don't have to worry about loading
+                    // non-articles on the server.
+                    if (article.url == null) {
+                        article.url = url;
+                    }
+
                     source.insertArticle(article);
                 }
 
@@ -78,6 +87,19 @@ class ArticleUtils {
                 }
             }
         }).start();
+    }
+
+    /**
+     * Preloads an article from the server so that it is cached on the device and immediately
+     * available when a user tries to view it without making any network calls. This includes
+     * loading the article body along with precaching any images with Glide.
+     *
+     * @param context the current application context.
+     * @param url the url to try and preload.
+     */
+    public void preloadArticle(Context context, final String url) {
+        // TODO(klinker41): preload the article and images. If it is marked as not an article on
+        //                  the server, skip the images.
     }
 
     /**
