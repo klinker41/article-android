@@ -4,10 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import xyz.klinker.android.article.ArticleUtils;
 import xyz.klinker.android.article.data.model.ArticleModel;
 import xyz.klinker.android.article.data.model.ContentModel;
 
@@ -127,6 +127,9 @@ public class DataSource {
      * Inserts a single article into the database for caching purposes.
      */
     public void insertArticle(Article article) {
+        // remove any extra query parameters from the url
+        article.url = ArticleUtils.removeUrlParameters(article.url);
+
         ContentValues values = new ContentValues(10);
         values.put(ArticleModel.COLUMN_ALIAS, article.alias);
         values.put(ArticleModel.COLUMN_URL, article.url);
@@ -147,8 +150,6 @@ public class DataSource {
         values.put(ContentModel.COLUMN_CONTENT, article.content);
 
         database.insert(ContentModel.TABLE, null, values);
-
-        Log.v(TAG, "inserted article with id " + id);
     }
 
     /**
@@ -156,6 +157,9 @@ public class DataSource {
      * first is returned.
      */
     public Article getArticle(String url) {
+        // remove any extra query parameters from the url
+        url = ArticleUtils.removeUrlParameters(url);
+
         Cursor cursor = database.query(
                 ArticleModel.TABLE + " a left outer join " + ContentModel.TABLE + " c " +
                         "on a." + ArticleModel.COLUMN_ID + " = c." + ContentModel.COLUMN_ARTICLE_ID,
@@ -183,8 +187,6 @@ public class DataSource {
         if (cursor != null && cursor.moveToFirst()) {
             Article article = new Article(cursor);
             cursor.close();
-
-            Log.v(TAG, "loaded article from cache with url " + url);
             return article;
         } else {
             return null;

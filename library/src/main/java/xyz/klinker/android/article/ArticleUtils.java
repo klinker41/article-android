@@ -65,14 +65,14 @@ public class ArticleUtils {
                 } else {
                     article = api.article().parse(url);
 
-                    // write the url to the article if it isn't there, this will make loading
-                    // from the database easier later so that we don't have to worry about loading
-                    // non-articles on the server.
-                    if (article.url == null) {
+                    if (article != null) {
+                        // the server will resolve the url when it is shortened or something like
+                        // that so we want to instead save the original so that it is findable by
+                        // that url again later.
                         article.url = url;
-                    }
 
-                    source.insertArticle(article);
+                        source.insertArticle(article);
+                    }
                 }
 
                 source.close();
@@ -173,6 +173,10 @@ public class ArticleUtils {
 
     private boolean isImageUrl(String src) {
         return src.contains("jpg") || src.contains("png") || src.contains("gif");
+    }
+
+    public static String removeUrlParameters(String url) {
+        return url.split("\\?")[0];
     }
 
 }

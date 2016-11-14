@@ -16,12 +16,15 @@
 
 package xyz.klinker.android.article;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,8 +83,9 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Elements elements;
     private GenericRequestBuilder<String, InputStream, BitmapFactory.Options, BitmapFactory.Options>
             sizeRequest;
-    private int recyclerWidth;
     private int accentColor;
+    private int imageWidth;
+    private int imageHeight;
 
     ArticleAdapter(Article article, int accentColor) {
         this.article = article;
@@ -89,6 +93,18 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private void initSizeRequest(Context context) {
+        Resources resources = context.getResources();
+        imageWidth = resources.getDimensionPixelSize(R.dimen.articleWidth);
+        if (imageWidth <= 0) {
+            Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            imageWidth = size.x;
+        }
+
+        imageHeight = resources.getDimensionPixelSize(R.dimen.imageParallax) +
+                resources.getDimensionPixelSize(R.dimen.imageHeight);
+
         sizeRequest = Glide
                 .with(context)
                 .using(new StreamStringLoader(context), InputStream.class)
@@ -189,16 +205,10 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             }
                         });
 
-                // add extra height to the image so that it can have a parallax effect
-                // when scrolling
-                Resources resources = image.getContext().getResources();
-                int height = resources.getDimensionPixelSize(R.dimen.imageParallax) +
-                        resources.getDimensionPixelSize(R.dimen.imageHeight);
-
                 ((ImageViewHolder) holder).url = src;
                 Glide.with(image.getContext())
                         .load(src)
-                        .override(recyclerWidth, height)
+                        .override(imageWidth, imageHeight)
                         .placeholder(R.color.imageBackground)
                         .into(image);
 
@@ -221,14 +231,15 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else {
             if (holder instanceof HeaderImageViewHolder) {
                 ImageView image = ((HeaderImageViewHolder) holder).image;
-                Resources resources = image.getContext().getResources();
-                int height = resources.getDimensionPixelSize(R.dimen.imageParallax) +
-                        resources.getDimensionPixelSize(R.dimen.imageHeight);
+
+                if (sizeRequest == null) {
+                    initSizeRequest(image.getContext());
+                }
 
                 ((HeaderImageViewHolder) holder).url = article.image;
                 Glide.with(image.getContext())
                         .load(article.image)
-                        .override(recyclerWidth, height)
+                        .override(imageWidth, imageHeight)
                         .placeholder(R.color.imageBackground)
                         .into(image);
             } else if (holder instanceof TitleTextViewHolder) {
@@ -308,7 +319,6 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-        recyclerWidth = recyclerView.getWidth();
     }
 
     private class TextViewHolder extends RecyclerView.ViewHolder {
