@@ -53,7 +53,7 @@ You can check out the sample application for more information and implementation
 
 ## Obtaining an API Key
 
-I distribute API keys for free to whoever wants one, I just ask that you give us a contact email address and a short description about how you're planning on using it. You can sign up for one at https://klinkerapps-article.herokuapp.com/. After signing up, simply pass it into the article intent builder as seen in the example above.
+I distribute API keys for free to whoever wants one, I just ask that you give us a contact email address and a short description about how you're planning on using it. You can sign up for one at https://article.klinkerapps.com/. After signing up, simply pass it into the article intent builder as seen in the example above.
 
 If you want to try out the sample app, you'll also have to register for an API token. After that, you need to rename the `api_keys.properties.example` file to `api_keys.properties` and it's contents should just be your token: `API_KEY=<your-api-token>`.
 
