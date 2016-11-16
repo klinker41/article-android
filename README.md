@@ -8,7 +8,18 @@ This library is an attempt to build on top of the concept of Chrome Custom Tabs 
 
 One of the major goals is to make this as simple as possible to integrate into your new or existing apps when you're already considering (or have implemented) using Custom Tabs for opening links.
 
-To include it in your project, add this to your `build.gradle` file:
+In your project's root `build.gradle` (not your module's `build.gradle`):
+
+```groovy
+allprojects {
+    repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+
+To include it in your project, add this to your module's `build.gradle` file:
 
 ```groovy
 dependencies {
