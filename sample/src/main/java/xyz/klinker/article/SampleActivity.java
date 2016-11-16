@@ -24,10 +24,14 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.regex.Matcher;
 
 import xyz.klinker.android.article.ArticleIntent;
+import xyz.klinker.android.article.ArticleLoadedListener;
+import xyz.klinker.android.article.ArticleUtils;
+import xyz.klinker.android.article.data.Article;
 
 public class SampleActivity extends AppCompatActivity {
 
@@ -48,6 +52,7 @@ public class SampleActivity extends AppCompatActivity {
         final Button link10 = (Button) findViewById(R.id.link10);
         final EditText url = (EditText) findViewById(R.id.edit_text);
         final Button go = (Button) findViewById(R.id.go);
+        final Button preload = (Button) findViewById(R.id.preload);
 
         link1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,8 +127,27 @@ public class SampleActivity extends AppCompatActivity {
         go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (url.getText().length() > 0) {
-                    openArticle(url.getText().toString());
+                String text = url.getText().toString();
+                if (text.length() > 0) {
+                    openArticle(text);
+                }
+            }
+        });
+
+        preload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String text = url.getText().toString();
+                if (text.length() > 0) {
+                    new ArticleUtils(BuildConfig.API_KEY).preloadArticle(
+                            getApplicationContext(), text,
+                            new ArticleLoadedListener() {
+                                @Override
+                                public void onArticleLoaded(Article article) {
+                                    Toast.makeText(SampleActivity.this, "Finished Loading",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 }
             }
         });

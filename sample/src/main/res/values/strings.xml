@@ -29,5 +29,6 @@
     <string name="link10">http://www.facebook.com/</string>
     <string name="enter_url">Enter URL…</string>
     <string name="go">Go</string>
+    <string name="preload">Preload</string>
 
 </resources>

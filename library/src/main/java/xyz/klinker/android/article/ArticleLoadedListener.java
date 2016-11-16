@@ -16,16 +16,13 @@
 
 package xyz.klinker.android.article;
 
-import org.jsoup.select.Elements;
-
 import xyz.klinker.android.article.data.Article;
 
 /**
  * Listener for waiting for article loaded events.
  */
-interface ArticleLoadedListener {
+public interface ArticleLoadedListener {
 
     void onArticleLoaded(Article article);
-    void onArticleParsed(Elements elements);
 
 }

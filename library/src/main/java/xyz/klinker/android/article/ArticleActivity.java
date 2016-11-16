@@ -46,7 +46,8 @@ import xyz.klinker.android.article.view.ElasticDragDismissFrameLayout;
  * NOTE: Not all options in the builder by be applied in this activity. However, all options will
  * be forwarded to a chrome custom tab if the user chooses to view it there.
  */
-public class ArticleActivity extends AppCompatActivity implements ArticleLoadedListener {
+public class ArticleActivity extends AppCompatActivity
+        implements ArticleLoadedListener, ArticleParsedListener {
 
     private static final String TAG = "ArticleActivity";
     private static final boolean DEBUG = false;

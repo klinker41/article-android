@@ -38,7 +38,7 @@ public class ArticleUtils {
 
     private ArticleApi api;
 
-    ArticleUtils(String apiToken) {
+    public ArticleUtils(String apiToken) {
         this.api = new ArticleApi(apiToken);
     }
 
@@ -92,14 +92,27 @@ public class ArticleUtils {
     /**
      * Preloads an article from the server so that it is cached on the device and immediately
      * available when a user tries to view it without making any network calls. This includes
-     * loading the article body along with precaching any images with Glide.
+     * downloading the article body along with precaching any images with Glide.
      *
      * @param context the current application context.
      * @param url the url to try and preload.
+     * @param callback the callback to be invoked when preloading has finished.
      */
-    public void preloadArticle(Context context, final String url) {
-        // TODO(klinker41): preload the article and images. If it is marked as not an article on
-        //                  the server, skip the images.
+    public void preloadArticle(Context context, final String url,
+                               final ArticleLoadedListener callback) {
+        DataSource source = DataSource.getInstance(context);
+        loadArticle(url, source, new ArticleLoadedListener() {
+            @Override
+            public void onArticleLoaded(Article article) {
+                if (callback != null) {
+                    callback.onArticleLoaded(article);
+                }
+
+                if (article.isArticle) {
+                    // TODO load the images with glide
+                }
+            }
+        });
     }
 
     /**
@@ -108,7 +121,7 @@ public class ArticleUtils {
      * @param article the article to parse content from.
      * @param callback the callback to receive after parsing completes.
      */
-    void parseArticleContent(final Article article, final ArticleLoadedListener callback) {
+    void parseArticleContent(final Article article, final ArticleParsedListener callback) {
         final Handler handler = new Handler();
 
         new Thread(new Runnable() {

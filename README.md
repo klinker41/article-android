@@ -57,6 +57,17 @@ I distribute API keys for free to whoever wants one, I just ask that you give us
 
 If you want to try out the sample app, you'll also have to register for an API token. After that, you need to rename the `api_keys.properties.example` file to `api_keys.properties` and it's contents should just be your token: `API_KEY=<your-api-token>`.
 
+## Preloading an Article
+
+You can also preload articles so that when the user wants to see it, it is immediately available for them to view. This would be helpful in the context of a message that they received from a friend that you knew the user was going to open and look at. This is a simple task:
+
+```java
+ArticleUtils utils = new ArticleUtils(myApiToken);
+utils.preloadArticle(context, url, callback);
+```
+
+The callback is optional will be invoked when the article has finished loading and is cached. If you call this multiple times, a network call will only be made the first time. To open an article after it has been preloaded, simply follow the same steps as above with an `ArticleIntent.Builder`.
+
 ## How It Works
 
 This library leverages a node.js backend that I have deployed on AWS that does all of the heavy lifting for processing an article. On the backend, we go and grab the article and strip out anything in it that we don't want as soon as we get a URL from the app. We'll then return the results to the library and cache them in a MongoDB instance so that next time we get a request for the same article, it is significantly faster to load.
