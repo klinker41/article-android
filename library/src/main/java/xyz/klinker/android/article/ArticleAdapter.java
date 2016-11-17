@@ -42,6 +42,7 @@ import com.bumptech.glide.load.resource.SimpleResource;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.File;
@@ -76,7 +77,9 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_HEADER_6 = 10;
     private static final int TYPE_BLOCKQUOTE = 11;
     private static final int TYPE_PRE = 12;
-    private static final int TYPE_OTHER = 13;
+    private static final int TYPE_UNORDERED_LIST_ITEM = 13;
+    private static final int TYPE_ORDERED_LIST_ITEM = 14;
+    private static final int TYPE_OTHER = 15;
     private static final int MIN_IMAGE_WIDTH = 200; // px
 
     private Article article;
@@ -128,10 +131,12 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         parent, false);
 
         switch (viewType) {
-            case TYPE_HEADER_IMAGE:     return new HeaderImageViewHolder(view);
-            case TYPE_TITLE:            return new TitleTextViewHolder(view);
-            case TYPE_INLINE_IMAGE:     return new ImageViewHolder(view);
-            case TYPE_BLOCKQUOTE:       return new BlockQuoteViewHolder(view, accentColor);
+            case TYPE_HEADER_IMAGE:         return new HeaderImageViewHolder(view);
+            case TYPE_TITLE:                return new TitleTextViewHolder(view);
+            case TYPE_INLINE_IMAGE:         return new ImageViewHolder(view);
+            case TYPE_BLOCKQUOTE:           return new BlockQuoteViewHolder(view, accentColor);
+            case TYPE_UNORDERED_LIST_ITEM:
+            case TYPE_ORDERED_LIST_ITEM:
             case TYPE_PARAGRAPH:
             case TYPE_HEADER_1:
             case TYPE_HEADER_2:
@@ -140,25 +145,27 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case TYPE_HEADER_5:
             case TYPE_HEADER_6:
             case TYPE_PRE:
-            default:                    return new TextViewHolder(view);
+            default:                        return new TextViewHolder(view);
         }
     }
 
     private int getItemResourceFromType(int viewType) {
         switch (viewType) {
-            case TYPE_HEADER_IMAGE:     return R.layout.article_item_header;
-            case TYPE_TITLE:            return R.layout.article_item_title;
-            case TYPE_PARAGRAPH:        return R.layout.article_item_paragraph;
-            case TYPE_INLINE_IMAGE:     return R.layout.article_item_image;
-            case TYPE_HEADER_1:         return R.layout.article_item_header_1;
-            case TYPE_HEADER_2:         return R.layout.article_item_header_2;
-            case TYPE_HEADER_3:         return R.layout.article_item_header_3;
-            case TYPE_HEADER_4:         return R.layout.article_item_header_4;
-            case TYPE_HEADER_5:         return R.layout.article_item_header_5;
-            case TYPE_HEADER_6:         return R.layout.article_item_header_6;
-            case TYPE_BLOCKQUOTE:       return R.layout.article_item_blockquote;
-            case TYPE_PRE:              return R.layout.article_item_pre;
-            default:                    return R.layout.article_item_other;
+            case TYPE_HEADER_IMAGE:         return R.layout.article_item_header;
+            case TYPE_TITLE:                return R.layout.article_item_title;
+            case TYPE_PARAGRAPH:            return R.layout.article_item_paragraph;
+            case TYPE_INLINE_IMAGE:         return R.layout.article_item_image;
+            case TYPE_HEADER_1:             return R.layout.article_item_header_1;
+            case TYPE_HEADER_2:             return R.layout.article_item_header_2;
+            case TYPE_HEADER_3:             return R.layout.article_item_header_3;
+            case TYPE_HEADER_4:             return R.layout.article_item_header_4;
+            case TYPE_HEADER_5:             return R.layout.article_item_header_5;
+            case TYPE_HEADER_6:             return R.layout.article_item_header_6;
+            case TYPE_BLOCKQUOTE:           return R.layout.article_item_blockquote;
+            case TYPE_PRE:                  return R.layout.article_item_pre;
+            case TYPE_UNORDERED_LIST_ITEM:  return R.layout.article_item_unordered_list_item;
+            case TYPE_ORDERED_LIST_ITEM:    return R.layout.article_item_ordered_list_item;
+            default:                        return R.layout.article_item_other;
         }
     }
 
@@ -266,7 +273,13 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public int getItemViewType(int position) {
         int topItemCount = getTopItemCount();
         if (position >= topItemCount) {
-            return getItemTypeForTag(elements.get(position - topItemCount).tagName());
+            Element element = elements.get(position - topItemCount);
+            String tag = element.tagName();
+            if (tag.equals("li")) {
+                tag = element.parent().tagName() + "." + tag;
+            }
+
+            return getItemTypeForTag(tag);
         } else {
             if (position == 0) {
                 return TYPE_HEADER_IMAGE;
@@ -314,6 +327,8 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case "img":         return TYPE_INLINE_IMAGE;
             case "blockquote":  return TYPE_BLOCKQUOTE;
             case "pre":         return TYPE_PRE;
+            case "ul.li":       return TYPE_UNORDERED_LIST_ITEM;
+            case "ol.li":       return TYPE_ORDERED_LIST_ITEM;
             default:            return TYPE_OTHER;
         }
     }
