@@ -15,17 +15,21 @@
   ~ limitations under the License.
   -->
 
-<xyz.klinker.android.article.view.CutLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <xyz.klinker.android.article.view.PEWImageView
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/imageHeight"
-        android:scaleType="centerCrop"
-        android:contentDescription="@null"
-        android:id="@+id/image"
-        android:src="@color/imageBackground" />
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:textSize="15sp"
+        android:textColor="@color/article_secondaryText"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:lineSpacingMultiplier="1.2"
+        android:id="@+id/article_text"/>
 
-</xyz.klinker.android.article.view.CutLayout>
+</FrameLayout>

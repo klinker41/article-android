@@ -31,9 +31,9 @@ public class ImageViewActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image_view);
+        setContentView(R.layout.article_activity_image_view);
 
-        ImageView imageView = (ImageView) findViewById(R.id.image_view);
+        ImageView imageView = (ImageView) findViewById(R.id.article_image_view);
         String url = getIntent().getDataString();
 
         Glide.with(this)

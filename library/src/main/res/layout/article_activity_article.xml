@@ -25,22 +25,22 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@color/transparentSideBackground"
-        android:id="@+id/transparent_side_1"/>
+        android:background="@color/article_transparentSideBackground"
+        android:id="@+id/article_transparent_side_1"/>
 
     <xyz.klinker.android.article.view.ElasticDragDismissFrameLayout
-        android:layout_width="@dimen/articleWidth"
+        android:layout_width="@dimen/article_articleWidth"
         android:layout_height="match_parent"
-        android:id="@+id/drag_dismiss_layout">
+        android:id="@+id/article_drag_dismiss_layout">
 
         <android.support.design.widget.CoordinatorLayout
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/windowBackground">
+            android:background="@color/article_windowBackground">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
+                android:id="@+id/article_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="vertical"
@@ -51,14 +51,14 @@
                 android:layout_width="244dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:id="@+id/loading"
+                android:id="@+id/article_loading"
                 android:indeterminate="true"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
-                android:id="@+id/status_bar"
-                android:background="@color/toolbarBackground"/>
+                android:id="@+id/article_status_bar"
+                android:background="@color/article_toolbarBackground"/>
 
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
@@ -69,10 +69,10 @@
                 app:elevation="0dp">
 
                 <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
+                    android:id="@+id/article_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="@color/toolbarBackground"
+                    android:background="@color/article_toolbarBackground"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:layout_scrollFlags="" />
 
@@ -84,7 +84,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@color/transparentSideBackground"
-        android:id="@+id/transparent_side_2"/>
+        android:background="@color/article_transparentSideBackground"
+        android:id="@+id/article_transparent_side_2"/>
 
 </LinearLayout>

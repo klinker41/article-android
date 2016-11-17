@@ -22,14 +22,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:textSize="14sp"
-        android:textColor="@color/secondaryText"
+        android:fontFamily="sans-serif-condensed"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:textColor="@color/article_primaryText"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
-        android:paddingBottom="8dp"
         android:paddingTop="8dp"
-        android:lineSpacingMultiplier="1.2"
-        android:id="@+id/text"/>
+        android:paddingBottom="8dp"
+        android:id="@+id/article_text"/>
 
 </FrameLayout>

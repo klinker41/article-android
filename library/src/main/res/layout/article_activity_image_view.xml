@@ -15,21 +15,15 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
-    <TextView
+    <uk.co.senab.photoview.PhotoView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-condensed"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:textColor="@color/primaryText"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:id="@+id/text"/>
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:id="@+id/article_image_view"/>
 
-</FrameLayout>
+</LinearLayout>

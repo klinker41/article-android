@@ -91,23 +91,23 @@ public class ArticleActivity extends AppCompatActivity
         this.utils.loadArticle(url, source, this);
 
         this.primaryColor = getIntent().getIntExtra(ArticleIntent.EXTRA_TOOLBAR_COLOR,
-                getResources().getColor(R.color.colorPrimary));
+                getResources().getColor(R.color.article_colorPrimary));
         this.accentColor = getIntent().getIntExtra(ArticleIntent.EXTRA_ACCENT_COLOR,
-                getResources().getColor(R.color.colorAccent));
+                getResources().getColor(R.color.article_colorAccent));
 
-        setContentView(R.layout.activity_article);
+        setContentView(R.layout.article_activity_article);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.article_toolbar);
         setSupportActionBar(toolbar);
 
-        View statusBar = findViewById(R.id.status_bar);
+        View statusBar = findViewById(R.id.article_status_bar);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) findViewById(R.id.article_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addOnScrollListener(
                 new ArticleScrollListener(toolbar, statusBar, primaryColor));
 
-        progressBar = (ProgressBar) findViewById(R.id.loading);
+        progressBar = (ProgressBar) findViewById(R.id.article_loading);
 
         Utils.changeRecyclerOverscrollColors(recyclerView, primaryColor);
         Utils.changeProgressBarColors(progressBar, primaryColor);
@@ -117,11 +117,11 @@ public class ArticleActivity extends AppCompatActivity
             getSupportActionBar().setTitle(null);
         }
 
-        findViewById(R.id.transparent_side_1).setOnClickListener(sideClickListener);
-        findViewById(R.id.transparent_side_2).setOnClickListener(sideClickListener);
+        findViewById(R.id.article_transparent_side_1).setOnClickListener(sideClickListener);
+        findViewById(R.id.article_transparent_side_2).setOnClickListener(sideClickListener);
 
         ElasticDragDismissFrameLayout dragDismissLayout = (ElasticDragDismissFrameLayout)
-                findViewById(R.id.drag_dismiss_layout);
+                findViewById(R.id.article_drag_dismiss_layout);
         dragDismissLayout.addListener(new ElasticDragDismissFrameLayout.ElasticDragDismissCallback() {
             @Override
             public void onDragDismissed() {
@@ -166,7 +166,7 @@ public class ArticleActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_article, menu);
+        getMenuInflater().inflate(R.menu.article_activity_article, menu);
         return true;
     }
 
@@ -174,14 +174,14 @@ public class ArticleActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
-        } else if (item.getItemId() == R.id.share) {
+        } else if (item.getItemId() == R.id.article_share) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT, url);
             sendIntent.setType("text/plain");
             startActivity(Intent.createChooser(sendIntent,
-                    getResources().getText(R.string.share_with)));
-        } else if (item.getItemId() == R.id.open_in_chrome) {
+                    getResources().getText(R.string.article_share_with)));
+        } else if (item.getItemId() == R.id.article_open_in_chrome) {
             openChromeCustomTab();
         }
 

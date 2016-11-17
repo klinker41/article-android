@@ -19,17 +19,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
+    <xyz.klinker.android.article.view.PEWImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:textSize="15sp"
-        android:textColor="@color/secondaryText"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp"
-        android:lineSpacingMultiplier="1.2"
-        android:id="@+id/text"/>
+        android:layout_height="@dimen/article_imageHeight"
+        android:scaleType="centerCrop"
+        android:contentDescription="@null"
+        android:id="@+id/article_image"
+        android:src="@color/article_imageBackground" />
 
 </FrameLayout>

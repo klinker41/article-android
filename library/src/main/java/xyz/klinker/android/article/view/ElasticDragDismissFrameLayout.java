@@ -93,13 +93,13 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
 
     private void init() {
         dragDismissDistance = getResources()
-                .getDimensionPixelSize(R.dimen.drag_down_dismiss_distance);
+                .getDimensionPixelSize(R.dimen.article_drag_down_dismiss_distance);
 
         shouldScale = dragDismissScale != 1f;
 
         draggingBackgroundPaint = new Paint();
         draggingBackgroundPaint.setColor(getContext().getResources()
-                .getColor(R.color.transparentSideBackground));
+                .getColor(R.color.article_transparentSideBackground));
         draggingBackgroundPaint.setStyle(Paint.Style.FILL);
     }
 

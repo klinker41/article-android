@@ -94,7 +94,7 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private void initSizeRequest(Context context) {
         Resources resources = context.getResources();
-        imageWidth = resources.getDimensionPixelSize(R.dimen.articleWidth);
+        imageWidth = resources.getDimensionPixelSize(R.dimen.article_articleWidth);
         if (imageWidth <= 0) {
             Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
             Point size = new Point();
@@ -102,8 +102,8 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             imageWidth = size.x;
         }
 
-        imageHeight = resources.getDimensionPixelSize(R.dimen.imageParallax) +
-                resources.getDimensionPixelSize(R.dimen.imageHeight);
+        imageHeight = resources.getDimensionPixelSize(R.dimen.article_imageParallax) +
+                resources.getDimensionPixelSize(R.dimen.article_imageHeight);
 
         sizeRequest = Glide
                 .with(context)
@@ -146,19 +146,19 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private int getItemResourceFromType(int viewType) {
         switch (viewType) {
-            case TYPE_HEADER_IMAGE:     return R.layout.item_header;
-            case TYPE_TITLE:            return R.layout.item_title;
-            case TYPE_PARAGRAPH:        return R.layout.item_paragraph;
-            case TYPE_INLINE_IMAGE:     return R.layout.item_image;
-            case TYPE_HEADER_1:         return R.layout.item_header_1;
-            case TYPE_HEADER_2:         return R.layout.item_header_2;
-            case TYPE_HEADER_3:         return R.layout.item_header_3;
-            case TYPE_HEADER_4:         return R.layout.item_header_4;
-            case TYPE_HEADER_5:         return R.layout.item_header_5;
-            case TYPE_HEADER_6:         return R.layout.item_header_6;
-            case TYPE_BLOCKQUOTE:       return R.layout.item_blockquote;
-            case TYPE_PRE:              return R.layout.item_pre;
-            default:                    return R.layout.item_other;
+            case TYPE_HEADER_IMAGE:     return R.layout.article_item_header;
+            case TYPE_TITLE:            return R.layout.article_item_title;
+            case TYPE_PARAGRAPH:        return R.layout.article_item_paragraph;
+            case TYPE_INLINE_IMAGE:     return R.layout.article_item_image;
+            case TYPE_HEADER_1:         return R.layout.article_item_header_1;
+            case TYPE_HEADER_2:         return R.layout.article_item_header_2;
+            case TYPE_HEADER_3:         return R.layout.article_item_header_3;
+            case TYPE_HEADER_4:         return R.layout.article_item_header_4;
+            case TYPE_HEADER_5:         return R.layout.article_item_header_5;
+            case TYPE_HEADER_6:         return R.layout.article_item_header_6;
+            case TYPE_BLOCKQUOTE:       return R.layout.article_item_blockquote;
+            case TYPE_PRE:              return R.layout.article_item_pre;
+            default:                    return R.layout.article_item_other;
         }
     }
 
@@ -177,7 +177,7 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if (position - topItemCount - 1 >= 0 &&
                         !elements.get(position - topItemCount - 1).tagName().equals("img")) {
                     params.topMargin = image.getContext().getResources()
-                            .getDimensionPixelSize(R.dimen.extraImagePadding);
+                            .getDimensionPixelSize(R.dimen.article_extraImagePadding);
                 } else {
                     params.topMargin = 0;
                 }
@@ -185,7 +185,7 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if (position != getItemCount() - 1 &&
                         !elements.get(position - topItemCount + 1).tagName().equals("img")) {
                     params.bottomMargin = image.getContext().getResources()
-                            .getDimensionPixelSize(R.dimen.extraImagePadding);
+                            .getDimensionPixelSize(R.dimen.article_extraImagePadding);
                 } else {
                     params.bottomMargin = 0;
                 }
@@ -209,7 +209,7 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 Glide.with(image.getContext())
                         .load(src)
                         .override(imageWidth, imageHeight)
-                        .placeholder(R.color.imageBackground)
+                        .placeholder(R.color.article_imageBackground)
                         .into(image);
 
             } else if (holder instanceof TextViewHolder) {
@@ -221,7 +221,7 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                 if (position == getItemCount() - 1) {
                     params.bottomMargin = textView.getContext().getResources()
-                            .getDimensionPixelSize(R.dimen.extraBottomPadding);
+                            .getDimensionPixelSize(R.dimen.article_extraBottomPadding);
                 } else {
                     params.bottomMargin = 0;
                 }
@@ -240,7 +240,7 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 Glide.with(image.getContext())
                         .load(article.image)
                         .override(imageWidth, imageHeight)
-                        .placeholder(R.color.imageBackground)
+                        .placeholder(R.color.article_imageBackground)
                         .into(image);
             } else if (holder instanceof TitleTextViewHolder) {
                 ((TitleTextViewHolder) holder).text.setText(article.title);
@@ -326,7 +326,7 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         private TextViewHolder(View itemView) {
             super(itemView);
-            this.text = (TextView) itemView.findViewById(R.id.text);
+            this.text = (TextView) itemView.findViewById(R.id.article_text);
         }
     }
 
@@ -343,7 +343,7 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         private ImageViewHolder(View itemView) {
             super(itemView);
-            this.image = (ImageView) itemView.findViewById(R.id.image);
+            this.image = (ImageView) itemView.findViewById(R.id.article_image);
 
             this.image.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -368,8 +368,8 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         private TitleTextViewHolder(View itemView) {
             super(itemView);
-            author = (TextView) itemView.findViewById(R.id.author);
-            source = (TextView) itemView.findViewById(R.id.source);
+            author = (TextView) itemView.findViewById(R.id.article_author);
+            source = (TextView) itemView.findViewById(R.id.article_source);
         }
     }
 

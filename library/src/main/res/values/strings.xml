@@ -16,7 +16,7 @@
   -->
 
 <resources>
-    <string name="open_in_chrome">Open in Chrome</string>
-    <string name="share">Share…</string>
-    <string name="share_with">Share with…</string>
+    <string name="article_open_in_chrome">Open in Chrome</string>
+    <string name="article_share">Share…</string>
+    <string name="article_share_with">Share with…</string>
 </resources>

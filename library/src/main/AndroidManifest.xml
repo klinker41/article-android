@@ -23,7 +23,7 @@
         <activity android:name=".ArticleActivity"
             android:theme="@style/ArticleTheme"/>
         <activity android:name=".ImageViewActivity"
-            android:theme="@style/ImageViewTheme"/>
+            android:theme="@style/ArticleImageViewTheme"/>
     </application>
 
 </manifest>

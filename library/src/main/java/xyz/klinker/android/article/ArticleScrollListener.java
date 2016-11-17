@@ -49,7 +49,7 @@ class ArticleScrollListener extends RecyclerView.OnScrollListener {
         this.statusBar = statusBar;
         this.primaryColor = primaryColor;
         this.transparentColor = toolbar.getContext().getResources()
-                .getColor(R.color.toolbarBackground);
+                .getColor(R.color.article_toolbarBackground);
     }
 
     @Override
@@ -70,7 +70,7 @@ class ArticleScrollListener extends RecyclerView.OnScrollListener {
         super.onScrolled(recyclerView, dx, dy);
 
         int minDistance = toolbar.getContext().getResources()
-                .getDimensionPixelSize(R.dimen.minToolbarScroll);
+                .getDimensionPixelSize(R.dimen.article_minToolbarScroll);
         if (Math.abs(dy) < minDistance) {
             return;
         }

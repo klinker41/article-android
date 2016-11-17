@@ -16,29 +16,20 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/codeblockBackground"
-    android:layout_marginLeft="12dp"
-    android:layout_marginRight="12dp"
-    tools:ignore="Overdraw">
+    android:layout_height="wrap_content">
 
-    <HorizontalScrollView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="UselessParent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:textSize="14sp"
-            android:textColor="@color/secondaryText"
-            android:padding="24dp"
-            android:scrollHorizontally="true"
-            android:id="@+id/text"/>
-
-    </HorizontalScrollView>
+        android:fontFamily="sans-serif"
+        android:textSize="14sp"
+        android:textColor="@color/article_secondaryText"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:lineSpacingMultiplier="1.2"
+        android:id="@+id/article_text"/>
 
 </FrameLayout>

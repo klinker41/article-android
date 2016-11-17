@@ -30,24 +30,24 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:textSize="14sp"
-        android:textColor="@color/primaryText"
-        android:id="@+id/source"/>
+        android:textColor="@color/article_primaryText"
+        android:id="@+id/article_source"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:textSize="24sp"
-        android:textColor="@color/primaryText"
-        android:id="@+id/text"/>
+        android:textColor="@color/article_primaryText"
+        android:id="@+id/article_text"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:textSize="12sp"
-        android:textColor="@color/primaryText"
-        android:id="@+id/author"
+        android:textColor="@color/article_primaryText"
+        android:id="@+id/article_author"
         android:visibility="gone"/>
 
 </LinearLayout>

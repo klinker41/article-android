@@ -15,15 +15,14 @@
   ~ limitations under the License.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <uk.co.senab.photoview.PhotoView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="@null"
-        android:id="@+id/image_view"/>
-
-</LinearLayout>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/article_open_in_chrome"
+        android:title="@string/article_open_in_chrome"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/article_share"
+        android:title="@string/article_share"
+        app:showAsAction="never" />
+</menu>

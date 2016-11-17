@@ -25,12 +25,12 @@
         android:fontFamily="sans-serif-condensed"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/article_colorAccent"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
         android:paddingBottom="16dp"
         android:paddingTop="16dp"
         android:gravity="center"
-        android:id="@+id/text"/>
+        android:id="@+id/article_text"/>
 
 </FrameLayout>

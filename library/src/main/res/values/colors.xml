@@ -16,15 +16,15 @@
   -->
 
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="toolbarBackground">#33000000</color>
-    <color name="transparentSideBackground">#AA000000</color>
+    <color name="article_colorPrimary">#3F51B5</color>
+    <color name="article_colorPrimaryDark">#303F9F</color>
+    <color name="article_colorAccent">#FF4081</color>
+    <color name="article_toolbarBackground">#33000000</color>
+    <color name="article_transparentSideBackground">#AA000000</color>
 
-    <color name="windowBackground">@android:color/white</color>
-    <color name="imageBackground">#E5E5E5</color>
-    <color name="primaryText">#E2000000</color>
-    <color name="secondaryText">#8C000000</color>
-    <color name="codeblockBackground">#EEEEEE</color>
+    <color name="article_windowBackground">@android:color/white</color>
+    <color name="article_imageBackground">#E5E5E5</color>
+    <color name="article_primaryText">#E2000000</color>
+    <color name="article_secondaryText">#8C000000</color>
+    <color name="article_codeblockBackground">#EEEEEE</color>
 </resources>
