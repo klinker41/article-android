@@ -17,16 +17,23 @@
 package xyz.klinker.android.article;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Point;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
+
+import com.bumptech.glide.Glide;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import xyz.klinker.android.article.data.Article;
 import xyz.klinker.android.article.api.ArticleApi;
+import xyz.klinker.android.article.data.Article;
 import xyz.klinker.android.article.data.DataSource;
 
 /**
@@ -98,21 +105,81 @@ public class ArticleUtils {
      * @param url the url to try and preload.
      * @param callback the callback to be invoked when preloading has finished.
      */
-    public void preloadArticle(Context context, final String url,
+    public void preloadArticle(final Context context, final String url,
                                final ArticleLoadedListener callback) {
         DataSource source = DataSource.getInstance(context);
         loadArticle(url, source, new ArticleLoadedListener() {
             @Override
-            public void onArticleLoaded(Article article) {
+            public void onArticleLoaded(final Article article) {
                 if (callback != null) {
                     callback.onArticleLoaded(article);
                 }
 
                 if (article.isArticle) {
-                    // TODO load the images with glide
+                    parseArticleContent(article, new ArticleParsedListener() {
+                        @Override
+                        public void onArticleParsed(final Elements elements) {
+                            cacheImages(context, article, elements);
+                        }
+                    });
                 }
             }
         });
+    }
+
+    private void cacheImages(final Context context, final Article article,
+                             final Elements elements) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int[] dimens = getCacheWidthAndHeight(context);
+
+                if (article.image != null) {
+                    try {
+                        Glide.with(context)
+                                .load(article.image)
+                                .downloadOnly(dimens[0], dimens[1])
+                                .get();
+                        Log.v("ArticleUtils", "cached header image");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                for (Element element : elements) {
+                    if (element.tagName().equals("img")) {
+                        String src = element.attr("src");
+
+                        try {
+                            Glide.with(context)
+                                    .load(src)
+                                    .downloadOnly(dimens[0], dimens[1])
+                                    .get();
+                            Log.v("ArticleUtils", "cached image");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
+    }
+
+    private int[] getCacheWidthAndHeight(Context context) {
+        Resources resources = context.getResources();
+        int imageWidth = resources.getDimensionPixelSize(R.dimen.article_articleWidth);
+        if (imageWidth <= 0) {
+            WindowManager window = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+            Display display = window.getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            imageWidth = size.x;
+        }
+
+        int imageHeight = resources.getDimensionPixelSize(R.dimen.article_imageParallax) +
+                resources.getDimensionPixelSize(R.dimen.article_imageHeight);
+
+        return new int[] {imageWidth, imageHeight};
     }
 
     /**

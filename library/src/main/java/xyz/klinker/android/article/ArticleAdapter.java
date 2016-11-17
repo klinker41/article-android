@@ -210,6 +210,7 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         .load(src)
                         .override(imageWidth, imageHeight)
                         .placeholder(R.color.article_imageBackground)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(image);
 
             } else if (holder instanceof TextViewHolder) {
@@ -241,6 +242,7 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         .load(article.image)
                         .override(imageWidth, imageHeight)
                         .placeholder(R.color.article_imageBackground)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(image);
             } else if (holder instanceof TitleTextViewHolder) {
                 ((TitleTextViewHolder) holder).text.setText(article.title);
