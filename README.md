@@ -24,7 +24,7 @@ To include it in your project, add this to your module's `build.gradle` file:
 ```groovy
 dependencies {
 	...
-	compile 'com.klinkerapps:article_viewer:0.7.0-SNAPSHOT'
+	compile 'com.klinkerapps:article_viewer:0.8.0-SNAPSHOT'
 }
 ```
 
