@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 /**
  * Activity for viewing full size images from an article. Images are zoomable. You can pass in the
@@ -38,6 +39,7 @@ public class ImageViewActivity extends AppCompatActivity {
 
         Glide.with(this)
                 .load(url)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView);
     }
 
