@@ -35,7 +35,7 @@ public class ImageViewActivity extends AppCompatActivity {
         setContentView(R.layout.article_activity_image_view);
 
         ImageView imageView = (ImageView) findViewById(R.id.article_image_view);
-        String url = getIntent().getDataString();
+        String url = ArticleUtils.decodeImageUrl(getIntent().getDataString());
 
         Glide.with(this)
                 .load(url)

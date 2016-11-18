@@ -174,7 +174,8 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         int topItemCount = getTopItemCount();
         if (position >= topItemCount) {
             if (holder instanceof ImageViewHolder) {
-                String src = elements.get(position - topItemCount).attr("src");
+                String src = ArticleUtils
+                        .decodeImageUrl(elements.get(position - topItemCount).attr("src"));
                 final ImageView image = ((ImageViewHolder) holder).image;
                 image.setVisibility(View.VISIBLE);
 
@@ -244,9 +245,10 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     initSizeRequest(image.getContext());
                 }
 
-                ((HeaderImageViewHolder) holder).url = article.image;
+                String src = ArticleUtils.decodeImageUrl(article.image);
+                ((HeaderImageViewHolder) holder).url = src;
                 Glide.with(image.getContext())
-                        .load(article.image)
+                        .load(src)
                         .override(imageWidth, imageHeight)
                         .placeholder(R.color.article_imageBackground)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)

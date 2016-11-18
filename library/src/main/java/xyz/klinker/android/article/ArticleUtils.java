@@ -19,6 +19,7 @@ package xyz.klinker.android.article;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -257,6 +258,10 @@ public class ArticleUtils {
 
     public static String removeUrlParameters(String url) {
         return url.split("\\?")[0];
+    }
+
+    public static String decodeImageUrl(String url) {
+        return Uri.decode(url.split(",")[0]).split(" ")[0];
     }
 
 }
