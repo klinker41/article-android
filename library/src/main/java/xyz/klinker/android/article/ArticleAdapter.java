@@ -24,6 +24,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -212,6 +213,8 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                 }
                             }
                         });
+
+                Log.v("ArticleAdapter", "loading url at " + src);
 
                 ((ImageViewHolder) holder).url = src;
                 Glide.with(image.getContext())

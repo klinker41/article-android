@@ -52,7 +52,7 @@ public class ArticleActivity extends AppCompatActivity
     private static final String TAG = "ArticleActivity";
     private static final boolean DEBUG = false;
 
-    private static final int MIN_NUM_ELEMENTS = 3;
+    private static final int MIN_NUM_ELEMENTS = 1;
 
     private String url;
     private ArticleUtils utils;
