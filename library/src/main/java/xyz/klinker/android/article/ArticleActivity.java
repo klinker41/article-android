@@ -63,10 +63,6 @@ public class ArticleActivity extends AppCompatActivity
     private int accentColor;
     private DataSource source;
 
-    static {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
