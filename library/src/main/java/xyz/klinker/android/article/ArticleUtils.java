@@ -64,35 +64,7 @@ public class ArticleUtils {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                source.open();
-                Article loadedArticle = source.getArticle(url);
-
-                final Article article;
-                if (loadedArticle != null) {
-                    article = loadedArticle;
-                } else {
-                    article = api.article().parse(url);
-
-                    if (article != null) {
-                        // the server will resolve the url when it is shortened or something like
-                        // that so we want to instead save the original so that it is findable by
-                        // that url again later.
-                        article.url = url;
-
-                        source.insertArticle(article);
-                    }
-                }
-
-                source.close();
-
-                if (callback != null) {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            callback.onArticleLoaded(article);
-                        }
-                    });
-                }
+                loadArticleSync(url, source, callback, handler);
             }
         }).start();
     }
@@ -126,6 +98,76 @@ public class ArticleUtils {
                 }
             }
         });
+    }
+
+    /**
+     * Fetch an article from the server so that it is cached on the device and immediately
+     * available when a user tries to view it without making any network calls. This includes
+     * downloading the article body along with precaching any images with Glide.
+     *
+     * This api will return the article result without a callback. It will run syncronously on
+     * whatever thread it is called from.
+     *
+     * @param context the current application context.
+     * @param url the url to try and preload.
+     */
+    public Article fetchArticle(final Context context, final String url) {
+        DataSource source = DataSource.getInstance(context);
+        final Article article = loadArticleSync(url, source, null, null);
+
+        if (article.isArticle) {
+            parseArticleContent(article, new ArticleParsedListener() {
+                @Override
+                public void onArticleParsed(final Elements elements) {
+                    cacheImages(context, article, elements);
+                }
+            });
+        }
+
+        return article;
+    }
+
+    /**
+     * Loads an article from the server.
+     *
+     * @param url the url to load the article from.
+     * @param source the data source.
+     * @param callback the callback to receive after loading completes.
+     * @param handler UI thread handler to use when performing the callback.
+     */
+    private Article loadArticleSync(final String url, final DataSource source,
+                                    final ArticleLoadedListener callback, final Handler handler) {
+        source.open();
+        Article loadedArticle = source.getArticle(url);
+
+        final Article article;
+        if (loadedArticle != null) {
+            article = loadedArticle;
+        } else {
+            article = api.article().parse(url);
+
+            if (article != null) {
+                // the server will resolve the url when it is shortened or something like
+                // that so we want to instead save the original so that it is findable by
+                // that url again later.
+                article.url = url;
+
+                source.insertArticle(article);
+            }
+        }
+
+        source.close();
+
+        if (callback != null) {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    callback.onArticleLoaded(article);
+                }
+            });
+        }
+
+        return article;
     }
 
     private void cacheImages(final Context context, final Article article,

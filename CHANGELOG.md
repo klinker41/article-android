@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.9.0
+- API to fetch articles on whatever thread it is called from, instead of doing it asynchronously
+
 ### v0.8.0
 - API to preload articles and images
 - Handle HTML lists
