@@ -158,7 +158,7 @@ public class ArticleUtils {
 
         source.close();
 
-        if (callback != null) {
+        if (callback != null && handler != null) {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
