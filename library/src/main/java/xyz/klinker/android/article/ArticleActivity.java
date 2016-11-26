@@ -110,6 +110,7 @@ public class ArticleActivity extends AppCompatActivity
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
             getSupportActionBar().setTitle(null);
         }
 
