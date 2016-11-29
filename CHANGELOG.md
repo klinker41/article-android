@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.9.1
+- Bug fixes for image loading
+
 ### v0.9.0
 - API to fetch articles on whatever thread it is called from, instead of doing it asynchronously
 
