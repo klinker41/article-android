@@ -14,7 +14,7 @@ In your project's root `build.gradle` (not your module's `build.gradle`):
 allprojects {
     repositories {
         ...
-	jcenter()
+        jcenter()
         maven { url "https://jitpack.io" }
     }
 }
@@ -111,7 +111,7 @@ Benefits:
 * Keeps your users inside and enjoying your app instead of sending them elseware to view an article
 
 Downsides:
-* When not an article, we still take time to try and process it on the server and return something to the device, so that can be some wasted time that could have been spent going immediately to the Custom Tab insteead. After we get a good amount of cached data however, this should be negligable as all of the responses will be immediately from the server and won't require additional processing. You can also eliminate this by preloading articles.
+* When not an article, we still take time to try and process it on the server and return something to the device, so that can be some wasted time that could have been spent going immediately to the Custom Tab instead. After we get a good amount of cached data however, this should be negligable as all of the responses will be immediately from the server and won't require additional processing. You can also eliminate this by preloading articles.
 * It's difficult to parse every article out there since every site formats it's data differently. If this is the case, then we'll fall back to opening the article in a Custom Tab immediately, however sometimes it's difficult to recognize on the server whether or not something actually is an article. We're trying to apply machine learning to get better at this.
 * You're sending your users to our backend instead of your own. I don't collect any personal data from anything sent to the server, just cache the requested article so there aren't really privacy concerns here that I can see, just something to be aware of.
 
