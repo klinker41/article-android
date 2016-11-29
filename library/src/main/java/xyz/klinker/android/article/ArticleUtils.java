@@ -115,7 +115,7 @@ public class ArticleUtils {
         DataSource source = DataSource.getInstance(context);
         final Article article = loadArticleSync(url, source, null, null);
 
-        if (article.isArticle) {
+        if (article != null && article.isArticle) {
             parseArticleContent(article, new ArticleParsedListener() {
                 @Override
                 public void onArticleParsed(final Elements elements) {
