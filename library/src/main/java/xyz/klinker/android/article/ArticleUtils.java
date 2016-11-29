@@ -294,7 +294,7 @@ public class ArticleUtils {
         return elements;
     }
 
-    private boolean isImageUrl(String src) {
+    private static boolean isImageUrl(String src) {
         return src.contains("jpg") || src.contains("png") || src.contains("gif");
     }
 
@@ -303,7 +303,8 @@ public class ArticleUtils {
     }
 
     public static String decodeImageUrl(String url) {
-        return Uri.decode(url.split(",")[0]).split(" ")[0];
+        String parsedUrl = Uri.decode(url.split(",")[0]).split(" ")[0];
+        return isImageUrl(parsedUrl) ? parsedUrl : url;
     }
 
 }

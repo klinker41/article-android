@@ -82,6 +82,7 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_ORDERED_LIST_ITEM = 14;
     private static final int TYPE_OTHER = 15;
     private static final int MIN_IMAGE_WIDTH = 200; // px
+    private static final int MIN_IMAGE_HEIGHT = 100; // px
 
     private Article article;
     private Elements elements;
@@ -215,7 +216,8 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             @Override
                             public void onResourceReady(BitmapFactory.Options resource,
                                                         GlideAnimation<? super BitmapFactory.Options> glideAnimation) {
-                                if (resource.outWidth < MIN_IMAGE_WIDTH) {
+                                if (resource.outWidth < MIN_IMAGE_WIDTH ||
+                                        resource.outHeight < MIN_IMAGE_HEIGHT) {
                                     image.setVisibility(View.GONE);
                                 }
                             }
