@@ -14,6 +14,7 @@ In your project's root `build.gradle` (not your module's `build.gradle`):
 allprojects {
     repositories {
         ...
+	jcenter()
         maven { url "https://jitpack.io" }
     }
 }
