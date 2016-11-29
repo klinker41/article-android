@@ -79,9 +79,24 @@ utils.preloadArticle(context, url, callback);
 
 The callback is optional will be invoked when the article has finished loading and is cached. If you call this multiple times, a network call will only be made the first time. To open an article after it has been preloaded, simply follow the same steps as above with an `ArticleIntent.Builder`.
 
+This API is safe to use on the UI thread. It performs its work in the background and provides a callback for when that work is done.
+
+## Fetching an Article
+
+As opposed to `preloading` an article, you can also `fetch` an article.
+
+The difference between these two methods is that `fetch` is syncronous. You will have to manage the threading yourself, as this method makes a network call directly and must be run on a background thread. Instead of providing a callback for when the article loading is completed, it will return the `Article` object directly.
+
+```java
+ArticleUtils utils = new ArticleUtils(myApiToken);
+Article article = utils.fetchArticle(context, url);
+```
+
+As with `preload`, if you call this multiple times, a network call will only be made the first time. To open an article after it has been `fetched`, simply follow the same steps as above with an `ArticleIntent.Builder`.
+
 ## How It Works
 
-This library leverages a node.js backend that I have deployed on AWS that does all of the heavy lifting for processing an article. On the backend, we go and grab the article and strip out anything in it that we don't want as soon as we get a URL from the app. We'll then return the results to the library and cache them in a MongoDB instance so that next time we get a request for the same article, it is significantly faster to load.
+This library leverages a`node.js` backend that I have deployed on AWS that does all of the heavy lifting for processing an article. On the backend, we go and grab the article and strip out anything in it that we don't want as soon as we get a URL from the app. We'll then return the results to the library and cache them in a MongoDB instance so that next time we get a request for the same article, it is significantly faster to load.
 
 ## Why Should I Use This?
 
