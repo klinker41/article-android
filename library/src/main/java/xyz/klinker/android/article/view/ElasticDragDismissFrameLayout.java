@@ -84,13 +84,6 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
         init();
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ElasticDragDismissFrameLayout(Context context, AttributeSet attrs,
-                                         int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-
     private void init() {
         dragDismissDistance = getResources()
                 .getDimensionPixelSize(R.dimen.article_drag_down_dismiss_distance);
