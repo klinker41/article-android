@@ -20,11 +20,35 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 import xyz.klinker.android.article.data.Article;
 
+/**
+ * Retrofit definition for the article service. you can call this will an added parameter for
+ * whether or not you want to use the cache to provide the article. By default, the cache will
+ * be used as it provides for significantly improved load times if an article has already been
+ * loaded.
+ *
+ * Your API token will automatically be appended to the request as well, assuming one was provided
+ * to the {@link ArticleApi}.
+ */
 public interface ArticleService {
 
+    /**
+     * Gets an article from the provided url and caches it.
+     *
+     * @param url the url to get an article from.
+     * @return the parsed article.
+     */
     @GET("parse")
     Article parse(@Query("url") String url);
 
+    /**
+     * Gets an article from the provided url and provides the option to ignore the cache if
+     * desired.
+     *
+     * @param url the url to get an article from.
+     * @param noCache if true, do not inspect the cache for a previously gotten article with the
+     *                same url.
+     * @return the parsed article.
+     */
     @GET("parse")
     Article parse(@Query("url") String url,
                   @Query("no_cache") boolean noCache);

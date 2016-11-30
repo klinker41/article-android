@@ -16,10 +16,30 @@
 
 package xyz.klinker.android.article.data.model;
 
+/**
+ * A table definition to be inserted into a database.
+ */
 public interface DatabaseTable {
 
+    /**
+     * Provides the create statement, defining a columns for the table.
+     *
+     * @return a SQLite formatted create statement.
+     */
     String getCreateStatement();
+
+    /**
+     * Gets the table name.
+     *
+     * @return the SQLite table name.
+     */
     String getTableName();
+
+    /**
+     * Gets statements that can be run to index the table on a certain column.
+     *
+     * @return an array of SQLite statement used to index a column for faster querying.
+     */
     String[] getIndexStatements();
 
 }

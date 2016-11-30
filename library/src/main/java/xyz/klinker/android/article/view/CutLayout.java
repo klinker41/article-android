@@ -30,7 +30,7 @@ import android.util.TypedValue;
 import android.widget.FrameLayout;
 
 /**
- * https://gist.github.com/ZieIony/8480b2d335c1aeb51167
+ * Adapted from: https://gist.github.com/ZieIony/8480b2d335c1aeb51167
  */
 public class CutLayout extends FrameLayout {
 

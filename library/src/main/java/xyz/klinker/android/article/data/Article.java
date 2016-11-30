@@ -40,10 +40,18 @@ public class Article implements DatabaseModel {
     public int duration;
     public boolean isArticle;
 
+    /**
+     * Creates a blank article that can be filled manually.
+     */
     public Article() {
 
     }
 
+    /**
+     * Creates an article that is filled automatically from a provided cursor.
+     *
+     * @param cursor the cursor to fill the article from.
+     */
     public Article(Cursor cursor) {
         fillFromCursor(cursor);
     }

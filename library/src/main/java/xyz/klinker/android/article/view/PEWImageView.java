@@ -20,9 +20,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 /**
- * Created by luke on 11/6/16.
+ * A parallax image view that reverses the Y direction animation by default.
  */
-
 public class PEWImageView extends com.fmsirvent.ParallaxEverywhere.PEWImageView {
     public PEWImageView(Context context) {
         super(context);

@@ -18,6 +18,15 @@ package xyz.klinker.android.article.data.model;
 
 import android.database.Cursor;
 
+/**
+ * A database model that can be filled from a cursor.
+ */
 public interface DatabaseModel {
+
+    /**
+     * Fills the model from the provided cursor.
+     *
+     * @param cursor the cursor to fill with.
+     */
     void fillFromCursor(Cursor cursor);
 }

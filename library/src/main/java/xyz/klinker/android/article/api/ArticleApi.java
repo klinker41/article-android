@@ -37,6 +37,17 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Helper for connecting to the remote APIs and fetching articles from the server. This class allows
+ * for both local development and remote development against the deployed server at
+ * https://article.klinkerapps.com/.
+ *
+ * To invoke, simply create a new object with your api token and then then use the fluent api
+ * method call article:
+ *
+ * ArticleApi api = new ArticleApi(myApiToken);
+ * Article article = api.article().parse(myUrl);
+ */
 public class ArticleApi {
 
     private static final String API_DEBUG_URL = "http://192.168.86.146:3000/";
@@ -123,6 +134,10 @@ public class ArticleApi {
      * requests.
      */
     private ArticleApi(String baseUrl, final String apiToken) {
+        if (apiToken == null) {
+            throw new RuntimeException("Api token cannot be null.");
+        }
+        
         if (httpClient.interceptors().size() == 0) {
             httpClient.addInterceptor(new Interceptor() {
                 @Override

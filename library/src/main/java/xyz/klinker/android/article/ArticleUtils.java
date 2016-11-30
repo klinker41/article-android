@@ -298,11 +298,17 @@ public class ArticleUtils {
         return src.contains("jpg") || src.contains("png") || src.contains("gif");
     }
 
+    /**
+     * Strips a string of all of it's parameters contained in the URL.
+     *
+     * @param url the url string.
+     * @return the url without any parameters.
+     */
     public static String removeUrlParameters(String url) {
         return url.split("\\?")[0];
     }
 
-    public static String decodeImageUrl(String url) {
+    static String decodeImageUrl(String url) {
         String parsedUrl = Uri.decode(url.split(",")[0]).split(" ")[0];
         return isImageUrl(parsedUrl) ? parsedUrl : url;
     }
