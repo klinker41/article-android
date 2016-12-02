@@ -25,7 +25,7 @@ To include it in your project, add this to your module's `build.gradle` file:
 ```groovy
 dependencies {
 	...
-	compile 'com.klinkerapps:article_viewer:0.9.2'
+	compile 'com.klinkerapps:article_viewer:0.10.0'
 }
 ```
 
@@ -56,6 +56,7 @@ ArticleIntent intent = new ArticleIntent.Builder(this, apiKey)
         .setToolbarColor(primaryColor)
         <b>.setAccentColor(accentColor)</b>
         <b>.setTheme(ArticleIntent.THEME_DARK)</b>
+        <b>.setTextSize(15)</b>     // 15 SP (default)
         .build();
 
 intent.launchUrl(this, Uri.parse(url));
