@@ -89,12 +89,14 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private GenericRequestBuilder<String, InputStream, BitmapFactory.Options, BitmapFactory.Options>
             sizeRequest;
     private int accentColor;
+    private int textSize;
     private int imageWidth;
     private int imageHeight;
 
-    ArticleAdapter(Article article, int accentColor) {
+    ArticleAdapter(Article article, int accentColor, int textSize) {
         this.article = article;
         this.accentColor = accentColor;
+        this.textSize = textSize;
     }
 
     private void initSizeRequest(Context context) {
@@ -248,7 +250,6 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
 
                 textView.setText(text);
-                textView.setTextIsSelectable(true);
             }
         } else {
             if (holder instanceof HeaderImageViewHolder) {
@@ -359,6 +360,8 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private TextViewHolder(View itemView) {
             super(itemView);
             this.text = (TextView) itemView.findViewById(R.id.article_text);
+            this.text.setTextSize(textSize);
+            this.text.setTextIsSelectable(true);
         }
     }
 
@@ -366,6 +369,7 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private BlockQuoteViewHolder(View itemView, int accentColor) {
             super(itemView);
             text.setTextColor(accentColor);
+            text.setTextSize(textSize + 5);
         }
     }
 
@@ -402,6 +406,10 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(itemView);
             author = (TextView) itemView.findViewById(R.id.article_author);
             source = (TextView) itemView.findViewById(R.id.article_source);
+
+            author.setTextSize(textSize - 3);
+            source.setTextSize(textSize - 1);
+            text.setTextSize(textSize + 9);
         }
     }
 

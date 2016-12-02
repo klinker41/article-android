@@ -79,6 +79,12 @@ public final class ArticleIntent {
             "xyz.klinker.android.article.extra.EXTRA_ACCENT_COLOR";
 
     /**
+     * Extra that changes the text size for the article. The default is 15 sp.
+     */
+    public static final String EXTRA_TEXT_SIZE =
+            "xyz.klinker.android.article.extra.EXTRA_TEXT_SIZE";
+
+    /**
      * String extra that is used for the API token when making requests to the server
      */
     public static final String EXTRA_API_TOKEN =
@@ -323,11 +329,16 @@ public final class ArticleIntent {
 
         /**
          * Sets the accent color.
-         * 
+         *
          * @param color {@link Color}
          */
         public ArticleIntent.Builder setAccentColor(@ColorInt int color) {
             mIntent.putExtra(EXTRA_ACCENT_COLOR, color);
+            return this;
+        }
+
+        public ArticleIntent.Builder setTextSize(int spSize) {
+            mIntent.putExtra(EXTRA_TEXT_SIZE, spSize);
             return this;
         }
 

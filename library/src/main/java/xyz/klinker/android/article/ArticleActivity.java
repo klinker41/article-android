@@ -61,6 +61,7 @@ public class ArticleActivity extends AppCompatActivity
     private ProgressBar progressBar;
     private int primaryColor;
     private int accentColor;
+    private int textSize;
     private DataSource source;
 
     @Override
@@ -90,6 +91,7 @@ public class ArticleActivity extends AppCompatActivity
                 getResources().getColor(R.color.article_colorPrimary));
         this.accentColor = getIntent().getIntExtra(ArticleIntent.EXTRA_ACCENT_COLOR,
                 getResources().getColor(R.color.article_colorAccent));
+        this.textSize = getIntent().getIntExtra(ArticleIntent.EXTRA_TEXT_SIZE, 15);
 
         setContentView(R.layout.article_activity_article);
 
@@ -144,7 +146,7 @@ public class ArticleActivity extends AppCompatActivity
                 Log.v(TAG, "\t" + article.description);
             }
 
-            adapter = new ArticleAdapter(article, accentColor);
+            adapter = new ArticleAdapter(article, accentColor, textSize);
             recyclerView.setAdapter(adapter);
 
             utils.parseArticleContent(article, this);
