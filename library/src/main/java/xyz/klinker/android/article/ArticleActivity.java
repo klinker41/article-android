@@ -132,7 +132,7 @@ public class ArticleActivity extends AppCompatActivity
 
     @Override
     public void onArticleLoaded(Article article) {
-        if (article == null || !article.isArticle) {
+        if (article == null || !article.isArticle || article.content == null) {
             if (DEBUG) {
                 Log.v(TAG, "not an article or couldn't fetch url");
             }

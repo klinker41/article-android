@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.10.2
+- Crash and bug fixes
+
 ### v0.10.0
 - New `ArticleIntent.Builder#setTextSize` API
 - Allow text selection within a paragraph

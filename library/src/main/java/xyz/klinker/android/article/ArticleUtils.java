@@ -88,7 +88,7 @@ public class ArticleUtils {
                     callback.onArticleLoaded(article);
                 }
 
-                if (article.isArticle) {
+                if (article != null && article.isArticle && article.content != null) {
                     parseArticleContent(article, new ArticleParsedListener() {
                         @Override
                         public void onArticleParsed(final Elements elements) {
@@ -115,7 +115,7 @@ public class ArticleUtils {
         DataSource source = DataSource.getInstance(context);
         final Article article = loadArticleSync(url, source, null, null);
 
-        if (article != null && article.isArticle) {
+        if (article != null && article.isArticle && article.content != null) {
             parseArticleContent(article, new ArticleParsedListener() {
                 @Override
                 public void onArticleParsed(final Elements elements) {
@@ -189,18 +189,20 @@ public class ArticleUtils {
                     }
                 }
 
-                for (Element element : elements) {
-                    if (element.tagName().equals("img")) {
-                        String src = element.attr("src");
+                if (elements != null) {
+                    for (Element element : elements) {
+                        if (element.tagName().equals("img")) {
+                            String src = element.attr("src");
 
-                        try {
-                            Glide.with(context)
-                                    .load(src)
-                                    .downloadOnly(dimens[0], dimens[1])
-                                    .get();
-                            Log.v("ArticleUtils", "cached image");
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                            try {
+                                Glide.with(context)
+                                        .load(src)
+                                        .downloadOnly(dimens[0], dimens[1])
+                                        .get();
+                                Log.v("ArticleUtils", "cached image");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
@@ -309,8 +311,12 @@ public class ArticleUtils {
     }
 
     static String decodeImageUrl(String url) {
-        String parsedUrl = Uri.decode(url.split(",")[0]).split(" ")[0];
-        return isImageUrl(parsedUrl) ? parsedUrl : url;
+        if (url == null) {
+            return "";
+        } else {
+            String parsedUrl = Uri.decode(url.split(",")[0]).split(" ")[0];
+            return isImageUrl(parsedUrl) ? parsedUrl : url;
+        }
     }
 
 }
