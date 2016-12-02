@@ -78,6 +78,9 @@ public final class ArticleIntent {
     public static final String EXTRA_ACCENT_COLOR =
             "xyz.klinker.android.article.extra.EXTRA_ACCENT_COLOR";
 
+    /**
+     * String extra that is used for the API token when making requests to the server
+     */
     public static final String EXTRA_API_TOKEN =
             "xyz.klinker.android.article.extra.EXTRA_API_TOKEN";
 
@@ -318,6 +321,11 @@ public final class ArticleIntent {
             return this;
         }
 
+        /**
+         * Sets the accent color.
+         * 
+         * @param color {@link Color}
+         */
         public ArticleIntent.Builder setAccentColor(@ColorInt int color) {
             mIntent.putExtra(EXTRA_ACCENT_COLOR, color);
             return this;
