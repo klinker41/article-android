@@ -248,6 +248,7 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
 
                 textView.setText(text);
+                textView.setTextIsSelectable(true);
             }
         } else {
             if (holder instanceof HeaderImageViewHolder) {
