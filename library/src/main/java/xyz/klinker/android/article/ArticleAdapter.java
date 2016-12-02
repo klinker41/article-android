@@ -407,8 +407,6 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             author = (TextView) itemView.findViewById(R.id.article_author);
             source = (TextView) itemView.findViewById(R.id.article_source);
 
-            author.setTextSize(textSize - 3);
-            source.setTextSize(textSize - 1);
             text.setTextSize(textSize + 9);
         }
     }
