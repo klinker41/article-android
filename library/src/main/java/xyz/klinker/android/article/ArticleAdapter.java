@@ -182,11 +182,11 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         .decodeImageUrl(elements.get(position - topItemCount).attr("src"));
                 final ImageView image = ((ImageViewHolder) holder).image;
 
-//                if (src.startsWith("data:")) {
-//                    // bad image data from the server, it didn't give us a url
-//                    image.setVisibility(View.GONE);
-//                    return;
-//                }
+                if (src.startsWith("data:")) {
+                    // bad image data from the server, it didn't give us a url
+                    image.setVisibility(View.GONE);
+                    return;
+                }
 
                 image.setVisibility(View.VISIBLE);
 
