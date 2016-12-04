@@ -292,7 +292,16 @@ public final class ArticleIntent {
      * @param url The URL to load in the Custom Tab.
      */
     public void launchUrl(Context context, Uri url) {
-        intent.setData(url);
+        launchUrl(context, url.toString());
+    }
+
+    /**
+     * Convenience method to launch a Custom Tabs Activity.
+     * @param context The source Context.
+     * @param url The URL to load in the Custom Tab.
+     */
+    public void launchUrl(Context context, String url) {
+        intent.setData(Uri.parse(ArticleUtils.removeUrlParameters(url)));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ContextCompat.startActivity(context, intent, startAnimationBundle);
     }
