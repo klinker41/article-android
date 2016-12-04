@@ -128,6 +128,38 @@ public class ArticleUtils {
     }
 
     /**
+     * Gets all trending articles from the server and returns them to the provided listener.
+     *
+     * @param listener the listener to call back to when articles are loaded.
+     */
+    public void loadTrending(final TrendingLoadedListener listener) {
+        final Handler handler = new Handler();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final Article[] articles = api.article().trending();
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (listener != null) {
+                            listener.onArticlesLoaded(articles);
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+
+    /**
+     * Gets all trending articles. Do not call from main UI thread.
+     *
+     * @return the trending articles.
+     */
+    public Article[] fetchTrending() {
+        return api.article().trending();
+    }
+
+    /**
      * Loads an article from the server.
      *
      * @param url the url to load the article from.
