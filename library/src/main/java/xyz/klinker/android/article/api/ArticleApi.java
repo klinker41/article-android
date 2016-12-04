@@ -50,8 +50,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ArticleApi {
 
-    private static final String API_DEBUG_URL = "http://192.168.86.146:3000/";
-    private static final String API_RELEASE_URL = "https://article.klinkerapps.com/";
+    private static final String API_DEBUG_URL = "http://192.168.86.146:3000/v1/";
+    private static final String API_RELEASE_URL = "https://article.klinkerapps.com/v1/";
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
