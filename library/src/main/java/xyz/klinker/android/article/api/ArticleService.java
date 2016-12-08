@@ -54,15 +54,19 @@ public interface ArticleService {
                   @Query("no_cache") boolean noCache);
 
     /**
-     * Gets the trending articles that are currently popular on our server. The articles that
-     * satisfy this will be:
-     *
-     *      1. First loaded within the last 24 hours
-     *      2. Had at least 5 views
+     * Gets the trending articles that are currently popular on our server.
      *
      * @return the trending articles.
      */
     @GET("trending")
     Article[] trending();
+
+    /**
+     * Prepares an article on the server so that it can be served immediately to any requesting
+     * client without having to parse again.
+     *
+     * @param url the url to get an article from.
+     */
+    void prepare(@Query("url") String url);
 
 }
