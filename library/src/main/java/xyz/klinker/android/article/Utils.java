@@ -17,6 +17,7 @@
 package xyz.klinker.android.article;
 
 import android.annotation.TargetApi;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -24,6 +25,7 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EdgeEffect;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -90,6 +92,60 @@ class Utils {
             progressBar.setIndeterminateDrawable(DrawableCompat.unwrap(wrapDrawable));
         } else {
             progressBar.getIndeterminateDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+        }
+    }
+
+    /**
+     * Changes the text selection handle colors.
+     */
+    static void changeTextSelectionHandleColors(TextView textView, int color) {
+        textView.setHighlightColor(Color.argb(
+                40, Color.red(color), Color.green(color), Color.blue(color)));
+
+        try {
+            Field editorField = TextView.class.getDeclaredField("mEditor");
+            if (!editorField.isAccessible()) {
+                editorField.setAccessible(true);
+            }
+
+            Object editor = editorField.get(textView);
+            Class<?> editorClass = editor.getClass();
+
+            String[] handleNames = {
+                    "mSelectHandleLeft",
+                    "mSelectHandleRight",
+                    "mSelectHandleCenter"
+            };
+            String[] resNames = {
+                    "mTextSelectHandleLeftRes",
+                    "mTextSelectHandleRightRes",
+                    "mTextSelectHandleRes"
+            };
+
+            for (int i = 0; i < handleNames.length; i++) {
+                Field handleField = editorClass.getDeclaredField(handleNames[i]);
+                if (!handleField.isAccessible()) {
+                    handleField.setAccessible(true);
+                }
+
+                Drawable handleDrawable = (Drawable) handleField.get(editor);
+
+                if (handleDrawable == null) {
+                    Field resField = TextView.class.getDeclaredField(resNames[i]);
+                    if (!resField.isAccessible()) {
+                        resField.setAccessible(true);
+                    }
+                    int resId = resField.getInt(textView);
+                    handleDrawable = textView.getResources().getDrawable(resId);
+                }
+
+                if (handleDrawable != null) {
+                    Drawable drawable = handleDrawable.mutate();
+                    drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+                    handleField.set(editor, drawable);
+                }
+            }
+        } catch (Exception e) {
         }
     }
 

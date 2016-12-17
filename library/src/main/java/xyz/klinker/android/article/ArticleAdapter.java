@@ -136,7 +136,7 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         switch (viewType) {
             case TYPE_HEADER_IMAGE:         return new HeaderImageViewHolder(view);
-            case TYPE_TITLE:                return new TitleTextViewHolder(view);
+            case TYPE_TITLE:                return new TitleTextViewHolder(view, accentColor);
             case TYPE_INLINE_IMAGE:         return new ImageViewHolder(view);
             case TYPE_BLOCKQUOTE:           return new BlockQuoteViewHolder(view, accentColor);
             case TYPE_UNORDERED_LIST_ITEM:
@@ -149,7 +149,7 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case TYPE_HEADER_5:
             case TYPE_HEADER_6:
             case TYPE_PRE:
-            default:                        return new TextViewHolder(view);
+            default:                        return new TextViewHolder(view, accentColor);
         }
     }
 
@@ -357,17 +357,18 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private class TextViewHolder extends RecyclerView.ViewHolder {
         public TextView text;
 
-        private TextViewHolder(View itemView) {
+        private TextViewHolder(View itemView, int accentColor) {
             super(itemView);
             this.text = (TextView) itemView.findViewById(R.id.article_text);
             this.text.setTextSize(textSize);
             this.text.setTextIsSelectable(true);
+            Utils.changeTextSelectionHandleColors(this.text, accentColor);
         }
     }
 
     private class BlockQuoteViewHolder extends TextViewHolder {
         private BlockQuoteViewHolder(View itemView, int accentColor) {
-            super(itemView);
+            super(itemView, accentColor);
             text.setTextColor(accentColor);
             text.setTextSize(textSize + 5);
         }
@@ -402,8 +403,8 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public TextView author;
         public TextView source;
 
-        private TitleTextViewHolder(View itemView) {
-            super(itemView);
+        private TitleTextViewHolder(View itemView, int accentColor) {
+            super(itemView, accentColor);
             author = (TextView) itemView.findViewById(R.id.article_author);
             source = (TextView) itemView.findViewById(R.id.article_source);
 
