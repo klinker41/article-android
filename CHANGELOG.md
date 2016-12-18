@@ -1,5 +1,12 @@
 # Changelog
 
+### v0.11.0
+- Improve text selection colors
+- Trending API endpoints
+- Ability to "prepare" an article on the server, without downloading it to the device
+- Fixes for blank images
+- Update support library
+
 ### v0.10.2
 - Crash and bug fixes
 
