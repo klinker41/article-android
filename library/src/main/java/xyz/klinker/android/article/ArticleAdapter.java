@@ -139,15 +139,15 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case TYPE_TITLE:                return new TitleTextViewHolder(view, accentColor);
             case TYPE_INLINE_IMAGE:         return new ImageViewHolder(view);
             case TYPE_BLOCKQUOTE:           return new BlockQuoteViewHolder(view, accentColor);
-            case TYPE_UNORDERED_LIST_ITEM:
-            case TYPE_ORDERED_LIST_ITEM:
-            case TYPE_PARAGRAPH:
             case TYPE_HEADER_1:
             case TYPE_HEADER_2:
             case TYPE_HEADER_3:
             case TYPE_HEADER_4:
             case TYPE_HEADER_5:
-            case TYPE_HEADER_6:
+            case TYPE_HEADER_6:             return new SubtitleTextViewHolder(view, accentColor);
+            case TYPE_UNORDERED_LIST_ITEM:
+            case TYPE_ORDERED_LIST_ITEM:
+            case TYPE_PARAGRAPH:
             case TYPE_PRE:
             default:                        return new TextViewHolder(view, accentColor);
         }
@@ -409,6 +409,13 @@ class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             source = (TextView) itemView.findViewById(R.id.article_source);
 
             text.setTextSize(textSize + 9);
+        }
+    }
+
+    private class SubtitleTextViewHolder extends TextViewHolder {
+        private SubtitleTextViewHolder(View itemView, int accentColor) {
+            super(itemView, accentColor);
+            text.setTextSize(textSize + 3);
         }
     }
 
