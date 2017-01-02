@@ -49,6 +49,9 @@ import xyz.klinker.android.article.view.ElasticDragDismissFrameLayout;
 public class ArticleActivity extends AppCompatActivity
         implements ArticleLoadedListener, ArticleParsedListener {
 
+    public static final String PERMISSION_SAVED_ARTICLE =
+            "xyz.klinker.android.article.SAVED_ARTICLE";
+
     private static final String TAG = "ArticleActivity";
     private static final boolean DEBUG = false;
 
