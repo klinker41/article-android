@@ -32,7 +32,7 @@ import android.view.animation.Interpolator;
  * Scroll listener for interacting with the toolbar when the recyclerview scrolls. This includes
  * hiding the toolbar and showing it again when appropriate, along with changing the colors.
  */
-class ArticleScrollListener extends RecyclerView.OnScrollListener {
+final class ArticleScrollListener extends RecyclerView.OnScrollListener {
 
     private static final int ANIMATION_DURATION = 200; // ms
 

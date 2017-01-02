@@ -27,7 +27,7 @@ import xyz.klinker.android.article.data.model.DatabaseTable;
 /**
  * Handles creating and updating a database.
  */
-public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
+public final class DatabaseSQLiteHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "articles.db";
     private static final int DATABASE_VERSION = 2;

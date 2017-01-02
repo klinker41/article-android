@@ -47,11 +47,13 @@ import xyz.klinker.android.article.view.ElasticDragDismissFrameLayout;
  * NOTE: Not all options in the builder by be applied in this activity. However, all options will
  * be forwarded to a chrome custom tab if the user chooses to view it there.
  */
-public class ArticleActivity extends AppCompatActivity
+public final class ArticleActivity extends AppCompatActivity
         implements ArticleLoadedListener, ArticleParsedListener {
 
     public static final String PERMISSION_SAVED_ARTICLE =
             "xyz.klinker.android.article.SAVED_ARTICLE";
+    public static final String ACTION_SAVED_ARTICLE =
+            "xyz.klinker.android.article.ARTICLE_SAVED";
 
     private static final String TAG = "ArticleActivity";
     private static final boolean DEBUG = false;
@@ -267,7 +269,9 @@ public class ArticleActivity extends AppCompatActivity
             }
         }).start();
 
-        // TODO(jklinker): send a broadcast to actually save the article.
+        Intent intent = new Intent(ACTION_SAVED_ARTICLE);
+        article.putIntoIntent(intent);
+        sendBroadcast(intent, PERMISSION_SAVED_ARTICLE);
     }
 
     private View.OnClickListener sideClickListener = new View.OnClickListener() {

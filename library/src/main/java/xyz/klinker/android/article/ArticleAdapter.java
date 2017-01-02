@@ -64,7 +64,7 @@ import xyz.klinker.android.article.data.Article;
  * 6. Paragraph Headers
  * 7. Block quotes
  */
-class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+final class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE_HEADER_IMAGE = 1;
     private static final int TYPE_TITLE = 2;

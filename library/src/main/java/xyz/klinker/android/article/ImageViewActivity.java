@@ -27,7 +27,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
  * Activity for viewing full size images from an article. Images are zoomable. You can pass in the
  * image url from an intent with .setData(url).
  */
-public class ImageViewActivity extends AppCompatActivity {
+public final class ImageViewActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

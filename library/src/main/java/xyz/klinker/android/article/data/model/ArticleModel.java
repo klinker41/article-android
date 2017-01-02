@@ -19,7 +19,7 @@ package xyz.klinker.android.article.data.model;
 /**
  * Model containing article data from the server.
  */
-public class ArticleModel implements DatabaseTable {
+public final class ArticleModel implements DatabaseTable {
 
     public static final String TABLE = "article";
     public static final String COLUMN_ID = "_id";

@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * Utilities we use, mostly for UI modification.
  */
-class Utils {
+final class Utils {
 
     /**
      * Changes the overscroll highlight effect on a recyclerview to be the given color.

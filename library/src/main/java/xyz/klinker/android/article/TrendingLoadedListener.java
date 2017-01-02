@@ -21,7 +21,7 @@ import xyz.klinker.android.article.data.Article;
 /**
  * Callback for listening for trending articles finished loading from remote server.
  */
-public interface TrendingLoadedListener {
+interface TrendingLoadedListener {
 
     void onArticlesLoaded(Article[] trendingArticles);
 

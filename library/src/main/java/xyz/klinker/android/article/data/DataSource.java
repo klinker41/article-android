@@ -14,7 +14,7 @@ import xyz.klinker.android.article.data.model.ContentModel;
 /**
  * Handles interactions with database models.
  */
-public class DataSource {
+public final class DataSource {
 
     private static final String TAG = "DataSource";
     private static volatile DataSource instance;

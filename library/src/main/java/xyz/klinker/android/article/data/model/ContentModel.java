@@ -21,7 +21,7 @@ package xyz.klinker.android.article.data.model;
  * so that we can keep that table small and light. This one will store blobs of text and each
  * entry could get quite large potentially.
  */
-public class ContentModel implements DatabaseTable {
+public final class ContentModel implements DatabaseTable {
 
     public static final String TABLE = "content";
     public static final String COLUMN_ID = "_id";
