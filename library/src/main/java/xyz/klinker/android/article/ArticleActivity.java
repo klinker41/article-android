@@ -19,6 +19,7 @@ package xyz.klinker.android.article;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
@@ -66,6 +67,7 @@ public class ArticleActivity extends AppCompatActivity
     private int primaryColor;
     private int accentColor;
     private int textSize;
+    private Boolean permissionAvailable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -177,18 +179,43 @@ public class ArticleActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem save = menu.findItem(R.id.article_save);
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        final MenuItem save = menu.findItem(R.id.article_save);
 
-        if (article != null) {
-            if (article.saved) {
-                save.setIcon(R.drawable.ic_star);
-            } else {
-                save.setIcon(R.drawable.ic_star_border);
-            }
+        if (permissionAvailable == null) {
+            final Handler handler = new Handler();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    permissionAvailable =
+                            Utils.saveArticlePermissionAvailable(ArticleActivity.this);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateSaveMenuItem(menu, save);
+                        }
+                    });
+                }
+            }).start();
+        } else {
+            updateSaveMenuItem(menu, save);
         }
 
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void updateSaveMenuItem(Menu menu, MenuItem save) {
+        if (article != null && save != null) {
+            if (permissionAvailable) {
+                if (article.saved) {
+                    save.setIcon(R.drawable.ic_star);
+                } else {
+                    save.setIcon(R.drawable.ic_star_border);
+                }
+            } else {
+                menu.removeItem(0);
+            }
+        }
     }
 
     @Override

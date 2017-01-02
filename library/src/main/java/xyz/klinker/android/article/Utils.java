@@ -17,6 +17,10 @@
 package xyz.klinker.android.article;
 
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -29,6 +33,7 @@ import android.widget.TextView;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * Utilities we use, mostly for UI modification.
@@ -147,6 +152,34 @@ class Utils {
             }
         } catch (Exception e) {
         }
+    }
+
+    /**
+     * Checks if there is an app installed on the device that requests
+     * @{link ArticleActivity.PERMISSION_SAVED_ARTICLE}.
+     */
+    static boolean saveArticlePermissionAvailable(Context context) {
+        PackageManager pm = context.getPackageManager();
+        List<ApplicationInfo> apps = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+
+        for (ApplicationInfo app : apps) {
+            try {
+                PackageInfo packageInfo = pm.getPackageInfo(app.packageName, PackageManager.GET_PERMISSIONS);
+
+                String[] requestedPermissions = packageInfo.requestedPermissions;
+                if (requestedPermissions != null) {
+                    for (String permission : requestedPermissions) {
+                        if (permission.equals(ArticleActivity.PERMISSION_SAVED_ARTICLE)) {
+                            return true;
+                        }
+                    }
+                }
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false;
     }
 
 }
