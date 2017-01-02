@@ -39,6 +39,7 @@ public class Article implements DatabaseModel {
     public String domain;
     public int duration;
     public boolean isArticle;
+    public boolean saved;
 
     /**
      * Creates a blank article that can be filled manually.
@@ -85,6 +86,8 @@ public class Article implements DatabaseModel {
                 this.duration = cursor.getInt(i);
             } else if (column.equals(ArticleModel.COLUMN_IS_ARTICLE)) {
                 this.isArticle = cursor.getInt(i) == 1;
+            } else if (column.equals(ArticleModel.COLUMN_SAVED)) {
+                this.saved = cursor.getInt(i) == 1;
             }
         }
     }

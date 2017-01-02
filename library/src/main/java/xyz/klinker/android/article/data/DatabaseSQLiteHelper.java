@@ -59,7 +59,11 @@ public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Allows for updating the database when necessary.
+        if (oldVersion < 2) {
+            try {
+                db.execSQL("ALTER TABLE article ADD COLUMN saved integer not null DEFAULT 0");
+            } catch(Exception e) { }
+        }
     }
 
 }
