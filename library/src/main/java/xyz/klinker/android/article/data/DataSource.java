@@ -154,6 +154,17 @@ public class DataSource {
     }
 
     /**
+     * Updates an article's saved state.
+     */
+    public void updateSavedArticleState(Article article) {
+        ContentValues values = new ContentValues(1);
+        values.put(ArticleModel.COLUMN_SAVED, article.saved);
+
+        database.update(
+                ArticleModel.TABLE, values, "_id=?", new String[] {Long.toString(article.id)});
+    }
+
+    /**
      * Gets a single article from the database. If there are multiple with the same URL, only the
      * first is returned.
      */

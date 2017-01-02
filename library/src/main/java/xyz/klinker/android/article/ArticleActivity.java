@@ -57,6 +57,7 @@ public class ArticleActivity extends AppCompatActivity
 
     private static final int MIN_NUM_ELEMENTS = 1;
 
+    private Article article;
     private String url;
     private ArticleUtils utils;
     private RecyclerView recyclerView;
@@ -65,7 +66,6 @@ public class ArticleActivity extends AppCompatActivity
     private int primaryColor;
     private int accentColor;
     private int textSize;
-    private DataSource source;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class ArticleActivity extends AppCompatActivity
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
         }
 
-        this.source = DataSource.getInstance(this);
+        DataSource source = DataSource.getInstance(this);
         this.utils = new ArticleUtils(getIntent().getStringExtra(ArticleIntent.EXTRA_API_TOKEN));
         this.utils.loadArticle(url, source, this);
 
@@ -142,6 +142,8 @@ public class ArticleActivity extends AppCompatActivity
 
             openChromeCustomTab();
         } else {
+            this.article = article;
+
             if (DEBUG) {
                 Log.v(TAG, "finished loading article at " + article.url);
                 Log.v(TAG, "\t" + article.title);
@@ -154,6 +156,8 @@ public class ArticleActivity extends AppCompatActivity
 
             utils.parseArticleContent(article, this);
             progressBar.setVisibility(View.GONE);
+
+            invalidateOptionsMenu();
         }
     }
 
@@ -173,6 +177,21 @@ public class ArticleActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem save = menu.findItem(R.id.article_save);
+
+        if (article != null) {
+            if (article.saved) {
+                save.setIcon(R.drawable.ic_star);
+            } else {
+                save.setIcon(R.drawable.ic_star_border);
+            }
+        }
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
@@ -185,6 +204,8 @@ public class ArticleActivity extends AppCompatActivity
                     getResources().getText(R.string.article_share_with)));
         } else if (item.getItemId() == R.id.article_open_in_chrome) {
             openChromeCustomTab();
+        } else if (item.getItemId() == R.id.article_save) {
+            saveArticle();
         }
 
         return true;
@@ -203,6 +224,23 @@ public class ArticleActivity extends AppCompatActivity
 
         // finish the current activity so that the back button takes us back
         finish();
+    }
+
+    private void saveArticle() {
+        article.saved = !article.saved;
+        invalidateOptionsMenu();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DataSource source = DataSource.getInstance(ArticleActivity.this);
+                source.open();
+                source.updateSavedArticleState(article);
+                source.close();
+            }
+        }).start();
+
+        // TODO(jklinker): send a broadcast to actually save the article.
     }
 
     private View.OnClickListener sideClickListener = new View.OnClickListener() {
