@@ -96,6 +96,40 @@ Article article = utils.fetchArticle(context, url);
 
 As with `preload`, if you call this multiple times, a network call will only be made the first time. To open an article after it has been `fetched`, simply follow the same steps as above with an `ArticleIntent.Builder`.
 
+## Saving Articles
+
+If you create an app that can save articles for users to be able to view later, you can add this saving functionality to the library. To do this, first request the save permission in your manifest:
+
+```xml
+<uses-permission android:name="xyz.klinker.android.article.SAVED_ARTICLE"/>
+```
+
+This will cause a star icon to be displayed on the toolbar that a user can use to save or remove the saved item.
+
+Next, register a receiver that will listen for these changes to the article:
+
+```xml
+<receiver android:name=".SampleSavedBroadcastReceiver">
+    <intent-filter>
+        <action android:name="xyz.klinker.android.article.ARTICLE_SAVED"/>
+    </intent-filter>
+</receiver>
+```
+
+This will provide you with the article inside the intent extras. You can grab the actual article object by passing the intent into the constructor:
+
+
+```java
+public class SampleSavedBroadcastReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Article article = new Article(intent);
+    }
+}
+```
+
+Then just do whatever you want with the article (probably save a reference of it to your own database and display it somewhere else in your app).
+
 ## How It Works
 
 This library leverages a`node.js` backend that I have deployed on AWS that does all of the heavy lifting for processing an article. On the backend, we go and grab the article and strip out anything in it that we don't want as soon as we get a URL from the app. We'll then return the results to the library and cache them in a MongoDB instance so that next time we get a request for the same article, it is significantly faster to load.
