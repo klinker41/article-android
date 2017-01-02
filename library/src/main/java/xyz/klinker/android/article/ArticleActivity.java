@@ -271,7 +271,7 @@ public final class ArticleActivity extends AppCompatActivity
 
         Intent intent = new Intent(ACTION_SAVED_ARTICLE);
         article.putIntoIntent(intent);
-        sendBroadcast(intent, PERMISSION_SAVED_ARTICLE);
+        sendBroadcast(intent);
     }
 
     private View.OnClickListener sideClickListener = new View.OnClickListener() {

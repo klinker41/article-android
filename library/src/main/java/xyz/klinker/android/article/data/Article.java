@@ -59,6 +59,16 @@ public final class Article implements DatabaseModel {
         fillFromCursor(cursor);
     }
 
+    /**
+     * Creates an article that is filled automatically from the intent, which was filled with
+     * @{link Article.putIntoIntent()}.
+     *
+     * @param intent the intent to fill the article from.
+     */
+    public Article(Intent intent) {
+        fillFromIntent(intent);
+    }
+
     @Override
     public void fillFromCursor(Cursor cursor) {
         for (int i = 0; i < cursor.getColumnCount(); i++) {
@@ -100,7 +110,7 @@ public final class Article implements DatabaseModel {
     public void fillFromIntent(Intent intent) {
         Bundle extras = intent.getExtras();
 
-        this.id = extras.getInt(ArticleModel.COLUMN_ID);
+        this.id = extras.getLong(ArticleModel.COLUMN_ID);
         this.alias = extras.getString(ArticleModel.COLUMN_ALIAS);
         this.url = extras.getString(ArticleModel.COLUMN_URL);
         this.title = extras.getString(ArticleModel.COLUMN_TITLE);
