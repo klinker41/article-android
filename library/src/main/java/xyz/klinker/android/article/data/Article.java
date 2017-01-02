@@ -16,7 +16,9 @@
 
 package xyz.klinker.android.article.data;
 
+import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 
 import xyz.klinker.android.article.data.model.ArticleModel;
 import xyz.klinker.android.article.data.model.ContentModel;
@@ -25,7 +27,7 @@ import xyz.klinker.android.article.data.model.DatabaseModel;
 /**
  * Model holding all possible elements in a response from the server.
  */
-public class Article implements DatabaseModel {
+public final class Article implements DatabaseModel {
 
     public long id;
     public String alias;
@@ -39,6 +41,7 @@ public class Article implements DatabaseModel {
     public String domain;
     public int duration;
     public boolean isArticle;
+    public boolean saved;
 
     /**
      * Creates a blank article that can be filled manually.
@@ -54,6 +57,16 @@ public class Article implements DatabaseModel {
      */
     public Article(Cursor cursor) {
         fillFromCursor(cursor);
+    }
+
+    /**
+     * Creates an article that is filled automatically from the intent, which was filled with
+     * @{link Article.putIntoIntent()}.
+     *
+     * @param intent the intent to fill the article from.
+     */
+    public Article(Intent intent) {
+        fillFromIntent(intent);
     }
 
     @Override
@@ -85,8 +98,50 @@ public class Article implements DatabaseModel {
                 this.duration = cursor.getInt(i);
             } else if (column.equals(ArticleModel.COLUMN_IS_ARTICLE)) {
                 this.isArticle = cursor.getInt(i) == 1;
+            } else if (column.equals(ArticleModel.COLUMN_SAVED)) {
+                this.saved = cursor.getInt(i) == 1;
             }
         }
+    }
+
+    /**
+     * Fills an article from an Intent.
+     */
+    public void fillFromIntent(Intent intent) {
+        Bundle extras = intent.getExtras();
+
+        this.id = extras.getLong(ArticleModel.COLUMN_ID);
+        this.alias = extras.getString(ArticleModel.COLUMN_ALIAS);
+        this.url = extras.getString(ArticleModel.COLUMN_URL);
+        this.title = extras.getString(ArticleModel.COLUMN_TITLE);
+        this.description = extras.getString(ArticleModel.COLUMN_DESCRIPTION);
+        this.image = extras.getString(ArticleModel.COLUMN_IMAGE);
+        this.content = extras.getString(ContentModel.COLUMN_CONTENT);
+        this.author = extras.getString(ArticleModel.COLUMN_AUTHOR);
+        this.source = extras.getString(ArticleModel.COLUMN_SOURCE);
+        this.domain = extras.getString(ArticleModel.COLUMN_DOMAIN);
+        this.duration = extras.getInt(ArticleModel.COLUMN_DURATION);
+        this.isArticle = extras.getBoolean(ArticleModel.COLUMN_IS_ARTICLE);
+        this.saved = extras.getBoolean(ArticleModel.COLUMN_SAVED);
+    }
+
+    /**
+     * Adds article data to an intent so that it can be sent over a broadcast.
+     */
+    public void putIntoIntent(Intent intent) {
+        intent.putExtra(ArticleModel.COLUMN_ID, this.id);
+        intent.putExtra(ArticleModel.COLUMN_ALIAS, this.alias);
+        intent.putExtra(ArticleModel.COLUMN_URL, this.url);
+        intent.putExtra(ArticleModel.COLUMN_TITLE, this.title);
+        intent.putExtra(ArticleModel.COLUMN_DESCRIPTION, this.description);
+        intent.putExtra(ArticleModel.COLUMN_IMAGE, this.image);
+        intent.putExtra(ContentModel.COLUMN_CONTENT, this.content);
+        intent.putExtra(ArticleModel.COLUMN_AUTHOR, this.author);
+        intent.putExtra(ArticleModel.COLUMN_SOURCE, this.source);
+        intent.putExtra(ArticleModel.COLUMN_DOMAIN, this.domain);
+        intent.putExtra(ArticleModel.COLUMN_DURATION, this.duration);
+        intent.putExtra(ArticleModel.COLUMN_IS_ARTICLE, this.isArticle);
+        intent.putExtra(ArticleModel.COLUMN_SAVED, this.saved);
     }
 
 }

@@ -19,6 +19,7 @@ package xyz.klinker.android.article;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
@@ -46,14 +47,20 @@ import xyz.klinker.android.article.view.ElasticDragDismissFrameLayout;
  * NOTE: Not all options in the builder by be applied in this activity. However, all options will
  * be forwarded to a chrome custom tab if the user chooses to view it there.
  */
-public class ArticleActivity extends AppCompatActivity
+public final class ArticleActivity extends AppCompatActivity
         implements ArticleLoadedListener, ArticleParsedListener {
+
+    public static final String PERMISSION_SAVED_ARTICLE =
+            "xyz.klinker.android.article.SAVED_ARTICLE";
+    public static final String ACTION_SAVED_ARTICLE =
+            "xyz.klinker.android.article.ARTICLE_SAVED";
 
     private static final String TAG = "ArticleActivity";
     private static final boolean DEBUG = false;
 
     private static final int MIN_NUM_ELEMENTS = 1;
 
+    private Article article;
     private String url;
     private ArticleUtils utils;
     private RecyclerView recyclerView;
@@ -62,7 +69,7 @@ public class ArticleActivity extends AppCompatActivity
     private int primaryColor;
     private int accentColor;
     private int textSize;
-    private DataSource source;
+    private Boolean permissionAvailable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,7 +90,7 @@ public class ArticleActivity extends AppCompatActivity
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
         }
 
-        this.source = DataSource.getInstance(this);
+        DataSource source = DataSource.getInstance(this);
         this.utils = new ArticleUtils(getIntent().getStringExtra(ArticleIntent.EXTRA_API_TOKEN));
         this.utils.loadArticle(url, source, this);
 
@@ -139,6 +146,8 @@ public class ArticleActivity extends AppCompatActivity
 
             openChromeCustomTab();
         } else {
+            this.article = article;
+
             if (DEBUG) {
                 Log.v(TAG, "finished loading article at " + article.url);
                 Log.v(TAG, "\t" + article.title);
@@ -151,6 +160,8 @@ public class ArticleActivity extends AppCompatActivity
 
             utils.parseArticleContent(article, this);
             progressBar.setVisibility(View.GONE);
+
+            invalidateOptionsMenu();
         }
     }
 
@@ -170,6 +181,46 @@ public class ArticleActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        final MenuItem save = menu.findItem(R.id.article_save);
+
+        if (permissionAvailable == null) {
+            final Handler handler = new Handler();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    permissionAvailable =
+                            Utils.saveArticlePermissionAvailable(ArticleActivity.this);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateSaveMenuItem(menu, save);
+                        }
+                    });
+                }
+            }).start();
+        } else {
+            updateSaveMenuItem(menu, save);
+        }
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void updateSaveMenuItem(Menu menu, MenuItem save) {
+        if (article != null && save != null) {
+            if (permissionAvailable) {
+                if (article.saved) {
+                    save.setIcon(R.drawable.ic_star);
+                } else {
+                    save.setIcon(R.drawable.ic_star_border);
+                }
+            } else {
+                menu.removeItem(0);
+            }
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
@@ -182,6 +233,8 @@ public class ArticleActivity extends AppCompatActivity
                     getResources().getText(R.string.article_share_with)));
         } else if (item.getItemId() == R.id.article_open_in_chrome) {
             openChromeCustomTab();
+        } else if (item.getItemId() == R.id.article_save) {
+            saveArticle();
         }
 
         return true;
@@ -200,6 +253,25 @@ public class ArticleActivity extends AppCompatActivity
 
         // finish the current activity so that the back button takes us back
         finish();
+    }
+
+    private void saveArticle() {
+        article.saved = !article.saved;
+        invalidateOptionsMenu();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DataSource source = DataSource.getInstance(ArticleActivity.this);
+                source.open();
+                source.updateSavedArticleState(article);
+                source.close();
+            }
+        }).start();
+
+        Intent intent = new Intent(ACTION_SAVED_ARTICLE);
+        article.putIntoIntent(intent);
+        sendBroadcast(intent);
     }
 
     private View.OnClickListener sideClickListener = new View.OnClickListener() {

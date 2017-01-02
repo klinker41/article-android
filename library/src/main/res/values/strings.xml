@@ -20,4 +20,8 @@
     <string name="article_share">Share…</string>
     <string name="article_share_with">Share with…</string>
     <string name="article_bullet_point">•</string>
+    <string name="article_save_title">Save</string>
+    <string name="article_saved_permission_label">Save articles from the web</string>
+    <string name="article_saved_permission_description">Allows app to save articles for viewing
+        later.</string>
 </resources>

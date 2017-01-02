@@ -14,7 +14,7 @@ import xyz.klinker.android.article.data.model.ContentModel;
 /**
  * Handles interactions with database models.
  */
-public class DataSource {
+public final class DataSource {
 
     private static final String TAG = "DataSource";
     private static volatile DataSource instance;
@@ -142,6 +142,7 @@ public class DataSource {
         values.put(ArticleModel.COLUMN_DURATION, article.duration);
         values.put(ArticleModel.COLUMN_INSERTED_AT, System.currentTimeMillis());
         values.put(ArticleModel.COLUMN_IS_ARTICLE, article.isArticle);
+        values.put(ArticleModel.COLUMN_SAVED, article.saved);
 
         long id = database.insert(ArticleModel.TABLE, null, values);
 
@@ -150,6 +151,17 @@ public class DataSource {
         values.put(ContentModel.COLUMN_CONTENT, article.content);
 
         database.insert(ContentModel.TABLE, null, values);
+    }
+
+    /**
+     * Updates an article's saved state.
+     */
+    public void updateSavedArticleState(Article article) {
+        ContentValues values = new ContentValues(1);
+        values.put(ArticleModel.COLUMN_SAVED, article.saved);
+
+        database.update(
+                ArticleModel.TABLE, values, "_id=?", new String[] {Long.toString(article.id)});
     }
 
     /**
@@ -176,7 +188,8 @@ public class DataSource {
                         "a." + ArticleModel.COLUMN_DURATION + " as " + ArticleModel.COLUMN_DURATION,
                         "a." + ArticleModel.COLUMN_INSERTED_AT + " as " + ArticleModel.COLUMN_INSERTED_AT,
                         "a." + ArticleModel.COLUMN_IS_ARTICLE + " as " + ArticleModel.COLUMN_IS_ARTICLE,
-                        "c." + ContentModel.COLUMN_CONTENT + " as " + ContentModel.COLUMN_CONTENT
+                        "a." + ArticleModel.COLUMN_SAVED + " as " + ArticleModel.COLUMN_SAVED,
+                        "c." + ContentModel.COLUMN_CONTENT + " as " + ContentModel.COLUMN_CONTENT,
                 },
                 ArticleModel.COLUMN_URL + "=?",
                 new String[] { url },

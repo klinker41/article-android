@@ -40,7 +40,7 @@ import xyz.klinker.android.article.data.DataSource;
 /**
  * Helper for working with the article apis.
  */
-public class ArticleUtils {
+public final class ArticleUtils {
 
     private static final String SELECTOR = "p, h1, h2, h3, h4, h5, h6, img, blockquote, pre, li";
 

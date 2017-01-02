@@ -18,6 +18,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/article_save"
+        android:title="@string/article_save_title"
+        android:icon="@android:color/transparent"
+        app:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/article_open_in_chrome"
         android:title="@string/article_open_in_chrome"
         app:showAsAction="never" />

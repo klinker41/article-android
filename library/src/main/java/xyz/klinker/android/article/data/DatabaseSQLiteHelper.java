@@ -27,10 +27,10 @@ import xyz.klinker.android.article.data.model.DatabaseTable;
 /**
  * Handles creating and updating a database.
  */
-public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
+public final class DatabaseSQLiteHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "articles.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private DatabaseTable[] tables = {
             new ArticleModel(),
@@ -59,7 +59,11 @@ public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Allows for updating the database when necessary.
+        if (oldVersion < 2) {
+            try {
+                db.execSQL("ALTER TABLE article ADD COLUMN saved integer not null DEFAULT 0");
+            } catch(Exception e) { }
+        }
     }
 
 }

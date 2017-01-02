@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Jacob Klinker
+ * Copyright (C) 2017 Jacob Klinker
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,21 @@
  * limitations under the License.
  */
 
-package xyz.klinker.android.article;
+package xyz.klinker.article;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 
 import xyz.klinker.android.article.data.Article;
 
-/**
- * Callback for listening for trending articles finished loading from remote server.
- */
-interface TrendingLoadedListener {
+public class SampleSavedBroadcastReceiver extends BroadcastReceiver {
 
-    void onArticlesLoaded(Article[] trendingArticles);
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Article article = new Article(intent);
+        Log.v("SavedArticle", article.title);
+    }
 
 }

@@ -19,7 +19,7 @@ package xyz.klinker.android.article.data.model;
 /**
  * Model containing article data from the server.
  */
-public class ArticleModel implements DatabaseTable {
+public final class ArticleModel implements DatabaseTable {
 
     public static final String TABLE = "article";
     public static final String COLUMN_ID = "_id";
@@ -34,6 +34,7 @@ public class ArticleModel implements DatabaseTable {
     public static final String COLUMN_DURATION = "duration";
     public static final String COLUMN_INSERTED_AT = "inserted_at";
     public static final String COLUMN_IS_ARTICLE = "is_article";
+    public static final String COLUMN_SAVED = "saved";
 
     private static final String DATABASE_CREATE = "create table if not exists " +
             TABLE + " (" +
@@ -48,7 +49,8 @@ public class ArticleModel implements DatabaseTable {
             COLUMN_DOMAIN + " text, " +
             COLUMN_DURATION + " integer, " +
             COLUMN_INSERTED_AT + " integer not null, " +
-            COLUMN_IS_ARTICLE + " integer not null" +
+            COLUMN_IS_ARTICLE + " integer not null, " +
+            COLUMN_SAVED + " integer not null" +
             ");";
 
     private static final String[] INDEXES = {
