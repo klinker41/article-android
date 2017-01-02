@@ -142,6 +142,7 @@ public class DataSource {
         values.put(ArticleModel.COLUMN_DURATION, article.duration);
         values.put(ArticleModel.COLUMN_INSERTED_AT, System.currentTimeMillis());
         values.put(ArticleModel.COLUMN_IS_ARTICLE, article.isArticle);
+        values.put(ArticleModel.COLUMN_SAVED, article.saved);
 
         long id = database.insert(ArticleModel.TABLE, null, values);
 
@@ -176,7 +177,8 @@ public class DataSource {
                         "a." + ArticleModel.COLUMN_DURATION + " as " + ArticleModel.COLUMN_DURATION,
                         "a." + ArticleModel.COLUMN_INSERTED_AT + " as " + ArticleModel.COLUMN_INSERTED_AT,
                         "a." + ArticleModel.COLUMN_IS_ARTICLE + " as " + ArticleModel.COLUMN_IS_ARTICLE,
-                        "c." + ContentModel.COLUMN_CONTENT + " as " + ContentModel.COLUMN_CONTENT
+                        "a." + ArticleModel.COLUMN_SAVED + " as " + ArticleModel.COLUMN_SAVED,
+                        "c." + ContentModel.COLUMN_CONTENT + " as " + ContentModel.COLUMN_CONTENT,
                 },
                 ArticleModel.COLUMN_URL + "=?",
                 new String[] { url },

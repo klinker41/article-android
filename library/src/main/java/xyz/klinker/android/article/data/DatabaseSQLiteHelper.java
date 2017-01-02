@@ -30,7 +30,7 @@ import xyz.klinker.android.article.data.model.DatabaseTable;
 public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "articles.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private DatabaseTable[] tables = {
             new ArticleModel(),
