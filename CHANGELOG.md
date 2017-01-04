@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.12.0
+- API for saving articles to apps that support it (See [README.md](README.md))
+
 ### v0.11.0
 - Improve text selection colors
 - Trending API endpoints
