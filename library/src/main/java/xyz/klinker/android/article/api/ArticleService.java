@@ -41,32 +41,11 @@ public interface ArticleService {
     Article parse(@Query("url") String url);
 
     /**
-     * Gets an article from the provided url and provides the option to ignore the cache if
-     * desired.
-     *
-     * @param url the url to get an article from.
-     * @param noCache if true, do not inspect the cache for a previously gotten article with the
-     *                same url.
-     * @return the parsed article.
-     */
-    @GET("parse")
-    Article parse(@Query("url") String url,
-                  @Query("no_cache") boolean noCache);
-
-    /**
      * Gets the trending articles that are currently popular on our server.
      *
      * @return the trending articles.
      */
     @GET("trending")
     Article[] trending();
-
-    /**
-     * Prepares an article on the server so that it can be served immediately to any requesting
-     * client without having to parse again.
-     *
-     * @param url the url to get an article from.
-     */
-    void prepare(@Query("url") String url);
 
 }
