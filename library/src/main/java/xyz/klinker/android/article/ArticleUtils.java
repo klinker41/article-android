@@ -22,6 +22,7 @@ import android.graphics.Point;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
@@ -328,7 +329,8 @@ public final class ArticleUtils {
         return elements;
     }
 
-    private static boolean isImageUrl(String src) {
+    @VisibleForTesting
+    static boolean isImageUrl(String src) {
         return src.contains("jpg") || src.contains("png") || src.contains("gif");
     }
 
