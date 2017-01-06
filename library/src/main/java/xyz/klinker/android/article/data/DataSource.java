@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.VisibleForTesting;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -49,6 +50,26 @@ public final class DataSource {
     }
 
     /**
+     * Contructor to help with testing.
+     *
+     * @param helper Mock of the database helper
+     */
+    @VisibleForTesting
+    protected DataSource(DatabaseSQLiteHelper helper) {
+        this.dbHelper = helper;
+    }
+
+    /**
+     * Constructor to help with testing.
+     *
+     * @param database Mock of the sqlite database
+     */
+    @VisibleForTesting
+    public DataSource(SQLiteDatabase database) {
+        this.database = database;
+    }
+
+    /**
      * Opens the database.
      */
     public synchronized void open() {
@@ -71,6 +92,29 @@ public final class DataSource {
         if (openCounter.decrementAndGet() == 0) {
             dbHelper.close();
         }
+    }
+
+    /**
+     * Available to close the database after tests have finished running. Don't call
+     * in the production application outside of test code.
+     */
+    @VisibleForTesting
+    public synchronized static void forceCloseImmediate() {
+        if (instance != null && instance.openCounter.get() > 0) {
+            instance.openCounter.set(0);
+            instance.dbHelper.close();
+            instance = null;
+        }
+    }
+
+    /**
+     * Get the currently open database
+     *
+     * @return sqlite database
+     */
+    @VisibleForTesting
+    public SQLiteDatabase getDatabase() {
+        return database;
     }
 
     /**
