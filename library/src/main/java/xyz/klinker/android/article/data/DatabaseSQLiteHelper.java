@@ -66,4 +66,10 @@ public final class DatabaseSQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void onDrop(SQLiteDatabase db) {
+        for (DatabaseTable table : tables) {
+            db.execSQL("drop table if exists " + table.getTableName());
+        }
+    }
+
 }
