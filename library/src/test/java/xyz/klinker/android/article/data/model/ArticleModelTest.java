@@ -14,32 +14,37 @@
  * limitations under the License.
  */
 
-package xyz.klinker.android.article;
+package xyz.klinker.android.article.data.model;
 
+import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import xyz.klinker.android.article.ArticleSuite;
 
-public class ArticleUtilsTest extends ArticleRobolectricSuite {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-    @Test
-    public void jpgIsImageUrl() {
-        assertTrue(ArticleUtils.isImageUrl("http://google.com/image.jpg"));
+public class ArticleModelTest extends ArticleSuite {
+
+    private ArticleModel model;
+
+    @Before
+    public void setUp() {
+        model = new ArticleModel();
     }
 
     @Test
-    public void pngIsImageUrl() {
-        assertTrue(ArticleUtils.isImageUrl("http://google.com/image.png"));
+    public void createStatementNotNull() {
+        assertNotNull(model.getCreateStatement());
     }
 
     @Test
-    public void gifIsImageUrl() {
-        assertTrue(ArticleUtils.isImageUrl("http://google.com/image.gif"));
+    public void indexStatementNotNull() {
+        assertNotNull(model.getIndexStatements());
     }
 
     @Test
-    public void isNotImageUrl() {
-        assertFalse(ArticleUtils.isImageUrl("http://google.com/image"));
+    public void tableName() {
+        assertEquals("article", model.getTableName());
     }
 }

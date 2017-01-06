@@ -19,7 +19,7 @@ package xyz.klinker.android.article;
 import org.junit.Before;
 import org.mockito.MockitoAnnotations;
 
-public abstract class MessengerSuite {
+public abstract class ArticleSuite {
 
     @Before
     public final void setup() {

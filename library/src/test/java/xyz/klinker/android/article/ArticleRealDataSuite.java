@@ -33,7 +33,7 @@ import xyz.klinker.android.article.data.DatabaseSQLiteHelper;
 
 import static junit.framework.Assert.assertTrue;
 
-public abstract class MessengerRealDataSuite extends MessengerRobolectricSuite {
+public abstract class ArticleRealDataSuite extends ArticleRobolectricSuite {
 
     public DataSource source;
 
@@ -54,13 +54,13 @@ public abstract class MessengerRealDataSuite extends MessengerRobolectricSuite {
     }
 
     /**
-     * Loads data from assets/fixtures into the given database. This class will read any files that are
-     * stored in the fixtures folder. These files should be named by the table that the data should
-     * be inserted into. Inside of each file, data should be separated by |'s, much like a cucumber
-     * test.
+     * Loads data from assets/fixtures into the given database. This class will read any files that
+     * are stored in the fixtures folder. These files should be named by the table that the data
+     * should be inserted into. Inside of each file, data should be separated by |'s, much like a
+     * cucumber test.
      * <p/>
-     * For example, a file could be named apps.fixture (or apps.txt, etc.) and have the following table
-     * stored inside of it:
+     * For example, a file could be named apps.fixture (or apps.txt, etc.) and have the following
+     * table stored inside of it:
      * | app_uid    | name      | package_name                      |
      * | 1          | Source    | com.klinker.android.source        |
      * | 2          | EvolveSMS | com.klinker.android.evolve_sms    |

@@ -33,8 +33,8 @@ import org.robolectric.annotation.Config;
 import xyz.klinker.android.article.data.DataSource;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 23, constants = BuildConfig.class)
-public abstract class MessengerRobolectricSuite {
+@Config(sdk = 25, constants = BuildConfig.class)
+public abstract class ArticleRobolectricSuite {
 
     @Before
     public final void setup() {
@@ -59,7 +59,8 @@ public abstract class MessengerRobolectricSuite {
         return startFragment(fragment, FragmentActivity.class);
     }
 
-    public static <T extends Fragment> T startFragment(T fragment, Class<? extends FragmentActivity> activityClass) {
+    public static <T extends Fragment> T startFragment(
+            T fragment, Class<? extends FragmentActivity> activityClass) {
         FragmentActivity activity = Robolectric.buildActivity(activityClass)
                 .create()
                 .start()
@@ -73,7 +74,8 @@ public abstract class MessengerRobolectricSuite {
         return fragment;
     }
 
-    public static <T extends android.app.Fragment> T startFragment(T fragment, Class<? extends Activity> activityClass) {
+    public static <T extends android.app.Fragment> T startFragment(
+            T fragment, Class<? extends Activity> activityClass) {
         Activity activity = Robolectric.buildActivity(activityClass)
                 .create()
                 .start()
