@@ -341,7 +341,11 @@ public final class ArticleUtils {
      * @return the url without any parameters.
      */
     public static String removeUrlParameters(String url) {
-        return url.split("\\?")[0];
+        if (url == null) {
+            return null;
+        } else {
+            return url.split("\\?")[0];
+        }
     }
 
     static String decodeImageUrl(String url) {

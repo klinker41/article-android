@@ -267,4 +267,21 @@ public final class DataSource {
                 ArticleModel.COLUMN_INSERTED_AT + " desc");
     }
 
+    /**
+     * Gets all saved articles in the database.
+     *
+     * NOTE: this method does not return the content associated with the article, that would be
+     *       slow as some articles can get very large.
+     */
+    public Cursor getSavedArticles() {
+        return database.query(
+                ArticleModel.TABLE,
+                null,
+                ArticleModel.COLUMN_SAVED + "=1",
+                null,
+                null,
+                null,
+                ArticleModel.COLUMN_INSERTED_AT + " desc");
+    }
+
 }

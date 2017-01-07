@@ -18,7 +18,9 @@ package xyz.klinker.android.article;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public class ArticleUtilsTest extends ArticleRobolectricSuite {
@@ -41,5 +43,28 @@ public class ArticleUtilsTest extends ArticleRobolectricSuite {
     @Test
     public void isNotImageUrl() {
         assertFalse(ArticleUtils.isImageUrl("http://google.com/image"));
+    }
+
+    @Test
+    public void removeUrlParameters_one() {
+        assertEquals(
+                "http://google.com", ArticleUtils.removeUrlParameters("http://google.com?test=1"));
+    }
+
+    @Test
+    public void removeUrlParameters_two() {
+        assertEquals(
+                "http://google.com",
+                ArticleUtils.removeUrlParameters("http://google.com?test=2&again=2"));
+    }
+
+    @Test
+    public void removeUrlParameters_none() {
+        assertEquals("http://google.com", ArticleUtils.removeUrlParameters("http://google.com"));
+    }
+
+    @Test
+    public void removeUrlParameters_null() {
+        assertNull(ArticleUtils.removeUrlParameters(null));
     }
 }
