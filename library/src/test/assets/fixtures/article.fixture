@@ -1,3 +1,3 @@
 | _id   | alias         | url               | title             | description               | image                     | author        | source        | domain        | duration  | inserted_at   | is_article    | saved |
-| 1     | test          | http://test.com/  | article 1         | test article 1            | http://test.com/image1    | jake klinker  | google.com    | google.com    | 1         | 1             | 1             | 0     |
-| 1     | test          | http://test.com/2 | article 2         | test article 2            | http://test.com/image2    | luke klinker  | klinker.xyz   | klinker.xyz   | 2         | 2             | 1             | 0     |
+| 1     | test          | http://test.com/  | article 1         | test article 1            | http://test.com/image1    | jake klinker  | google.com    | google.com    | 1         | 1             | 1             | 1     |
+| 2     | test          | http://test.com/2 | article 2         | test article 2            | http://test.com/image2    | luke klinker  | klinker.xyz   | klinker.xyz   | 2         | 2             | 1             | 0     |

@@ -43,6 +43,7 @@ public class ArticleTest extends ArticleRobolectricSuite {
                 "source",
                 "domain",
                 "duration",
+                "inserted_at",
                 "is_article",
                 "saved"
         });
@@ -59,6 +60,7 @@ public class ArticleTest extends ArticleRobolectricSuite {
                 "google.com",
                 "google.com",
                 1,
+                2,
                 1,
                 0
         });
@@ -76,6 +78,8 @@ public class ArticleTest extends ArticleRobolectricSuite {
         assertEquals("jake klinker", article.author);
         assertEquals("google.com", article.source);
         assertEquals("google.com", article.domain);
+        assertEquals(1, article.duration);
+        assertEquals(2, article.insertedAt);
         assertTrue(article.isArticle);
         assertFalse(article.saved);
     }
@@ -94,6 +98,7 @@ public class ArticleTest extends ArticleRobolectricSuite {
         intent.putExtra("source", "google.com");
         intent.putExtra("domain", "google.com");
         intent.putExtra("duration", 1);
+        intent.putExtra("inserted_at", 2L);
         intent.putExtra("is_article", true);
         intent.putExtra("saved", false);
 
@@ -109,6 +114,8 @@ public class ArticleTest extends ArticleRobolectricSuite {
         assertEquals("jake klinker", article.author);
         assertEquals("google.com", article.source);
         assertEquals("google.com", article.domain);
+        assertEquals(1, article.duration);
+        assertEquals(2, article.insertedAt);
         assertTrue(article.isArticle);
         assertFalse(article.saved);
     }
@@ -127,6 +134,7 @@ public class ArticleTest extends ArticleRobolectricSuite {
         article.source = "google.com";
         article.domain = "google.com";
         article.duration = 1;
+        article.insertedAt = 2;
         article.isArticle = true;
         article.saved = false;
 
@@ -143,6 +151,8 @@ public class ArticleTest extends ArticleRobolectricSuite {
         assertEquals("jake klinker", intent.getStringExtra("author"));
         assertEquals("google.com", intent.getStringExtra("source"));
         assertEquals("google.com", intent.getStringExtra("domain"));
+        assertEquals(1, intent.getIntExtra("duration", 0));
+        assertEquals(2, intent.getLongExtra("inserted_at", 0));
         assertTrue(intent.getBooleanExtra("is_article", false));
         assertFalse(intent.getBooleanExtra("saved", true));
     }

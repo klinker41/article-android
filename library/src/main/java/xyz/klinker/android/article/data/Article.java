@@ -40,6 +40,7 @@ public final class Article implements DatabaseModel {
     public String source;
     public String domain;
     public int duration;
+    public long insertedAt;
     public boolean isArticle;
     public boolean saved;
 
@@ -96,6 +97,8 @@ public final class Article implements DatabaseModel {
                 this.domain = cursor.getString(i);
             } else if (column.equals(ArticleModel.COLUMN_DURATION)) {
                 this.duration = cursor.getInt(i);
+            } else if (column.equals(ArticleModel.COLUMN_INSERTED_AT)) {
+                this.insertedAt = cursor.getLong(i);
             } else if (column.equals(ArticleModel.COLUMN_IS_ARTICLE)) {
                 this.isArticle = cursor.getInt(i) == 1;
             } else if (column.equals(ArticleModel.COLUMN_SAVED)) {
@@ -121,6 +124,7 @@ public final class Article implements DatabaseModel {
         this.source = extras.getString(ArticleModel.COLUMN_SOURCE);
         this.domain = extras.getString(ArticleModel.COLUMN_DOMAIN);
         this.duration = extras.getInt(ArticleModel.COLUMN_DURATION);
+        this.insertedAt = extras.getLong(ArticleModel.COLUMN_INSERTED_AT);
         this.isArticle = extras.getBoolean(ArticleModel.COLUMN_IS_ARTICLE);
         this.saved = extras.getBoolean(ArticleModel.COLUMN_SAVED);
     }
@@ -140,6 +144,7 @@ public final class Article implements DatabaseModel {
         intent.putExtra(ArticleModel.COLUMN_SOURCE, this.source);
         intent.putExtra(ArticleModel.COLUMN_DOMAIN, this.domain);
         intent.putExtra(ArticleModel.COLUMN_DURATION, this.duration);
+        intent.putExtra(ArticleModel.COLUMN_INSERTED_AT, this.insertedAt);
         intent.putExtra(ArticleModel.COLUMN_IS_ARTICLE, this.isArticle);
         intent.putExtra(ArticleModel.COLUMN_SAVED, this.saved);
     }
