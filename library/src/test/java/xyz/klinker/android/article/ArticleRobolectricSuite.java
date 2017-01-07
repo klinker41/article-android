@@ -33,7 +33,7 @@ import org.robolectric.annotation.Config;
 import xyz.klinker.android.article.data.DataSource;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 25, constants = BuildConfig.class)
+@Config(sdk = {25, 21, 19, 16}, constants = BuildConfig.class)
 public abstract class ArticleRobolectricSuite {
 
     @Before
