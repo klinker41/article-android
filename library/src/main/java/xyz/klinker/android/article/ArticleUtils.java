@@ -174,7 +174,7 @@ public final class ArticleUtils {
         Article loadedArticle = source.getArticle(url);
 
         final Article article;
-        if (loadedArticle != null) {
+        if (loadedArticle != null && loadedArticle.content != null) {
             article = loadedArticle;
         } else {
             article = api.article().parse(url);
@@ -185,7 +185,12 @@ public final class ArticleUtils {
                 // that url again later.
                 article.url = url;
 
-                source.insertArticle(article);
+                if (loadedArticle != null && loadedArticle.content == null) {
+                    loadedArticle.content = article.content;
+                    source.updateArticleContent(loadedArticle);
+                } else {
+                    source.insertArticle(article);
+                }
             }
         }
 

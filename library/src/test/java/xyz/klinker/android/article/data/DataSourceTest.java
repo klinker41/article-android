@@ -140,6 +140,21 @@ public class DataSourceTest extends ArticleRobolectricSuite {
     }
 
     @Test
+    public void updateArticleContent() {
+        Article article = new Article();
+        article.id = 2L;
+        article.content = "blah";
+        ContentValues values = new ContentValues();
+        values.put("content", "blah");
+
+        source.updateArticleContent(article);
+
+        verify(database).update("content", values, "article_id=?", new String[] {"2"});
+        verifyNoMoreInteractions(database);
+    }
+
+
+    @Test
     public void getArticle() {
         Cursor cursor = mock(Cursor.class);
         when(database.query(

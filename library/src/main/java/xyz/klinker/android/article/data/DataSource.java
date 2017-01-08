@@ -209,6 +209,20 @@ public final class DataSource {
     }
 
     /**
+     * Updates an article's content.
+     */
+    public void updateArticleContent(Article article) {
+        ContentValues values = new ContentValues(1);
+        values.put(ContentModel.COLUMN_CONTENT, article.content);
+
+        database.update(
+                ContentModel.TABLE,
+                values,
+                "article_id=?",
+                new String[] {Long.toString(article.id)});
+    }
+
+    /**
      * Gets a single article from the database. If there are multiple with the same URL, only the
      * first is returned.
      */

@@ -103,4 +103,14 @@ public class SQLiteQueryTest extends ArticleRealDataSuite {
 
         assertEquals(3, source.getAllArticles().getCount());
     }
+
+    @Test
+    public void updateArticleContent() {
+        Article article = source.getArticle("http://test.com/");
+        article.content = "blah";
+        source.updateArticleContent(article);
+
+        article = source.getArticle("http://test.com/");
+        assertEquals("blah", article.content);
+    }
 }
