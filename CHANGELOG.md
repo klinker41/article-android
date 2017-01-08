@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.12.1
+- Fix some permission issues
+
 ### v0.12.0
 - API for saving articles to apps that support it (See [README.md](README.md))
 
