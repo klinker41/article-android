@@ -23,6 +23,7 @@ import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.net.Uri;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Display;
@@ -66,21 +67,21 @@ import xyz.klinker.android.article.data.Article;
  */
 final class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final int TYPE_HEADER_IMAGE = 1;
-    private static final int TYPE_TITLE = 2;
-    private static final int TYPE_PARAGRAPH = 3;
-    private static final int TYPE_INLINE_IMAGE = 4;
-    private static final int TYPE_HEADER_1 = 5;
-    private static final int TYPE_HEADER_2 = 6;
-    private static final int TYPE_HEADER_3 = 7;
-    private static final int TYPE_HEADER_4 = 8;
-    private static final int TYPE_HEADER_5 = 9;
-    private static final int TYPE_HEADER_6 = 10;
-    private static final int TYPE_BLOCKQUOTE = 11;
-    private static final int TYPE_PRE = 12;
-    private static final int TYPE_UNORDERED_LIST_ITEM = 13;
-    private static final int TYPE_ORDERED_LIST_ITEM = 14;
-    private static final int TYPE_OTHER = 15;
+    @VisibleForTesting static final int TYPE_HEADER_IMAGE = 1;
+    @VisibleForTesting static final int TYPE_TITLE = 2;
+    @VisibleForTesting static final int TYPE_PARAGRAPH = 3;
+    @VisibleForTesting static final int TYPE_INLINE_IMAGE = 4;
+    @VisibleForTesting static final int TYPE_HEADER_1 = 5;
+    @VisibleForTesting static final int TYPE_HEADER_2 = 6;
+    @VisibleForTesting static final int TYPE_HEADER_3 = 7;
+    @VisibleForTesting static final int TYPE_HEADER_4 = 8;
+    @VisibleForTesting static final int TYPE_HEADER_5 = 9;
+    @VisibleForTesting static final int TYPE_HEADER_6 = 10;
+    @VisibleForTesting static final int TYPE_BLOCKQUOTE = 11;
+    @VisibleForTesting static final int TYPE_PRE = 12;
+    @VisibleForTesting static final int TYPE_UNORDERED_LIST_ITEM = 13;
+    @VisibleForTesting static final int TYPE_ORDERED_LIST_ITEM = 14;
+    @VisibleForTesting static final int TYPE_OTHER = 15;
     private static final int MIN_IMAGE_WIDTH = 200; // px
     private static final int MIN_IMAGE_HEIGHT = 100; // px
 
@@ -153,7 +154,8 @@ final class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private int getItemResourceFromType(int viewType) {
+    @VisibleForTesting
+    int getItemResourceFromType(int viewType) {
         switch (viewType) {
             case TYPE_HEADER_IMAGE:         return R.layout.article_item_header;
             case TYPE_TITLE:                return R.layout.article_item_title;
@@ -331,7 +333,8 @@ final class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return count;
     }
 
-    private int getItemTypeForTag(String tag) {
+    @VisibleForTesting
+    int getItemTypeForTag(String tag) {
         switch(tag) {
             case "p":           return TYPE_PARAGRAPH;
             case "h1":          return TYPE_HEADER_1;
@@ -354,7 +357,8 @@ final class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    private class TextViewHolder extends RecyclerView.ViewHolder {
+    @VisibleForTesting
+    class TextViewHolder extends RecyclerView.ViewHolder {
         public TextView text;
 
         private TextViewHolder(View itemView, int accentColor) {
@@ -366,7 +370,8 @@ final class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private class BlockQuoteViewHolder extends TextViewHolder {
+    @VisibleForTesting
+    class BlockQuoteViewHolder extends TextViewHolder {
         private BlockQuoteViewHolder(View itemView, int accentColor) {
             super(itemView, accentColor);
             text.setTextColor(accentColor);
@@ -374,7 +379,8 @@ final class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private class ImageViewHolder extends RecyclerView.ViewHolder {
+    @VisibleForTesting
+    class ImageViewHolder extends RecyclerView.ViewHolder {
         public ImageView image;
         public String url;
 
@@ -393,13 +399,15 @@ final class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private class HeaderImageViewHolder extends ImageViewHolder {
+    @VisibleForTesting
+    class HeaderImageViewHolder extends ImageViewHolder {
         private HeaderImageViewHolder(View itemView) {
             super(itemView);
         }
     }
 
-    private class TitleTextViewHolder extends TextViewHolder {
+    @VisibleForTesting
+    class TitleTextViewHolder extends TextViewHolder {
         public TextView author;
         public TextView source;
 
@@ -412,7 +420,8 @@ final class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private class SubtitleTextViewHolder extends TextViewHolder {
+    @VisibleForTesting
+    class SubtitleTextViewHolder extends TextViewHolder {
         private SubtitleTextViewHolder(View itemView, int accentColor) {
             super(itemView, accentColor);
             text.setTextSize(textSize + 3);
