@@ -35,6 +35,10 @@ android {
         htmlReport true
     }
 
+    buildTypes.all {
+        consumerProguardFiles 'proguard-rules.pro'
+    }
+
     resourcePrefix "article_"
 }
 
