@@ -1,5 +1,11 @@
 # Changelog
 
+### v0.14.0
+- Add `source` and `category` tables for some future features.
+
+### v0.13.0
+- Fix proguard configuration. No app's implementing this library will need to make changes
+
 ### v0.12.1
 - Fix some permission issues
 
