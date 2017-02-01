@@ -273,6 +273,10 @@ public final class ArticleUtils {
      */
     void parseArticleContent(final Article article, final ArticleParsedListener callback) {
         final Handler handler = new Handler();
+        
+        if (article.content == null) {
+            return;
+        }
 
         new Thread(new Runnable() {
             @Override
