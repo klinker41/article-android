@@ -35,6 +35,7 @@ public final class ArticleModel implements DatabaseTable {
     public static final String COLUMN_INSERTED_AT = "inserted_at";
     public static final String COLUMN_IS_ARTICLE = "is_article";
     public static final String COLUMN_SAVED = "saved";
+    public static final String COLUMN_SOURCE_ID = "source_id";
 
     private static final String DATABASE_CREATE = "create table if not exists " +
             TABLE + " (" +
@@ -50,12 +51,15 @@ public final class ArticleModel implements DatabaseTable {
             COLUMN_DURATION + " integer, " +
             COLUMN_INSERTED_AT + " integer not null, " +
             COLUMN_IS_ARTICLE + " integer not null, " +
-            COLUMN_SAVED + " integer not null" +
+            COLUMN_SAVED + " integer not null, " +
+            COLUMN_SOURCE_ID + " integer " +
             ");";
 
     private static final String[] INDEXES = {
             "create index if not exists url_article_index on " + TABLE +
-                    " (" + COLUMN_URL + ");"
+                    " (" + COLUMN_URL + ");",
+            "create index if not exists source_id_article_index on " + TABLE +
+                    " (" + COLUMN_SOURCE_ID + ");"
     };
 
     @Override

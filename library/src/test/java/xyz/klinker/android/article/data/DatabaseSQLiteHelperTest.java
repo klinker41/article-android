@@ -25,7 +25,9 @@ import org.robolectric.RuntimeEnvironment;
 
 import xyz.klinker.android.article.ArticleRobolectricSuite;
 import xyz.klinker.android.article.data.model.ArticleModel;
+import xyz.klinker.android.article.data.model.CategoryModel;
 import xyz.klinker.android.article.data.model.ContentModel;
+import xyz.klinker.android.article.data.model.SourceModel;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -55,16 +57,37 @@ public class DatabaseSQLiteHelperTest extends ArticleRobolectricSuite {
     }
 
     @Test
+    public void onUpgrade1to3() {
+        helper.onUpgrade(database, 1, 3);
+        verify2Upgrade();
+        verify3Upgrade();
+    }
+
+    @Test
     public void onUpgrade2to3() {
         helper.onUpgrade(database, 2, 3);
         verify3Upgrade();
     }
 
     @Test
-    public void onUpgrade1to3() {
-        helper.onUpgrade(database, 1, 3);
+    public void onUpgrade1to4() {
+        helper.onUpgrade(database, 1, 4);
         verify2Upgrade();
         verify3Upgrade();
+        verify4Upgrade();
+    }
+
+    @Test
+    public void onUpgrade2to4() {
+        helper.onUpgrade(database, 2, 4);
+        verify3Upgrade();
+        verify4Upgrade();
+    }
+
+    @Test
+    public void onUpgrade3to4() {
+        helper.onUpgrade(database, 3, 4);
+        verify4Upgrade();
     }
 
     @Test
@@ -76,8 +99,12 @@ public class DatabaseSQLiteHelperTest extends ArticleRobolectricSuite {
     private void verifyCreateStatement() {
         verify(database).execSQL(new ArticleModel().getCreateStatement());
         verify(database).execSQL(new ContentModel().getCreateStatement());
+        verify(database).execSQL(new SourceModel().getCreateStatement());
+        verify(database).execSQL(new CategoryModel().getCreateStatement());
         verify(database).execSQL(new ArticleModel().getIndexStatements()[0]);
+        verify(database).execSQL(new ArticleModel().getIndexStatements()[1]);
         verify(database).execSQL(new ContentModel().getIndexStatements()[0]);
+        verify(database).execSQL(new SourceModel().getIndexStatements()[0]);
         verifyNoMoreInteractions(database);
     }
 
@@ -86,12 +113,22 @@ public class DatabaseSQLiteHelperTest extends ArticleRobolectricSuite {
     }
 
     private void verify3Upgrade() {
+        verify(database).execSQL(new SourceModel().getCreateStatement());
+        verify(database).execSQL(new CategoryModel().getCreateStatement());
+        verify(database).execSQL(new SourceModel().getIndexStatements()[0]);
+        verify(database).execSQL("ALTER TABLE article ADD COLUMN source_id integer");
+        verify(database).execSQL(new ArticleModel().getIndexStatements()[1]);
+    }
+
+    private void verify4Upgrade() {
         // do nothing for now, fill with more database migrations.
     }
 
     private void verifyDropStatement() {
         verify(database).execSQL("drop table if exists article");
         verify(database).execSQL("drop table if exists content");
+        verify(database).execSQL("drop table if exists source");
+        verify(database).execSQL("drop table if exists category");
         verifyNoMoreInteractions(database);
     }
 }

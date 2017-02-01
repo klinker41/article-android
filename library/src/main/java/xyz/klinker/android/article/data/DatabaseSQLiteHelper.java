@@ -21,8 +21,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import xyz.klinker.android.article.data.model.ArticleModel;
+import xyz.klinker.android.article.data.model.CategoryModel;
 import xyz.klinker.android.article.data.model.ContentModel;
 import xyz.klinker.android.article.data.model.DatabaseTable;
+import xyz.klinker.android.article.data.model.SourceModel;
 
 /**
  * Handles creating and updating a database.
@@ -30,11 +32,13 @@ import xyz.klinker.android.article.data.model.DatabaseTable;
 public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "articles.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     private DatabaseTable[] tables = {
             new ArticleModel(),
-            new ContentModel()
+            new ContentModel(),
+            new SourceModel(),
+            new CategoryModel()
     };
 
     /**
@@ -62,6 +66,16 @@ public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
         if (oldVersion < 2) {
             try {
                 db.execSQL("ALTER TABLE article ADD COLUMN saved integer not null DEFAULT 0");
+            } catch(Exception e) { }
+        }
+
+        if (oldVersion < 3) {
+            try {
+                db.execSQL(tables[2].getCreateStatement());
+                db.execSQL(tables[3].getCreateStatement());
+                db.execSQL(tables[2].getIndexStatements()[0]);
+                db.execSQL("ALTER TABLE article ADD COLUMN source_id integer");
+                db.execSQL(tables[0].getIndexStatements()[1]);
             } catch(Exception e) { }
         }
     }
