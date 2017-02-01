@@ -74,6 +74,8 @@ public class DatabaseSQLiteHelper extends SQLiteOpenHelper {
                 db.execSQL(tables[2].getCreateStatement());
                 db.execSQL(tables[3].getCreateStatement());
                 db.execSQL(tables[2].getIndexStatements()[0]);
+                db.execSQL(tables[2].getIndexStatements()[1]);
+                db.execSQL(tables[3].getIndexStatements()[0]);
                 db.execSQL("ALTER TABLE article ADD COLUMN source_id integer");
                 db.execSQL(tables[0].getIndexStatements()[1]);
             } catch(Exception e) { }

@@ -31,7 +31,9 @@ public class CategoryModel implements DatabaseTable {
             COLUMN_NAME + " text not null" +
             ");";
 
-    private static final String[] INDEXES = {};
+    private static final String[] INDEXES = {
+            "create index if not exists name_category_index on " + TABLE +
+                    " (" + COLUMN_NAME + ");"};
 
     @Override
     public String getCreateStatement() {

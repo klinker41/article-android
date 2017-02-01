@@ -105,6 +105,8 @@ public class DatabaseSQLiteHelperTest extends ArticleRobolectricSuite {
         verify(database).execSQL(new ArticleModel().getIndexStatements()[1]);
         verify(database).execSQL(new ContentModel().getIndexStatements()[0]);
         verify(database).execSQL(new SourceModel().getIndexStatements()[0]);
+        verify(database).execSQL(new SourceModel().getIndexStatements()[1]);
+        verify(database).execSQL(new CategoryModel().getIndexStatements()[0]);
         verifyNoMoreInteractions(database);
     }
 
@@ -116,6 +118,8 @@ public class DatabaseSQLiteHelperTest extends ArticleRobolectricSuite {
         verify(database).execSQL(new SourceModel().getCreateStatement());
         verify(database).execSQL(new CategoryModel().getCreateStatement());
         verify(database).execSQL(new SourceModel().getIndexStatements()[0]);
+        verify(database).execSQL(new SourceModel().getIndexStatements()[1]);
+        verify(database).execSQL(new CategoryModel().getIndexStatements()[0]);
         verify(database).execSQL("ALTER TABLE article ADD COLUMN source_id integer");
         verify(database).execSQL(new ArticleModel().getIndexStatements()[1]);
     }

@@ -6,11 +6,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.VisibleForTesting;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import xyz.klinker.android.article.ArticleUtils;
 import xyz.klinker.android.article.data.model.ArticleModel;
+import xyz.klinker.android.article.data.model.CategoryModel;
 import xyz.klinker.android.article.data.model.ContentModel;
+import xyz.klinker.android.article.data.model.SourceModel;
 
 /**
  * Handles interactions with database models.
@@ -174,7 +178,7 @@ public final class DataSource {
         // remove any extra query parameters from the url
         article.url = ArticleUtils.removeUrlParameters(article.url);
 
-        ContentValues values = new ContentValues(10);
+        ContentValues values = new ContentValues(11);
         values.put(ArticleModel.COLUMN_ALIAS, article.alias);
         values.put(ArticleModel.COLUMN_URL, article.url);
         values.put(ArticleModel.COLUMN_TITLE, article.title);
@@ -187,6 +191,7 @@ public final class DataSource {
         values.put(ArticleModel.COLUMN_INSERTED_AT, System.currentTimeMillis());
         values.put(ArticleModel.COLUMN_IS_ARTICLE, article.isArticle);
         values.put(ArticleModel.COLUMN_SAVED, article.saved);
+        values.put(ArticleModel.COLUMN_SOURCE_ID, article.sourceId);
 
         long id = database.insert(ArticleModel.TABLE, null, values);
 
@@ -298,4 +303,167 @@ public final class DataSource {
                 ArticleModel.COLUMN_INSERTED_AT + " desc");
     }
 
+    /**
+     * Gets all articles for a particular source.
+     *
+     * NOTE: this method does not return the content associated with the article, that would be
+     *       slow as some articles can get very large.
+     *
+     * @param remoteSourceId the source to get articles for.
+     * @return a cursor of articles.
+     */
+    public Cursor getArticlesForSource(long remoteSourceId) {
+        return database.query(
+                ArticleModel.TABLE,
+                null,
+                ArticleModel.COLUMN_SOURCE_ID + "=?",
+                new String[] {Long.toString(remoteSourceId)},
+                null,
+                null,
+                ArticleModel.COLUMN_INSERTED_AT + " desc");
+    }
+
+    /**
+     * Inserts a category into the database with the provided name.
+     *
+     * @param categoryName the category name.
+     * @return the id of the inserted category.
+     */
+    public long insertCategory(String categoryName) {
+        ContentValues values = new ContentValues(1);
+        values.put(CategoryModel.COLUMN_NAME, categoryName);
+        return database.insert(CategoryModel.TABLE, null, values);
+    }
+
+    /**
+     * Checks to see if a category already exists in the database.
+     *
+     * @param name the category name to search for.
+     * @return true if it exists, false otherwise.
+     */
+    @VisibleForTesting
+    boolean categoryExists(String name) {
+        return getCategoryId(name) != null;
+    }
+
+    /**
+     * Gets the id of a category.
+     *
+     * @param name
+     * @return
+     */
+    @VisibleForTesting
+    Long getCategoryId(String name) {
+        Cursor cursor = database.query(
+                CategoryModel.TABLE,
+                null,
+                CategoryModel.COLUMN_NAME + "=?",
+                new String[] {name},
+                null,
+                null,
+                null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            long id = cursor.getLong(cursor.getColumnIndex(CategoryModel.COLUMN_ID));
+            cursor.close();
+            return id;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Inserts a source into the database. Also will insert a category if that category does not
+     * already exist.
+     *
+     * @param source the source to insert.
+     */
+    public void insertSource(Source source) {
+        if (!categoryExists(source.categoryName)) {
+            source.categoryId = insertCategory(source.categoryName);
+        } else if (source.categoryId == null) {
+            source.categoryId = getCategoryId(source.categoryName);
+        }
+
+        ContentValues values = new ContentValues(4);
+        values.put(SourceModel.COLUMN_NAME, source.name);
+        values.put(SourceModel.COLUMN_IMAGE_URL, source.imageUrl);
+        values.put(SourceModel.COLUMN_REMOTE_ID, source.remoteId);
+        values.put(SourceModel.COLUMN_CATEGORY_ID, source.categoryId);
+        database.insert(SourceModel.TABLE, null, values);
+    }
+
+    /**
+     * Gets all sources in the database.
+     *
+     * @return a list of all sources.
+     */
+    public List<Source> getSources() {
+        Cursor cursor = database.query(
+                SourceModel.TABLE + " s left outer join " + CategoryModel.TABLE + " c on " +
+                        "s." + SourceModel.COLUMN_CATEGORY_ID + " = " +
+                        "c." + CategoryModel.COLUMN_ID,
+                new String[] {
+                        "s." + SourceModel.COLUMN_ID + " as s" + SourceModel.COLUMN_ID,
+                        "s." + SourceModel.COLUMN_NAME + " as s" + SourceModel.COLUMN_NAME,
+                        "s." + SourceModel.COLUMN_IMAGE_URL + " as s" + SourceModel.COLUMN_IMAGE_URL,
+                        "s." + SourceModel.COLUMN_REMOTE_ID + " as s" + SourceModel.COLUMN_REMOTE_ID,
+                        "c." + CategoryModel.COLUMN_ID + " as c" + CategoryModel.COLUMN_ID,
+                        "c." + CategoryModel.COLUMN_NAME + " as c" + CategoryModel.COLUMN_NAME
+                },
+                null,
+                null,
+                null,
+                null,
+                null);
+
+        List<Source> sources = new ArrayList<>();
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                sources.add(new Source(cursor));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
+        return sources;
+    }
+
+    /**
+     * Gets a list of categories and the number of articles that each contains, since the provided
+     * timestamp.
+     *
+     * @param timestamp the timestamp to query articles starting at.
+     * @return a list of categories.
+     */
+    public CategoryCounts getCategoryCounts(long timestamp) {
+        Cursor cursor = database.query(
+                ArticleModel.TABLE + " a join " + SourceModel.TABLE + " s on a." +
+                        ArticleModel.COLUMN_SOURCE_ID + " = s." + SourceModel.COLUMN_REMOTE_ID +
+                        " join " + CategoryModel.TABLE + " c on s." +
+                        SourceModel.COLUMN_CATEGORY_ID + " = c." + CategoryModel.COLUMN_ID,
+                new String[] {
+                        "c." + CategoryModel.COLUMN_NAME + " as " + CategoryModel.COLUMN_NAME,
+                        "count(c." + CategoryModel.COLUMN_ID + ") as count"
+                },
+                "a." + ArticleModel.COLUMN_INSERTED_AT + " > ? and " +
+                        "a." + ArticleModel.COLUMN_SOURCE_ID + " not null",
+                new String[] { Long.toString(timestamp) },
+                "c." + CategoryModel.COLUMN_ID,
+                null,
+                "count desc"
+        );
+
+        List<Category> categories = new ArrayList<>();
+        int total = 0;
+        if (cursor != null & cursor.moveToFirst()) {
+            do {
+                Category category = new Category(cursor);
+                total += category.numberArticles;
+                categories.add(category);
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
+        return new CategoryCounts(categories, total);
+    }
 }

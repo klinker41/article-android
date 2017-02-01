@@ -43,6 +43,7 @@ public final class Article implements DatabaseModel {
     public long insertedAt;
     public boolean isArticle;
     public boolean saved;
+    public Long sourceId;
 
     /**
      * Creates a blank article that can be filled manually.
@@ -103,6 +104,8 @@ public final class Article implements DatabaseModel {
                 this.isArticle = cursor.getInt(i) == 1;
             } else if (column.equals(ArticleModel.COLUMN_SAVED)) {
                 this.saved = cursor.getInt(i) == 1;
+            } else if (column.equals(ArticleModel.COLUMN_SOURCE_ID)) {
+                this.sourceId = cursor.getLong(i);
             }
         }
     }

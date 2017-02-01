@@ -39,7 +39,9 @@ public class SourceModel implements DatabaseTable {
 
     private static final String[] INDEXES = {
             "create index if not exists category_id_source_index on " + TABLE +
-                    " (" + COLUMN_CATEGORY_ID + ");"
+                    " (" + COLUMN_CATEGORY_ID + ");",
+            "create index if not exists remote_id_source_index on " + TABLE +
+                    " (" + COLUMN_REMOTE_ID + ");"
     };
 
     @Override

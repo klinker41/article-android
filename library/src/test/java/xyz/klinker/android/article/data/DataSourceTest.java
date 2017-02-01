@@ -29,12 +29,14 @@ import org.robolectric.RuntimeEnvironment;
 import xyz.klinker.android.article.ArticleRobolectricSuite;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -153,10 +155,8 @@ public class DataSourceTest extends ArticleRobolectricSuite {
         verifyNoMoreInteractions(database);
     }
 
-
     @Test
     public void getArticle() {
-        Cursor cursor = mock(Cursor.class);
         when(database.query(
                 anyString(),
                 any(String[].class),
@@ -197,5 +197,110 @@ public class DataSourceTest extends ArticleRobolectricSuite {
         when(database.query("article", null, "saved=1", null, null, null, "inserted_at desc"))
                 .thenReturn(cursor);
         assertEquals(cursor, source.getSavedArticles());
+    }
+
+    @Test
+    public void insertCategory() {
+        source.insertCategory("test");
+        verify(database).insert(eq("category"), eq((String) null), any(ContentValues.class));
+        verifyNoMoreInteractions(database);
+    }
+
+    @Test
+    public void categoryExists() {
+        when(database.query("category", null, "name=?", new String[] {"test"}, null, null, null))
+                .thenReturn(cursor);
+        when(cursor.getCount()).thenReturn(1);
+        when(cursor.moveToFirst()).thenReturn(true);
+        assertTrue(source.categoryExists("test"));
+    }
+
+    @Test
+    public void categoryDoesNotExist() {
+        when(database.query("category", null, "name=?", new String[] {"test"}, null, null, null))
+                .thenReturn(cursor);
+        when(cursor.getCount()).thenReturn(0);
+        when(cursor.moveToFirst()).thenReturn(false);
+        assertFalse(source.categoryExists("test"));
+    }
+
+    @Test
+    public void categoryDoesNotExist_null() {
+        when(database.query("category", null, "name=?", new String[] {"test"}, null, null, null))
+                .thenReturn(null);
+        assertFalse(source.categoryExists("test"));
+    }
+
+    @Test
+    public void getCategoryId() {
+        when(database.query("category", null, "name=?", new String[] {"test"}, null, null, null))
+                .thenReturn(cursor);
+        when(cursor.getCount()).thenReturn(1);
+        when(cursor.moveToFirst()).thenReturn(true);
+        when(cursor.getLong(anyInt())).thenReturn(2L);
+        assertEquals(Long.valueOf(2L), source.getCategoryId("test"));
+    }
+
+    @Test
+    public void getCategoryId_none() {
+        when(database.query("category", null, "name=?", new String[] {"test"}, null, null, null))
+                .thenReturn(cursor);
+        when(cursor.getCount()).thenReturn(0);
+        when(cursor.moveToFirst()).thenReturn(false);
+        assertNull(source.getCategoryId("test"));
+    }
+
+    @Test
+    public void getCategoryId_null() {
+        when(database.query("category", null, "name=?", new String[] {"test"}, null, null, null))
+                .thenReturn(null);
+        assertNull(source.getCategoryId("test"));
+    }
+
+    @Test
+    public void getArticlesForSourceId() {
+        when(database.query(
+                "article",
+                null,
+                "source_id=?",
+                new String[] {"1"},
+                null,
+                null,
+                "inserted_at desc")).thenReturn(cursor);
+        assertEquals(cursor, source.getArticlesForSource(1L));
+    }
+
+    @Test
+    public void getSources() {
+        when(database.query(
+                anyString(),
+                any(String[].class),
+                eq((String) null),
+                eq((String[]) null),
+                eq((String) null),
+                eq((String) null),
+                eq((String) null)))
+                .thenReturn(cursor);
+        assertNotNull(source.getSources());
+    }
+
+    @Test
+    public void getCategoriesCount() {
+        when(database.query(
+                anyString(),
+                any(String[].class),
+                anyString(),
+                any(String[].class),
+                anyString(),
+                eq((String) null),
+                anyString()))
+                .thenReturn(cursor);
+        assertNotNull(source.getCategoryCounts(1));
+    }
+
+    @Test
+    public void insertSource() {
+        source.insertSource(new Source());
+        verify(database).insert(eq("source"), eq((String) null), any(ContentValues.class));
     }
 }

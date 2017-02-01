@@ -45,7 +45,8 @@ public class ArticleTest extends ArticleRobolectricSuite {
                 "duration",
                 "inserted_at",
                 "is_article",
-                "saved"
+                "saved",
+                "source_id"
         });
 
         cursor.addRow(new Object[]{
@@ -62,7 +63,8 @@ public class ArticleTest extends ArticleRobolectricSuite {
                 1,
                 2,
                 1,
-                0
+                0,
+                2L
         });
 
         cursor.moveToFirst();
@@ -82,6 +84,7 @@ public class ArticleTest extends ArticleRobolectricSuite {
         assertEquals(2, article.insertedAt);
         assertTrue(article.isArticle);
         assertFalse(article.saved);
+        assertEquals(2L, (long) article.sourceId);
     }
 
     @Test
