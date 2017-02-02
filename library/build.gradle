@@ -28,8 +28,9 @@ android {
     }
 
     lintOptions {
-        abortOnError false
-        disable 'InvalidPackage', 'TrustAllX509TrustManager', 'UnusedAttribute'
+        abortOnError true
+        disable 'InvalidPackage', 'TrustAllX509TrustManager', 'UnusedAttribute',
+                'IconMissingDensityFolder', 'StaticFieldLeak'
         textOutput 'stdout'
         xmlReport false
         htmlReport true

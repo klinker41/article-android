@@ -52,8 +52,8 @@ android {
     }
 
     lintOptions {
-        abortOnError false
-        disable 'GoogleAppIndexingWarning', 'AllowBackup'
+        abortOnError true
+        disable 'GoogleAppIndexingWarning', 'AllowBackup', 'ExportedReciever'
         textOutput 'stdout'
         xmlReport false
         htmlReport true

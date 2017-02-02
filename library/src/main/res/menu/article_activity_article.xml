@@ -20,7 +20,7 @@
     <item
         android:id="@+id/article_save"
         android:title="@string/article_save_title"
-        android:icon="@drawable/ic_empty"
+        android:icon="@drawable/article_ic_empty"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/article_open_in_chrome"

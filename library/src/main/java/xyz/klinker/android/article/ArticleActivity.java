@@ -119,7 +119,7 @@ public final class ArticleActivity extends AppCompatActivity
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.article_ic_close);
             getSupportActionBar().setTitle(null);
         }
 
@@ -210,9 +210,9 @@ public final class ArticleActivity extends AppCompatActivity
         if (article != null && save != null) {
             if (permissionAvailable) {
                 if (article.saved) {
-                    save.setIcon(R.drawable.ic_star);
+                    save.setIcon(R.drawable.article_ic_star);
                 } else {
-                    save.setIcon(R.drawable.ic_star_border);
+                    save.setIcon(R.drawable.article_ic_star_border);
                 }
             } else {
                 menu.removeItem(0);
