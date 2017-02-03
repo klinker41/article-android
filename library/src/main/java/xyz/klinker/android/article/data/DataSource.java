@@ -168,10 +168,14 @@ public final class DataSource {
         values.put(ArticleModel.COLUMN_SOURCE, article.source);
         values.put(ArticleModel.COLUMN_DOMAIN, article.domain);
         values.put(ArticleModel.COLUMN_DURATION, article.duration);
-        values.put(ArticleModel.COLUMN_INSERTED_AT, System.currentTimeMillis());
         values.put(ArticleModel.COLUMN_IS_ARTICLE, article.isArticle);
         values.put(ArticleModel.COLUMN_SAVED, article.saved);
         values.put(ArticleModel.COLUMN_SOURCE_ID, article.sourceId);
+        if (article.insertedAt == 0) {
+            values.put(ArticleModel.COLUMN_INSERTED_AT, System.currentTimeMillis());
+        } else {
+            values.put(ArticleModel.COLUMN_INSERTED_AT, article.insertedAt);
+        }
 
         long id = database.insert(ArticleModel.TABLE, null, values);
 
