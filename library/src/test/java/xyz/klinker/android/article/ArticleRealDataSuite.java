@@ -19,6 +19,7 @@ package xyz.klinker.android.article;
 import android.annotation.TargetApi;
 import android.database.sqlite.SQLiteDatabase;
 
+import org.junit.After;
 import org.junit.Before;
 import org.robolectric.RuntimeEnvironment;
 
@@ -36,15 +37,21 @@ import static junit.framework.Assert.assertTrue;
 public abstract class ArticleRealDataSuite extends ArticleRobolectricSuite {
 
     public DataSource source;
+    private DatabaseSQLiteHelper helper;
 
     @Before
     public void setUp() throws Exception {
         SQLiteDatabase database = SQLiteDatabase.create(null);
-        DatabaseSQLiteHelper helper = new DatabaseSQLiteHelper(RuntimeEnvironment.application);
+        helper = new DatabaseSQLiteHelper(RuntimeEnvironment.application);
         helper.onCreate(database);
 
         source = new DataSource(database);
         insertData();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        helper.close();
     }
 
     private void insertData() throws Exception {

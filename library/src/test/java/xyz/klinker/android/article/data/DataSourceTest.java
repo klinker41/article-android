@@ -69,7 +69,7 @@ public class DataSourceTest extends ArticleRobolectricSuite {
 
     @Test
     public void realConstructor() {
-        DataSource dataSource = DataSource.getInstance(RuntimeEnvironment.application);
+        DataSource dataSource = DataSource.get(RuntimeEnvironment.application);
         dataSource.open();
         dataSource.close();
     }

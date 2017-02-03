@@ -22,15 +22,12 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-
-import xyz.klinker.android.article.data.DataSource;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = {16, 19, 21, 25}, constants = BuildConfig.class)
@@ -39,11 +36,6 @@ public abstract class ArticleRobolectricSuite {
     @Before
     public final void setup() {
         MockitoAnnotations.initMocks(this);
-    }
-
-    @After
-    public final void teardown() {
-        DataSource.forceCloseImmediate();
     }
 
     /**

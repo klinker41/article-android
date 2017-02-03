@@ -81,7 +81,7 @@ public final class ArticleUtils {
      */
     public void preloadArticle(final Context context, final String url,
                                final ArticleLoadedListener callback) {
-        DataSource source = DataSource.getInstance(context);
+        DataSource source = DataSource.get(context);
         loadArticle(url, source, new ArticleLoadedListener() {
             @Override
             public void onArticleLoaded(final Article article) {
@@ -113,7 +113,7 @@ public final class ArticleUtils {
      * @param url the url to try and preload.
      */
     public Article fetchArticle(final Context context, final String url) {
-        DataSource source = DataSource.getInstance(context);
+        DataSource source = DataSource.get(context);
         final Article article = loadArticleSync(url, source, null, null);
 
         if (article != null && article.isArticle && article.content != null) {

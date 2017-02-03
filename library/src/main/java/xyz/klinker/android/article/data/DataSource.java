@@ -21,9 +21,6 @@ import xyz.klinker.android.article.data.model.SourceModel;
  */
 public final class DataSource {
 
-    private static final String TAG = "DataSource";
-    private static volatile DataSource instance;
-
     protected Context context;
     private SQLiteDatabase database;
     private DatabaseSQLiteHelper dbHelper;
@@ -35,12 +32,8 @@ public final class DataSource {
      * @param context the current application instance.
      * @return the data source.
      */
-    public static DataSource getInstance(Context context) {
-        if (instance == null) {
-            instance = new DataSource(context);
-        }
-
-        return instance;
+    public static DataSource get(Context context) {
+        return new DataSource(context);
     }
 
     /**
@@ -59,7 +52,7 @@ public final class DataSource {
      * @param helper Mock of the database helper
      */
     @VisibleForTesting
-    protected DataSource(DatabaseSQLiteHelper helper) {
+    DataSource(DatabaseSQLiteHelper helper) {
         this.dbHelper = helper;
     }
 
@@ -95,19 +88,6 @@ public final class DataSource {
     public synchronized void close() {
         if (openCounter.decrementAndGet() == 0) {
             dbHelper.close();
-        }
-    }
-
-    /**
-     * Available to close the database after tests have finished running. Don't call
-     * in the production application outside of test code.
-     */
-    @VisibleForTesting
-    public synchronized static void forceCloseImmediate() {
-        if (instance != null && instance.openCounter.get() > 0) {
-            instance.openCounter.set(0);
-            instance.dbHelper.close();
-            instance = null;
         }
     }
 

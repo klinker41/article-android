@@ -90,7 +90,7 @@ public final class ArticleActivity extends AppCompatActivity
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
         }
 
-        DataSource source = DataSource.getInstance(this);
+        DataSource source = DataSource.get(this);
         this.utils = new ArticleUtils(getIntent().getStringExtra(ArticleIntent.EXTRA_API_TOKEN));
         this.utils.loadArticle(url, source, this);
 
@@ -262,7 +262,7 @@ public final class ArticleActivity extends AppCompatActivity
         new Thread(new Runnable() {
             @Override
             public void run() {
-                DataSource source = DataSource.getInstance(ArticleActivity.this);
+                DataSource source = DataSource.get(ArticleActivity.this);
                 source.open();
                 source.updateSavedArticleState(article);
                 source.close();
