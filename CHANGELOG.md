@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.15.1
+- Refactor away from the singleton pattern for the `DataSource`
+
 ### v0.14.0
 - Add `source` and `category` tables for some future features.
 
