@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.15.2
+- Improve Android Wear 2.0 support
+
 ### v0.15.1
 - Refactor away from the singleton pattern for the `DataSource`
 

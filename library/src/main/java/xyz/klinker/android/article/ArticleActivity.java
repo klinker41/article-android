@@ -31,6 +31,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import org.jsoup.select.Elements;
 
@@ -249,7 +250,13 @@ public final class ArticleActivity extends AppCompatActivity
         intent.intent.putExtras(getIntent().getExtras());
 
         // launch the url with the specified intent
-        intent.launchUrl(this, Uri.parse(url));
+        try {
+            intent.launchUrl(this, Uri.parse(url));
+        } catch (SecurityException e) {
+            // this throws an exception on Android Wear (yes you can use this library on android wear)
+            // since webkit is not supported, and there is no Google Chrome on Wear.
+            Toast.makeText(this, R.string.article_not_supported, Toast.LENGTH_SHORT).show();
+        }
 
         // finish the current activity so that the back button takes us back
         finish();
