@@ -19,7 +19,7 @@ import xyz.klinker.android.article.data.model.SourceModel;
 /**
  * Handles interactions with database models.
  */
-public final class DataSource {
+public class DataSource {
 
     protected Context context;
     private SQLiteDatabase database;
