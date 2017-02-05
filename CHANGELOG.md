@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.15.3
+- Remove final modifier on DataSource for easier mocking
+
 ### v0.15.2
 - Improve Android Wear 2.0 support
 
