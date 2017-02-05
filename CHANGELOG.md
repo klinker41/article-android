@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.15.4
+- Add datastore method to remove a source
+
 ### v0.15.3
 - Remove final modifier on DataSource for easier mocking
 
