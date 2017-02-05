@@ -303,4 +303,10 @@ public class DataSourceTest extends ArticleRobolectricSuite {
         source.insertSource(new Source());
         verify(database).insert(eq("source"), eq((String) null), any(ContentValues.class));
     }
+
+    @Test
+    public void deleteSource() {
+        source.deleteSource("test");
+        verify(database).delete("source", "name=?", new String[] {"test"});
+    }
 }

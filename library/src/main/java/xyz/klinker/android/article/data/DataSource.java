@@ -378,6 +378,13 @@ public class DataSource {
     }
 
     /**
+     * Deletes a source from the database depending on its name.
+     */
+    public void deleteSource(String name) {
+        database.delete(SourceModel.TABLE, SourceModel.COLUMN_NAME + "=?", new String[] {name});
+    }
+
+    /**
      * Gets all sources in the database.
      *
      * @return a list of all sources.
