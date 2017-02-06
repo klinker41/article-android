@@ -1,6 +1,6 @@
 # Changelog
 
-### v0.15.5
+### v0.15.6
 - Better equals() method for source comparisons
 - Add datastore method to remove a source
 - Remove final modifier on DataSource for easier mocking
