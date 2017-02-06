@@ -92,5 +92,6 @@ public class SourceTest extends ArticleRobolectricSuite {
         source.categoryName = categoryName;
         source.categoryId = categoryId;
         source.remoteId = remoteId;
+        return source;
     }
 }
