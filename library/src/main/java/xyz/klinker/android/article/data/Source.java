@@ -82,4 +82,9 @@ public class Source implements DatabaseModel {
             return false;
         }
     }
+
+    @Override
+    public int hashCode() {
+        return this.name.hashCode() + this.imageUrl.hashCode() + this.categoryName.hashCode();
+    }
 }
