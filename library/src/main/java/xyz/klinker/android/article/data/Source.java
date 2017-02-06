@@ -70,4 +70,19 @@ public class Source implements DatabaseModel {
             }
         }
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object instanceof Source) {
+            Source source = (Source) object;
+            return this.id == source.id &&
+                    this.name.equals(source.name) &&
+                    this.imageUrl.equals(source.imageUrl) &&
+                    this.categoryName.equals(source.categoryName) &&
+                    this.categoryId.equals(source.categoryId) &&
+                    this.remoteId == source.remoteId;
+        } else {
+            return false;
+        }
+    }
 }

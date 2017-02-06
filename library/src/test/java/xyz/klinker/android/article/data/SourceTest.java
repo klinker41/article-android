@@ -23,6 +23,7 @@ import org.junit.Test;
 import xyz.klinker.android.article.ArticleRobolectricSuite;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class SourceTest extends ArticleRobolectricSuite {
 
@@ -57,4 +58,39 @@ public class SourceTest extends ArticleRobolectricSuite {
         assertEquals("test category", source.categoryName);
     }
 
+    @Test
+    public void equals() {
+        Source source = newSource(1L, "test", "test url", "test category", 1L, 1L);
+        Source other = newSource(1L, "test", "test url", "test category", 1L, 1L);
+        assertEquals(source, other);
+    }
+
+    @Test
+    public void notEquals_differentType() {
+        Source source = newSource(1L, "test", "test url", "test category", 1L, 1L);
+        assertNotEquals("test", source);
+    }
+
+    @Test
+    public void notEquals() {
+        Source source = newSource(1L, "test", "test url", "test category", 1L, 1L);
+        Source other = newSource(2L, "test 2", "test url", "test category", 1L, 1L);
+        assertNotEquals(source, other);
+    }
+
+    private Source newSource(
+            long id,
+            String name,
+            String imageUrl,
+            String categoryName,
+            Long categoryId,
+            long remoteId) {
+        Source source = new Source();
+        source.id = id;
+        source.name = name;
+        source.imageUrl = imageUrl;
+        source.categoryName = categoryName;
+        source.categoryId = categoryId;
+        source.remoteId = remoteId;
+    }
 }
