@@ -59,6 +59,21 @@ public class SQLiteQueryTest extends ArticleRealDataSuite {
         Cursor articles = source.getAllArticles();
         assertNotNull(articles);
         assertEquals(8, articles.getCount());
+
+        articles.moveToFirst();
+        Article article = new Article(articles);
+        assertNotNull(article.alias);
+        assertNotNull(article.url);
+        assertNotNull(article.title);
+        assertNotNull(article.description);
+        assertNotNull(article.image);
+        assertNull(article.content);
+        assertNotNull(article.author);
+        assertNotNull(article.source);
+        assertNotNull(article.domain);
+        assertNotNull(article.sourceId);
+        assertNotNull(article.sourceModelName);
+        assertNotNull(article.sourceModelImageUrl);
     }
 
     @Test

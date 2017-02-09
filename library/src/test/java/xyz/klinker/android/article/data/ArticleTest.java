@@ -46,7 +46,9 @@ public class ArticleTest extends ArticleRobolectricSuite {
                 "inserted_at",
                 "is_article",
                 "saved",
-                "source_id"
+                "source_id",
+                "name",
+                "image_url"
         });
 
         cursor.addRow(new Object[]{
@@ -64,7 +66,9 @@ public class ArticleTest extends ArticleRobolectricSuite {
                 2,
                 1,
                 0,
-                2L
+                2L,
+                "test source name",
+                "test source image url"
         });
 
         cursor.moveToFirst();
@@ -85,6 +89,8 @@ public class ArticleTest extends ArticleRobolectricSuite {
         assertTrue(article.isArticle);
         assertFalse(article.saved);
         assertEquals(2L, (long) article.sourceId);
+        assertEquals("test source name", article.sourceModelName);
+        assertEquals("test source image url", article.sourceModelImageUrl);
     }
 
     @Test

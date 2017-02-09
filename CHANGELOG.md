@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.16.0
+- Query the source model name and image url when getting all articles
+
 ### v0.15.7
 - Better equals() method for source comparisons
 - Add datastore method to remove a source

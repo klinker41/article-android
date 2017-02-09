@@ -23,6 +23,7 @@ import android.os.Bundle;
 import xyz.klinker.android.article.data.model.ArticleModel;
 import xyz.klinker.android.article.data.model.ContentModel;
 import xyz.klinker.android.article.data.model.DatabaseModel;
+import xyz.klinker.android.article.data.model.SourceModel;
 
 /**
  * Model holding all possible elements in a response from the server.
@@ -44,6 +45,8 @@ public final class Article implements DatabaseModel {
     public boolean isArticle;
     public boolean saved;
     public Long sourceId;
+    public String sourceModelName;
+    public String sourceModelImageUrl;
 
     /**
      * Creates a blank article that can be filled manually.
@@ -106,6 +109,10 @@ public final class Article implements DatabaseModel {
                 this.saved = cursor.getInt(i) == 1;
             } else if (column.equals(ArticleModel.COLUMN_SOURCE_ID)) {
                 this.sourceId = cursor.getLong(i);
+            } else if (column.equals(SourceModel.COLUMN_NAME)) {
+                this.sourceModelName = cursor.getString(i);
+            } else if (column.equals(SourceModel.COLUMN_IMAGE_URL)) {
+                this.sourceModelImageUrl = cursor.getString(i);
             }
         }
     }

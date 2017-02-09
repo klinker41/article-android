@@ -261,7 +261,8 @@ public class DataSource {
      */
     public Cursor getAllArticles() {
         return database.query(
-                ArticleModel.TABLE,
+                ArticleModel.TABLE + " a left outer join " + SourceModel.TABLE + " s " +
+                    "on a." + ArticleModel.COLUMN_SOURCE_ID + " = s." + SourceModel.COLUMN_REMOTE_ID,
                 null,
                 null,
                 null,
@@ -332,9 +333,6 @@ public class DataSource {
 
     /**
      * Gets the id of a category.
-     *
-     * @param name
-     * @return
      */
     @VisibleForTesting
     Long getCategoryId(String name) {
