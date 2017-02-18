@@ -41,7 +41,7 @@ public final class ArticleModel implements DatabaseTable {
             TABLE + " (" +
             COLUMN_ID + " integer primary key, " +
             COLUMN_ALIAS + " text, " +
-            COLUMN_URL + " text not null, " +
+            COLUMN_URL + " text not null unique, " +
             COLUMN_TITLE + " text, " +
             COLUMN_DESCRIPTION + " text, " +
             COLUMN_IMAGE + " text, " +

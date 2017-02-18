@@ -122,6 +122,31 @@ public class SQLiteQueryTest extends ArticleRealDataSuite {
     }
 
     @Test
+    public void insertDuplicateArticle() {
+        Article article = new Article();
+        article.id = 1L;
+        article.alias = "alias";
+        article.url = "http://test";
+        article.title = "test title";
+        article.description = "test description";
+        article.image = "image url";
+        article.content = "<p>test paragraph</p>";
+        article.author = "jake klinker";
+        article.source = "google.com";
+        article.domain = "google.com";
+        article.duration = 1;
+        article.insertedAt = 2;
+        article.isArticle = true;
+        article.saved = false;
+
+        source.insertArticle(article);
+        assertEquals(9, source.getAllArticles().getCount());
+
+        source.insertArticle(article);
+        assertEquals(9, source.getAllArticles().getCount());
+    }
+
+    @Test
     public void insertArticle_withSourceId() {
         Article article = new Article();
         article.id = 1L;

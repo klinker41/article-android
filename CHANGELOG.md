@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.17.0
+- Create a unique qualifier on the article.url database table
+
 ### v0.16.0
 - Query the source model name and image url when getting all articles
 
