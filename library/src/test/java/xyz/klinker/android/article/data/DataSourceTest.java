@@ -274,13 +274,14 @@ public class DataSourceTest extends ArticleRobolectricSuite {
     @Test
     public void getArticlesForSourceId() {
         when(database.query(
-                "article",
-                null,
-                "source_id=?",
-                new String[] {"1"},
-                null,
-                null,
-                "inserted_at desc")).thenReturn(cursor);
+                anyString(),
+                eq((String[]) null),
+                eq("source_id=?"),
+                eq(new String[] {"1"}),
+                eq((String) null),
+                eq((String) null),
+                eq("inserted_at desc")))
+                .thenReturn(cursor);
         assertEquals(cursor, source.getArticlesForSource(1L));
     }
 
