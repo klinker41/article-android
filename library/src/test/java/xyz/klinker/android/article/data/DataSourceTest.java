@@ -201,8 +201,15 @@ public class DataSourceTest extends ArticleRobolectricSuite {
 
     @Test
     public void getSavedArticles() {
-        when(database.query("article", null, "saved=1", null, null, null, "inserted_at desc"))
-                .thenReturn(cursor);
+        when(database.query(
+                anyString(),
+                eq((String[]) null),
+                eq("saved=1"),
+                eq((String[]) null),
+                eq((String) null),
+                eq((String) null),
+                eq("inserted_at desc")))
+                    .thenReturn(cursor);
         assertEquals(cursor, source.getSavedArticles());
     }
 
