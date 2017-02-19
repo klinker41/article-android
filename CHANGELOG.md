@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.17.2
+- Fix getting more source information for all saved articles
+
 ### v0.17.1
 - Fix an issue that is logged setting some drawable resources
 
