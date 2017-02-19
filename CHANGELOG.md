@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.17.1
+- Fix an issue that is logged setting some drawable resources
+
 ### v0.17.0
 - Create a unique qualifier on the article.url database table
 

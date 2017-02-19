@@ -103,7 +103,7 @@ final class Utils {
     /**
      * Changes the text selection handle colors.
      */
-    static void changeTextSelectionHandleColors(TextView textView, int color) {
+    static void changeTextSelectionHandleColors(Context context, TextView textView, int color) {
         textView.setHighlightColor(Color.argb(
                 40, Color.red(color), Color.green(color), Color.blue(color)));
 
@@ -141,7 +141,11 @@ final class Utils {
                         resField.setAccessible(true);
                     }
                     int resId = resField.getInt(textView);
-                    handleDrawable = textView.getResources().getDrawable(resId);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        handleDrawable = context.getDrawable(resId);
+                    } else {
+                        handleDrawable = context.getResources().getDrawable(resId);
+                    }
                 }
 
                 if (handleDrawable != null) {
