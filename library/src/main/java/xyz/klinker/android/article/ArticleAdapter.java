@@ -366,7 +366,7 @@ final class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.text = (TextView) itemView.findViewById(R.id.article_text);
             this.text.setTextSize(textSize);
             this.text.setTextIsSelectable(true);
-            Utils.changeTextSelectionHandleColors(this.text, accentColor);
+            Utils.changeTextSelectionHandleColors(itemView.getContext(), this.text, accentColor);
         }
     }
 
