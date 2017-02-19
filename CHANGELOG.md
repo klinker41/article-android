@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.17.3
+- Fix getting more source information for articles from a specific source
+
 ### v0.17.2
 - Fix getting more source information for all saved articles
 
