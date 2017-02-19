@@ -279,7 +279,8 @@ public class DataSource {
      */
     public Cursor getSavedArticles() {
         return database.query(
-                ArticleModel.TABLE,
+                ArticleModel.TABLE + " a left outer join " + SourceModel.TABLE + " s " +
+                    "on a." + ArticleModel.COLUMN_SOURCE_ID + " = s." + SourceModel.COLUMN_REMOTE_ID,
                 null,
                 ArticleModel.COLUMN_SAVED + "=1",
                 null,
