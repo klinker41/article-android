@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.18.0
+- Fix an issue causing articles not to be marked as saved the first time they are opened
+
 ### v0.17.3
 - Fix getting more source information for articles from a specific source
 

@@ -153,8 +153,10 @@ public class DataSource {
 
     /**
      * Inserts a single article into the database for caching purposes.
+     *
+     * @return the id of the inserted item.
      */
-    public void insertArticle(Article article) {
+    public long insertArticle(Article article) {
         // remove any extra query parameters from the url
         article.url = ArticleUtils.removeUrlParameters(article.url);
 
@@ -183,7 +185,7 @@ public class DataSource {
         values.put(ContentModel.COLUMN_ARTICLE_ID, id);
         values.put(ContentModel.COLUMN_CONTENT, article.content);
 
-        database.insert(ContentModel.TABLE, null, values);
+        return database.insert(ContentModel.TABLE, null, values);
     }
 
     /**

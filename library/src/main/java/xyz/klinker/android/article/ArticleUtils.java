@@ -189,7 +189,7 @@ public final class ArticleUtils {
                     loadedArticle.content = article.content;
                     source.updateArticleContent(loadedArticle);
                 } else {
-                    source.insertArticle(article);
+                    article.id = source.insertArticle(article);
                 }
             }
         }
