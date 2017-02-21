@@ -188,6 +188,7 @@ public final class ArticleUtils {
                 if (loadedArticle != null && loadedArticle.content == null) {
                     loadedArticle.content = article.content;
                     source.updateArticleContent(loadedArticle);
+                    article.id = loadedArticle.id;
                 } else {
                     article.id = source.insertArticle(article);
                 }

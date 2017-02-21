@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.18.1
+- Fix another issue with loading the article id when article content is not available
+
 ### v0.18.0
 - Fix an issue causing articles not to be marked as saved the first time they are opened
 
