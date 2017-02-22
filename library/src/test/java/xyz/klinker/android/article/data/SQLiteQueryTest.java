@@ -20,6 +20,8 @@ import android.database.Cursor;
 
 import org.junit.Test;
 
+import java.util.List;
+
 import xyz.klinker.android.article.ArticleRealDataSuite;
 
 import static org.junit.Assert.assertEquals;
@@ -227,7 +229,11 @@ public class SQLiteQueryTest extends ArticleRealDataSuite {
 
     @Test
     public void getSources() {
-        assertEquals(3, source.getSources().size());
+        List<Source> sources = source.getSources();
+        assertEquals(3, sources.size());
+        assertEquals("test 1", sources.get(0).name);
+        assertEquals("test 2", sources.get(1).name);
+        assertEquals("test 3", sources.get(2).name);
     }
 
     @Test

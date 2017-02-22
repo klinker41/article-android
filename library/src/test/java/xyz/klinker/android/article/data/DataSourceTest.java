@@ -294,7 +294,7 @@ public class DataSourceTest extends ArticleRobolectricSuite {
                 eq((String[]) null),
                 eq((String) null),
                 eq((String) null),
-                eq((String) null)))
+                eq("sname desc")))
                 .thenReturn(cursor);
         assertNotNull(source.getSources());
     }

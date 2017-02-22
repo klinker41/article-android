@@ -1,10 +1,9 @@
 # Changelog
 
-### v0.18.1
+### v0.18.2
 - Fix another issue with loading the article id when article content is not available
-
-### v0.18.0
 - Fix an issue causing articles not to be marked as saved the first time they are opened
+- Sort sources by their name when querying all of them
 
 ### v0.17.3
 - Fix getting more source information for articles from a specific source

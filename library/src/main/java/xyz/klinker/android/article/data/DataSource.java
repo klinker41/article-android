@@ -408,7 +408,7 @@ public class DataSource {
                 null,
                 null,
                 null,
-                null);
+                "s" + SourceModel.COLUMN_NAME + " asc");
 
         List<Source> sources = new ArrayList<>();
         if (cursor != null && cursor.moveToFirst()) {
