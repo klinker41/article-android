@@ -31,7 +31,7 @@ public class SourceModel implements DatabaseTable {
     private static final String DATABASE_CREATE = "create table if not exists " +
             TABLE + " (" +
             COLUMN_ID + " integer primary key, " +
-            COLUMN_REMOTE_ID + " integer not null, " +
+            COLUMN_REMOTE_ID + " integer not null unique, " +
             COLUMN_NAME + " text not null, " +
             COLUMN_IMAGE_URL + " text not null, " +
             COLUMN_CATEGORY_ID + " integer not null" +
