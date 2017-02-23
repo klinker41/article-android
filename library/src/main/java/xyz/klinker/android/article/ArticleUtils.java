@@ -61,7 +61,6 @@ public final class ArticleUtils {
     void loadArticle(final String url, final DataSource source,
                      final ArticleLoadedListener callback) {
         final Handler handler = new Handler();
-
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -81,7 +80,24 @@ public final class ArticleUtils {
      */
     public void preloadArticle(final Context context, final String url,
                                final ArticleLoadedListener callback) {
-        DataSource source = DataSource.get(context);
+        preloadArticle(context, url, DataSource.get(context), callback);
+    }
+
+    /**
+     * Preloads an article from the server so that it is cached on the device and immediately
+     * available when a user tries to view it without making any network calls. This includes
+     * downloading the article body along with precaching any images with Glide.
+     *
+     * @param context the current application context.
+     * @param url the url to try and preload.
+     * @param source the data source.
+     * @param callback the callback to be invoked when preloading has finished.
+     */
+    public void preloadArticle(
+            final Context context,
+            final String url,
+            final DataSource source,
+            final ArticleLoadedListener callback) {
         loadArticle(url, source, new ArticleLoadedListener() {
             @Override
             public void onArticleLoaded(final Article article) {
@@ -113,9 +129,22 @@ public final class ArticleUtils {
      * @param url the url to try and preload.
      */
     public Article fetchArticle(final Context context, final String url) {
-        DataSource source = DataSource.get(context);
-        final Article article = loadArticleSync(url, source, null, null);
+        return fetchArticle(context, url, DataSource.get(context));
+    }
 
+    /**
+     * Fetch an article from the server so that it is cached on the device and immediately
+     * available when a user tries to view it without making any network calls. This includes
+     * downloading the article body along with precaching any images with Glide.
+     *
+     * This api will return the article result without a callback. It will run syncronously on
+     * whatever thread it is called from.
+     *
+     * @param context the current application context.
+     * @param url the url to try and preload.
+     */
+    public Article fetchArticle(final Context context, final String url, final DataSource source) {
+        final Article article = loadArticleSync(url, source, null, null);
         if (article != null && article.isArticle && article.content != null) {
             parseArticleContent(article, new ArticleParsedListener() {
                 @Override

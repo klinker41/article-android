@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.19.1
+- Improvements to the ArticleUtils API
+
 ### v0.19.0
 - Improve styling of block quotes
 
