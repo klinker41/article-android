@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.19.0
+- Improve styling of block quotes
+
 ### v0.18.2
 - Fix another issue with loading the article id when article content is not available
 - Fix an issue causing articles not to be marked as saved the first time they are opened
