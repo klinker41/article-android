@@ -374,8 +374,9 @@ final class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     class BlockQuoteViewHolder extends TextViewHolder {
         private BlockQuoteViewHolder(View itemView, int accentColor) {
             super(itemView, accentColor);
+            View quoteMarker = itemView.findViewById(R.id.quote_marker);
             text.setTextColor(accentColor);
-            text.setTextSize(textSize + 5);
+            quoteMarker.setBackgroundColor(accentColor);
         }
     }
 

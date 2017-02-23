@@ -19,18 +19,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <View
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        android:background="@color/article_colorAccent"
+        android:layout_marginLeft="28dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:id="@+id/quote_marker"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-condensed"
-        android:textStyle="bold"
-        android:textSize="20sp"
+        android:fontFamily="sans-serif"
+        android:textSize="15sp"
         android:textColor="@color/article_colorAccent"
-        android:paddingLeft="32dp"
+        android:paddingStart="48dp"
+        android:paddingLeft="48dp"
+        android:paddingEnd="32dp"
         android:paddingRight="32dp"
         android:paddingBottom="16dp"
         android:paddingTop="16dp"
-        android:gravity="center"
         android:id="@+id/article_text"/>
 
 </FrameLayout>
