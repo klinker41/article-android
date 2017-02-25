@@ -18,26 +18,21 @@ package xyz.klinker.android.article;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.customtabs.CustomTabsIntent;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.jsoup.select.Elements;
 
 import xyz.klinker.android.article.data.Article;
 import xyz.klinker.android.article.data.DataSource;
-import xyz.klinker.android.article.view.ElasticDragDismissFrameLayout;
+import xyz.klinker.android.drag_dismiss.activity.DragDismissRecyclerViewActivity;
 
 /**
  * Activity that will display an article grabbed from the server or redirect to a chrome custom
@@ -48,7 +43,7 @@ import xyz.klinker.android.article.view.ElasticDragDismissFrameLayout;
  * NOTE: Not all options in the builder by be applied in this activity. However, all options will
  * be forwarded to a chrome custom tab if the user chooses to view it there.
  */
-public final class ArticleActivity extends AppCompatActivity
+public final class ArticleActivity extends DragDismissRecyclerViewActivity
         implements ArticleLoadedListener, ArticleParsedListener {
 
     public static final String PERMISSION_SAVED_ARTICLE =
@@ -66,80 +61,38 @@ public final class ArticleActivity extends AppCompatActivity
     private ArticleUtils utils;
     private RecyclerView recyclerView;
     private ArticleAdapter adapter;
-    private ProgressBar progressBar;
-    private int primaryColor;
     private int accentColor;
     private int textSize;
     private Boolean permissionAvailable;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    protected void setupRecyclerView(RecyclerView recyclerView) {
         this.url = getIntent().getDataString();
 
         if (DEBUG) {
             Log.v(TAG, "loading article: " + url);
         }
 
-        int theme = getIntent().getIntExtra(ArticleIntent.EXTRA_THEME, ArticleIntent.THEME_AUTO);
-        if (theme == ArticleIntent.THEME_LIGHT) {
-            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        } else if (theme == ArticleIntent.THEME_DARK) {
-            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
-        }
-
         DataSource source = DataSource.get(this);
         this.utils = new ArticleUtils(getIntent().getStringExtra(ArticleIntent.EXTRA_API_TOKEN));
         this.utils.loadArticle(url, source, this);
 
-        this.primaryColor = getIntent().getIntExtra(ArticleIntent.EXTRA_TOOLBAR_COLOR,
-                getResources().getColor(R.color.article_colorPrimary));
         this.accentColor = getIntent().getIntExtra(ArticleIntent.EXTRA_ACCENT_COLOR,
                 getResources().getColor(R.color.article_colorAccent));
         this.textSize = getIntent().getIntExtra(ArticleIntent.EXTRA_TEXT_SIZE, 15);
 
-        setContentView(R.layout.article_activity_article);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.article_toolbar);
-        setSupportActionBar(toolbar);
-
-        View statusBar = findViewById(R.id.article_status_bar);
-
-        recyclerView = (RecyclerView) findViewById(R.id.article_recycler_view);
+        this.recyclerView = recyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addOnScrollListener(
                 new ArticleScrollListener(toolbar, statusBar, primaryColor));
 
-        progressBar = (ProgressBar) findViewById(R.id.article_loading);
-
-        Utils.changeRecyclerOverscrollColors(recyclerView, primaryColor);
-        Utils.changeProgressBarColors(progressBar, primaryColor);
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.article_ic_close);
-            getSupportActionBar().setTitle(null);
-        }
-
-        findViewById(R.id.article_transparent_side_1).setOnClickListener(sideClickListener);
-        findViewById(R.id.article_transparent_side_2).setOnClickListener(sideClickListener);
-
-        ElasticDragDismissFrameLayout dragDismissLayout = (ElasticDragDismissFrameLayout)
-                findViewById(R.id.article_drag_dismiss_layout);
-        dragDismissLayout.addListener(new ElasticDragDismissFrameLayout.ElasticDragDismissCallback() {
-            @Override
-            public void onDragDismissed() {
-                super.onDragDismissed();
-                finish();
-            }
-        });
+        showProgressBar();
     }
 
     @Override
     public void onArticleLoaded(Article article) {
+        hideProgressBar();
+
         if (article == null || !article.isArticle || article.content == null) {
             if (DEBUG) {
                 Log.v(TAG, "not an article or couldn't fetch url");
@@ -156,7 +109,8 @@ public final class ArticleActivity extends AppCompatActivity
                 Log.v(TAG, "\t" + article.description);
             }
 
-            adapter = new ArticleAdapter(article, accentColor, textSize);
+            adapter = new ArticleAdapter(article, accentColor, textSize,
+                    getIntent().getIntExtra(ArticleIntent.EXTRA_THEME, ArticleIntent.THEME_AUTO));
             recyclerView.setAdapter(adapter);
 
             utils.parseArticleContent(article, this);

@@ -41,66 +41,6 @@ import java.util.List;
 final class Utils {
 
     /**
-     * Changes the overscroll highlight effect on a recyclerview to be the given color.
-     */
-    static void changeRecyclerOverscrollColors(RecyclerView recyclerView, final int color) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            return;
-        }
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            private boolean invoked = false;
-
-            @Override
-            @TargetApi(21)
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-                // only invoke this once
-                if (invoked) {
-                    return;
-                } else {
-                    invoked = true;
-                }
-
-                try {
-                    final Class<?> clazz = RecyclerView.class;
-
-                    for (final String name : new String[]{"ensureTopGlow", "ensureBottomGlow"}) {
-                        Method method = clazz.getDeclaredMethod(name);
-                        method.setAccessible(true);
-                        method.invoke(recyclerView);
-                    }
-
-                    for (final String name : new String[]{"mTopGlow", "mBottomGlow"}) {
-                        final Field field = clazz.getDeclaredField(name);
-                        field.setAccessible(true);
-                        final Object edge = field.get(recyclerView);
-                        final Field fEdgeEffect = edge.getClass().getDeclaredField("mEdgeEffect");
-                        fEdgeEffect.setAccessible(true);
-                        ((EdgeEffect) fEdgeEffect.get(edge)).setColor(color);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
-     * Changes the progress bar's color.
-     */
-    static void changeProgressBarColors(ProgressBar progressBar, int color) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            Drawable wrapDrawable = DrawableCompat.wrap(progressBar.getIndeterminateDrawable());
-            DrawableCompat.setTint(wrapDrawable, color);
-            progressBar.setIndeterminateDrawable(DrawableCompat.unwrap(wrapDrawable));
-        } else {
-            progressBar.getIndeterminateDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
-        }
-    }
-
-    /**
      * Changes the text selection handle colors.
      */
     static void changeTextSelectionHandleColors(Context context, TextView textView, int color) {

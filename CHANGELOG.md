@@ -1,5 +1,10 @@
 # Changelog
 
+### v0.20.0
+- Abstract drag dismiss activity
+- Add black theme option
+- Add drag-dismiss to the image viewer
+
 ### v0.19.1
 - Improvements to the ArticleUtils API
 
