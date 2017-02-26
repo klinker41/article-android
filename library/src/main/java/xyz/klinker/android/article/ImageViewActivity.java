@@ -16,31 +16,41 @@
 
 package xyz.klinker.android.article;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import xyz.klinker.android.drag_dismiss.activity.DragDismissActivity;
+
 /**
  * Activity for viewing full size images from an article. Images are zoomable. You can pass in the
  * image url from an intent with .setData(url).
  */
-public final class ImageViewActivity extends AppCompatActivity {
+public final class ImageViewActivity extends DragDismissActivity {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.article_activity_image_view);
+    protected View onCreateContent(LayoutInflater inflater, ViewGroup parent) {
+        View root = inflater.inflate(R.layout.article_activity_image_view, parent, false);
 
-        ImageView imageView = (ImageView) findViewById(R.id.article_image_view);
+        ImageView imageView = (ImageView) root.findViewById(R.id.article_image_view);
+        View statusBar = findViewById(R.id.dragdismiss_status_bar);
         String url = ArticleUtils.decodeImageUrl(getIntent().getDataString());
 
         Glide.with(this)
                 .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView);
+
+        statusBar.setBackgroundColor(Color.BLACK);
+
+        return root;
     }
 
 }

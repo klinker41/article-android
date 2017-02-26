@@ -36,6 +36,9 @@ import android.widget.RemoteViews;
 
 import java.util.ArrayList;
 
+import xyz.klinker.android.drag_dismiss.DragDismissIntentBuilder;
+import xyz.klinker.android.drag_dismiss.DragDismissIntentBuilder;
+
 /**
  * Class holding the {@link Intent} and start bundle for an Article Activity.
  *
@@ -270,9 +273,14 @@ public final class ArticleIntent {
     public static final int THEME_DARK = 2;
 
     /**
+     * Use the black theme.
+     */
+    public static final int THEME_BLACK = 3;
+
+    /**
      * Use an automatic theme, changing between light and dark based on time of day.
      */
-    public static final int THEME_AUTO = 3;
+    public static final int THEME_AUTO = 4;
 
     /**
      * An {@link Intent} used to start the Custom Tabs Activity.
@@ -315,6 +323,7 @@ public final class ArticleIntent {
      * Builder class for {@link ArticleIntent} objects.
      */
     public static final class Builder {
+        private final Context context;
         private final Intent mIntent;
         private ArrayList<Bundle> mMenuItems = null;
         private Bundle mStartAnimationBundle = null;
@@ -322,6 +331,7 @@ public final class ArticleIntent {
         private boolean mInstantAppsEnabled = true;
 
         public Builder(Context context, String apiToken) {
+            this.context = context;
             mIntent = new Intent(context, ArticleActivity.class);
             mIntent.putExtra(EXTRA_API_TOKEN, apiToken);
         }
@@ -559,7 +569,8 @@ public final class ArticleIntent {
         /**
          * Sets the theme to use.
          *
-         * @param theme One of {@link #THEME_LIGHT}, {@link #THEME_DARK} or {@link #THEME_AUTO}.
+         * @param theme One of {@link #THEME_LIGHT}, {@link #THEME_DARK}, {@link #THEME_BLACK} or
+         *              {@link #THEME_AUTO}.
          */
         public ArticleIntent.Builder setTheme(int theme) {
             mIntent.putExtra(EXTRA_THEME, theme);
@@ -578,6 +589,15 @@ public final class ArticleIntent {
                 mIntent.putParcelableArrayListExtra(EXTRA_TOOLBAR_ITEMS, mActionButtons);
             }
             mIntent.putExtra(EXTRA_ENABLE_INSTANT_APPS, mInstantAppsEnabled);
+
+            new DragDismissIntentBuilder(context)
+                    .setShowToolbar(true)
+                    .setShouldScrollToolbar(true)
+                    .setTheme(convertIntToTheme(mIntent.getIntExtra(EXTRA_THEME, THEME_AUTO)))
+                    .setPrimaryColorValue(mIntent.getIntExtra(EXTRA_TOOLBAR_COLOR,
+                            context.getResources().getColor(R.color.article_toolbarBackground)))
+                    .build(mIntent);
+
             return new ArticleIntent(mIntent, mStartAnimationBundle);
         }
     }
@@ -615,5 +635,25 @@ public final class ArticleIntent {
     public static boolean shouldAlwaysUseBrowserUI(Intent intent) {
         return intent.getBooleanExtra(EXTRA_USER_OPT_OUT_FROM_CUSTOM_TABS, false)
                 && (intent.getFlags() & Intent.FLAG_ACTIVITY_NEW_TASK) != 0;
+    }
+
+    /**
+     * Converts the ArticleIntent integer theme to a DragDismiss theme
+     *
+     * @param themeInt One of {@link #THEME_LIGHT}, {@link #THEME_DARK}, {@link #THEME_BLACK} or
+     *                  {@link #THEME_AUTO}.
+     * @return the corresponding DragDismiss theme
+     */
+    static DragDismissIntentBuilder.Theme convertIntToTheme(int themeInt) {
+        switch (themeInt) {
+            case THEME_LIGHT:
+                return DragDismissIntentBuilder.Theme.LIGHT;
+            case THEME_DARK:
+                return DragDismissIntentBuilder.Theme.DARK;
+            case THEME_BLACK:
+                return DragDismissIntentBuilder.Theme.BLACK;
+            default:
+                return DragDismissIntentBuilder.Theme.DAY_NIGHT;
+        }
     }
 }

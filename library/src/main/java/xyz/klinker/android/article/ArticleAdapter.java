@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.net.Uri;
 import android.support.annotation.VisibleForTesting;
@@ -52,6 +53,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import xyz.klinker.android.article.data.Article;
+import xyz.klinker.android.drag_dismiss.DragDismissIntentBuilder;
 
 /**
  * Recycler adapter responsible for displaying the article in a recycler view. This will
@@ -91,13 +93,15 @@ final class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             sizeRequest;
     private int accentColor;
     private int textSize;
+    private int theme;
     private int imageWidth;
     private int imageHeight;
 
-    ArticleAdapter(Article article, int accentColor, int textSize) {
+    ArticleAdapter(Article article, int accentColor, int textSize, int theme) {
         this.article = article;
         this.accentColor = accentColor;
         this.textSize = textSize;
+        this.theme = theme;
     }
 
     private void initSizeRequest(Context context) {
@@ -393,6 +397,14 @@ final class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(image.getContext(), ImageViewActivity.class);
+
+                    new DragDismissIntentBuilder(image.getContext())
+                            .setShouldScrollToolbar(false)
+                            .setTheme(ArticleIntent.convertIntToTheme(theme))
+                            .setPrimaryColorValue(Color.TRANSPARENT)
+                            .setFullscreenOnTablets(true)
+                            .build(intent);
+
                     intent.setData(Uri.parse(url));
                     image.getContext().startActivity(intent);
                 }

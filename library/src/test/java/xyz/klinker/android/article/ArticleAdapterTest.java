@@ -43,7 +43,7 @@ public class ArticleAdapterTest extends ArticleRobolectricSuite {
     @Before
     public void setUp() {
         article = new Article();
-        adapter = new ArticleAdapter(article, 0, 0);
+        adapter = new ArticleAdapter(article, 0, 0, 1);
     }
 
     @Test
@@ -213,7 +213,7 @@ public class ArticleAdapterTest extends ArticleRobolectricSuite {
 
     @Test
     public void getItemCount_noArticleNoElements() {
-        assertEquals(0, new ArticleAdapter(null, 0, 0).getItemCount());
+        assertEquals(0, new ArticleAdapter(null, 0, 0, 1).getItemCount());
     }
 
     @Test
