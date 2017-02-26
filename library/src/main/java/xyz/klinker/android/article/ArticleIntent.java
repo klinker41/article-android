@@ -275,12 +275,12 @@ public final class ArticleIntent {
     /**
      * Use an automatic theme, changing between light and dark based on time of day.
      */
-    public static final int THEME_AUTO = 3;
+    public static final int THEME_BLACK = 3;
 
     /**
      * Use an automatic theme, changing between light and dark based on time of day.
      */
-    public static final int THEME_BLACK = 4;
+    public static final int THEME_AUTO = 4;
 
     /**
      * An {@link Intent} used to start the Custom Tabs Activity.
@@ -591,8 +591,8 @@ public final class ArticleIntent {
             mIntent.putExtra(EXTRA_ENABLE_INSTANT_APPS, mInstantAppsEnabled);
 
             new DragDismissIntentBuilder(context)
-                    .setShouldScrollToolbar(true)
                     .setShowToolbar(true)
+                    .setShouldScrollToolbar(true)
                     .setTheme(convertIntToTheme(mIntent.getIntExtra(EXTRA_THEME, THEME_AUTO)))
                     .setPrimaryColorValue(mIntent.getIntExtra(EXTRA_TOOLBAR_COLOR,
                             context.getResources().getColor(R.color.article_toolbarBackground)))
@@ -645,15 +645,12 @@ public final class ArticleIntent {
      * @return the corresponding DragDismiss theme
      */
     static DragDismissIntentBuilder.Theme convertIntToTheme(int themeInt) {
-        DragDismissIntentBuilder.Theme theme = DragDismissIntentBuilder.Theme.DAY_NIGHT;
-        if (themeInt == THEME_LIGHT) {
-            theme = DragDismissIntentBuilder.Theme.LIGHT;
-        } else if (themeInt == THEME_DARK) {
-            theme = DragDismissIntentBuilder.Theme.DARK;
-        } else if (themeInt == THEME_BLACK) {
-            theme = DragDismissIntentBuilder.Theme.BLACK;
+        switch (themeInt) {
+            case THEME_LIGHT: return DragDismissIntentBuilder.Theme.LIGHT;
+            case THEME_DARK:  return DragDismissIntentBuilder.Theme.DARK;
+            case THEME_BLACK: return DragDismissIntentBuilder.Theme.BLACK;
+            default:
+                return DragDismissIntentBuilder.Theme.DAY_NIGHT;
         }
-
-        return theme;
     }
 }
