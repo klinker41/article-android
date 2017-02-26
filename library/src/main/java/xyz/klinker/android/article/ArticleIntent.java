@@ -273,7 +273,7 @@ public final class ArticleIntent {
     public static final int THEME_DARK = 2;
 
     /**
-     * Use an automatic theme, changing between light and dark based on time of day.
+     * Use the black theme.
      */
     public static final int THEME_BLACK = 3;
 
@@ -646,9 +646,12 @@ public final class ArticleIntent {
      */
     static DragDismissIntentBuilder.Theme convertIntToTheme(int themeInt) {
         switch (themeInt) {
-            case THEME_LIGHT: return DragDismissIntentBuilder.Theme.LIGHT;
-            case THEME_DARK:  return DragDismissIntentBuilder.Theme.DARK;
-            case THEME_BLACK: return DragDismissIntentBuilder.Theme.BLACK;
+            case THEME_LIGHT:
+                return DragDismissIntentBuilder.Theme.LIGHT;
+            case THEME_DARK:
+                return DragDismissIntentBuilder.Theme.DARK;
+            case THEME_BLACK:
+                return DragDismissIntentBuilder.Theme.BLACK;
             default:
                 return DragDismissIntentBuilder.Theme.DAY_NIGHT;
         }
