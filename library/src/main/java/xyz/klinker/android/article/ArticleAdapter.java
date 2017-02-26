@@ -402,6 +402,7 @@ final class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             .setShouldScrollToolbar(false)
                             .setTheme(ArticleIntent.convertIntToTheme(theme))
                             .setPrimaryColorValue(Color.TRANSPARENT)
+                            .setFullscreenOnTablets(true)
                             .build(intent);
 
                     intent.setData(Uri.parse(url));
