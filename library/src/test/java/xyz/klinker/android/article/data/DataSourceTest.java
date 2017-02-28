@@ -324,4 +324,11 @@ public class DataSourceTest extends ArticleRobolectricSuite {
         source.deleteSource("test");
         verify(database).delete("source", "name=?", new String[] {"test"});
     }
+
+    @Test
+    public void deleteArticle() {
+        source.deleteArticle(1L);
+        verify(database).delete("article", "_id=?", new String[] {"1"});
+        verify(database).delete("content", "article_id=?", new String[] {"1"});
+    }
 }

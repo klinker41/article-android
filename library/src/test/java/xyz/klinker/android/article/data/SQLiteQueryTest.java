@@ -311,4 +311,18 @@ public class SQLiteQueryTest extends ArticleRealDataSuite {
         source.deleteSource("non existant");
         assertEquals(count, source.getSources().size());
     }
+
+    @Test
+    public void deleteArticle() {
+        int count = source.getAllArticles().getCount();
+        source.deleteArticle(1L);
+        assertEquals(count - 1, source.getAllArticles().getCount());
+    }
+
+    @Test
+    public void deleteArticle_nonExistant() {
+        int count = source.getAllArticles().getCount();
+        source.deleteArticle(-1L);
+        assertEquals(count, source.getAllArticles().getCount());
+    }
 }

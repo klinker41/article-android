@@ -107,6 +107,8 @@ public class DataSource {
     public void clearTables() {
         database.delete(ContentModel.TABLE, null, null);
         database.delete(ArticleModel.TABLE, null, null);
+        database.delete(CategoryModel.TABLE, null, null);
+        database.delete(SourceModel.TABLE, null, null);
     }
 
     /**
@@ -310,6 +312,31 @@ public class DataSource {
                 null,
                 null,
                 ArticleModel.COLUMN_INSERTED_AT + " desc");
+    }
+
+    /**
+     * Deletes an article and its content.
+     *
+     * @param article The article to delete.
+     */
+    public void deleteArticle(Article article) {
+        deleteArticle(article.id);
+    }
+
+    /**
+     * Deletes an article and its content.
+     *
+     * @param articleId the id of the article to delete.
+     */
+    public void deleteArticle(long articleId) {
+        database.delete(
+                ArticleModel.TABLE,
+                ArticleModel.COLUMN_ID + "=?",
+                new String[] {Long.toString(articleId)});
+        database.delete(
+                ContentModel.TABLE,
+                ContentModel.COLUMN_ARTICLE_ID + "=?",
+                new String[] {Long.toString(articleId)});
     }
 
     /**
