@@ -180,12 +180,7 @@ public final class ArticleActivity extends DragDismissRecyclerViewActivity
         if (item.getItemId() == android.R.id.home) {
             finish();
         } else if (item.getItemId() == R.id.article_share) {
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, url);
-            sendIntent.setType("text/plain");
-            startActivity(Intent.createChooser(sendIntent,
-                    getResources().getText(R.string.article_share_with)));
+            SocialUtils.shareArticle(this, article);
         } else if (item.getItemId() == R.id.article_open_in_chrome) {
             openChromeCustomTab();
         } else if (item.getItemId() == R.id.article_save) {
