@@ -1,5 +1,9 @@
 # Changelog
 
+### v0.20.1
+- Add method for deleting article from database
+- Extract logic for sharing an article to a util class
+
 ### v0.20.0
 - Abstract drag dismiss activity
 - Add black theme option
