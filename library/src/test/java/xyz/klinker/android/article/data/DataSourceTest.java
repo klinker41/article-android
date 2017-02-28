@@ -85,6 +85,8 @@ public class DataSourceTest extends ArticleRobolectricSuite {
 
         verify(database).delete("article", null, null);
         verify(database).delete("content", null, null);
+        verify(database).delete("source", null, null);
+        verify(database).delete("category", null, null);
         verifyNoMoreInteractions(database);
     }
 
