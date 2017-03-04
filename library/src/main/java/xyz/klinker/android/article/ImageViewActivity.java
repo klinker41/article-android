@@ -36,7 +36,7 @@ import xyz.klinker.android.drag_dismiss.activity.DragDismissActivity;
 public final class ImageViewActivity extends DragDismissActivity {
 
     @Override
-    protected View onCreateContent(LayoutInflater inflater, ViewGroup parent) {
+    protected View onCreateContent(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.article_activity_image_view, parent, false);
 
         ImageView imageView = (ImageView) root.findViewById(R.id.article_image_view);
