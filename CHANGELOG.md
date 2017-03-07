@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.20.2
+- Update underlying drag dismiss library
+
 ### v0.20.1
 - Add method for deleting article from database
 - Extract logic for sharing an article to a util class
