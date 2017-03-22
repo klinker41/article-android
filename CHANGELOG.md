@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.21.0
+- Update support library to 25.3.0
+
 ### v0.20.3
 - Update the underlying drag dismiss library
 
