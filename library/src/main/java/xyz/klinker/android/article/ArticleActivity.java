@@ -84,7 +84,7 @@ public final class ArticleActivity extends DragDismissRecyclerViewActivity
         this.recyclerView = recyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addOnScrollListener(
-                new ArticleScrollListener(toolbar, statusBar, primaryColor));
+                new ArticleScrollListener(delegate.getToolbar(), delegate.getStatusBar(), delegate.getPrimaryColor()));
 
         showProgressBar();
     }
@@ -114,7 +114,7 @@ public final class ArticleActivity extends DragDismissRecyclerViewActivity
             recyclerView.setAdapter(adapter);
 
             utils.parseArticleContent(article, this);
-            progressBar.setVisibility(View.GONE);
+            delegate.getProgressBar().setVisibility(View.GONE);
 
             invalidateOptionsMenu();
         }

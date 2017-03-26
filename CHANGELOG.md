@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.21.1
+- Update drag dismiss dependency
+
 ### v0.21.0
 - Update support library to 25.3.0
 
