@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.22.1
+- Fix bug when inserting articles and returning the incorrect id
+
 ### V0.22.0
 - Android O support through updated article favoriting method
     - Use the new `ArticleIntent.Builder$setFavoriteService(Class)` method when constructing the article intent
