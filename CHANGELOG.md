@@ -1,5 +1,10 @@
 # Changelog
 
+### V0.22.0
+- Android O support through updated article favoriting method
+    - Use the new `ArticleIntent.Builder$setFavoriteService(Class)` method when constructing the article intent
+    - Switch the old `BroadcastReceiver` to a `Service` instead
+
 ### v0.21.1
 - Update drag dismiss dependency
 
