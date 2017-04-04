@@ -98,32 +98,23 @@ As with `preload`, if you call this multiple times, a network call will only be 
 
 ## Saving Articles
 
-If you create an app that can save articles for users to be able to view later, you can add this saving functionality to the library. To do this, first request the save permission in your manifest:
+If you create an app that can save articles for users to be able to view later, you can add saving functionality from the library. This will cause a star icon to be displayed on the toolbar that a user can use to save or remove the saved item.
+
+Register a service that will listen for these changes to the article:
 
 ```xml
-<uses-permission android:name="xyz.klinker.android.article.SAVED_ARTICLE"/>
-```
-
-This will cause a star icon to be displayed on the toolbar that a user can use to save or remove the saved item.
-
-Next, register a receiver that will listen for these changes to the article:
-
-```xml
-<receiver android:name=".SampleSavedBroadcastReceiver">
-    <intent-filter>
-        <action android:name="xyz.klinker.android.article.ARTICLE_SAVED"/>
-    </intent-filter>
-</receiver>
+<service android:name=".FavoriteService"/>
 ```
 
 This will provide you with the article inside the intent extras. You can grab the actual article object by passing the intent into the constructor:
 
 
 ```java
-public class SampleSavedBroadcastReceiver extends BroadcastReceiver {
+public class FavoriteService extends Service {
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public int onStartCommand(Intent intent, int flags, int startId) {
         Article article = new Article(intent);
+        return super.onStartCommand(intent, flags, startId);
     }
 }
 ```
@@ -154,7 +145,7 @@ I personally think that the benefits of a smooth, quick UI outweigh the downside
 
 ## License
 
-    Copyright 2016 Jake Klinker
+    Copyright 2017 Jake Klinker
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
