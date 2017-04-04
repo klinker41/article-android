@@ -18,6 +18,7 @@ package xyz.klinker.android.article;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -92,6 +93,13 @@ public final class ArticleIntent {
      */
     public static final String EXTRA_API_TOKEN =
             "xyz.klinker.android.article.extra.EXTRA_API_TOKEN";
+
+    /**
+     * String extra that defines the service to run when favoriting an article. If not defined, no
+     * favorite icon will be shown.
+     */
+    public static final String EXTRA_FAVORITE_SERVICE =
+            "xyz.klinker.android.article.extra.EXTRA_FAVORITE_SERVICE";
 
     /**
      * Boolean extra that enables the url bar to hide as the user scrolls down the page
@@ -387,6 +395,16 @@ public final class ArticleIntent {
         public ArticleIntent.Builder setShowTitle(boolean showTitle) {
             mIntent.putExtra(EXTRA_TITLE_VISIBILITY_STATE,
                     showTitle ? SHOW_PAGE_TITLE : NO_TITLE);
+            return this;
+        }
+
+        /**
+         * Sets the service to run when the favorite button is pressed.
+         *
+         * @param service The service to run.
+         */
+        public ArticleIntent.Builder setFavoriteService(Class<? extends Service> service) {
+            mIntent.putExtra(EXTRA_FAVORITE_SERVICE, service.getName());
             return this;
         }
 

@@ -42,12 +42,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".SampleSavedBroadcastReceiver"
-            tools:ignore="ExportedReceiver">
-            <intent-filter>
-                <action android:name="xyz.klinker.android.article.ARTICLE_SAVED"/>
-            </intent-filter>
-        </receiver>
+        <service android:name=".FavoriteService"/>
 
     </application>
 

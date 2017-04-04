@@ -159,6 +159,7 @@ public class SampleActivity extends AppCompatActivity {
         ArticleIntent intent = new ArticleIntent.Builder(this, BuildConfig.API_KEY)
                 .setToolbarColor(getResources().getColor(R.color.articlePrimary))
                 .setAccentColor(getResources().getColor(R.color.articleAccent))
+                .setFavoriteService(FavoriteService.class)
                 .build();
 
         intent.launchUrl(this, Uri.parse(url));

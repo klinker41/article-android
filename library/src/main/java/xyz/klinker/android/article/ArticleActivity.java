@@ -63,7 +63,6 @@ public final class ArticleActivity extends DragDismissRecyclerViewActivity
     private ArticleAdapter adapter;
     private int accentColor;
     private int textSize;
-    private Boolean permissionAvailable;
 
     @Override
     protected void setupRecyclerView(RecyclerView recyclerView) {
@@ -137,33 +136,13 @@ public final class ArticleActivity extends DragDismissRecyclerViewActivity
 
     @Override
     public boolean onPrepareOptionsMenu(final Menu menu) {
-        final MenuItem save = menu.findItem(R.id.article_save);
-
-        if (permissionAvailable == null) {
-            final Handler handler = new Handler();
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    permissionAvailable =
-                            Utils.saveArticlePermissionAvailable(ArticleActivity.this);
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            updateSaveMenuItem(menu, save);
-                        }
-                    });
-                }
-            }).start();
-        } else {
-            updateSaveMenuItem(menu, save);
-        }
-
+        updateSaveMenuItem(menu, menu.findItem(R.id.article_save));
         return super.onPrepareOptionsMenu(menu);
     }
 
     private void updateSaveMenuItem(Menu menu, MenuItem save) {
         if (article != null && save != null) {
-            if (permissionAvailable) {
+            if (getIntent().hasExtra(ArticleIntent.EXTRA_FAVORITE_SERVICE)) {
                 if (article.saved) {
                     save.setIcon(R.drawable.article_ic_star);
                 } else {
@@ -226,8 +205,9 @@ public final class ArticleActivity extends DragDismissRecyclerViewActivity
         }).start();
 
         Intent intent = new Intent(ACTION_SAVED_ARTICLE);
+        intent.setClassName(this, getIntent().getStringExtra(ArticleIntent.EXTRA_FAVORITE_SERVICE));
         article.putIntoIntent(intent);
-        sendBroadcast(intent);
+        startService(intent);
     }
 
     private View.OnClickListener sideClickListener = new View.OnClickListener() {
