@@ -203,18 +203,20 @@ public class DataSource {
         values.put(ContentModel.COLUMN_ARTICLE_ID, id);
         values.put(ContentModel.COLUMN_CONTENT, article.content);
 
-        return database.insert(ContentModel.TABLE, null, values);
+        database.insert(ContentModel.TABLE, null, values);
+        return id;
     }
 
     /**
      * Updates an article's saved state.
      */
-    public void updateSavedArticleState(Article article) {
+    public int updateSavedArticleState(Article article) {
         ContentValues values = new ContentValues(1);
         values.put(ArticleModel.COLUMN_SAVED, article.saved);
 
-        database.update(
+        return database.update(
                 ArticleModel.TABLE, values, "_id=?", new String[] {Long.toString(article.id)});
+
     }
 
     /**
