@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.22.2
+- Add method to update article timestamp in database
+
 ### v0.22.1
 - Fix bug when inserting articles and returning the incorrect id
 
