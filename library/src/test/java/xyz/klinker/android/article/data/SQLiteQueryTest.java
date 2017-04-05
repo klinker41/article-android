@@ -101,6 +101,15 @@ public class SQLiteQueryTest extends ArticleRealDataSuite {
     }
 
     @Test
+    public void updateArticleInsertedAt() {
+        Article article = source.getArticle("http://test.com/2");
+        article.insertedAt = 4L;
+        source.updateArticleInsertedAtTimestamp(article);
+        article = source.getArticle("http://test.com/2");
+        assertEquals(4L, article.insertedAt);
+    }
+
+    @Test
     public void insertArticle() {
         Article article = new Article();
         article.id = 1L;

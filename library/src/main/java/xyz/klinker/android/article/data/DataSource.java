@@ -216,7 +216,17 @@ public class DataSource {
 
         return database.update(
                 ArticleModel.TABLE, values, "_id=?", new String[] {Long.toString(article.id)});
+    }
 
+    /**
+     * Updates an article's timestamp.
+     */
+    public int updateArticleInsertedAtTimestamp(Article article) {
+        ContentValues values = new ContentValues(1);
+        values.put(ArticleModel.COLUMN_INSERTED_AT, article.insertedAt);
+
+        return database.update(
+                ArticleModel.TABLE, values, "_id=?", new String[] {Long.toString(article.id)});
     }
 
     /**

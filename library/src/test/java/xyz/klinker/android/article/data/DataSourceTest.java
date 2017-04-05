@@ -144,6 +144,20 @@ public class DataSourceTest extends ArticleRobolectricSuite {
     }
 
     @Test
+    public void updatedArticleInsertedAt() {
+        Article article = new Article();
+        article.id = 2L;
+        article.insertedAt = 4L;
+        ContentValues values = new ContentValues();
+        values.put("inserted_at", 4L);
+
+        source.updateArticleInsertedAtTimestamp(article);
+
+        verify(database).update("article", values, "_id=?", new String[] {"2"});
+        verifyNoMoreInteractions(database);
+    }
+
+    @Test
     public void updateArticleContent() {
         Article article = new Article();
         article.id = 2L;
