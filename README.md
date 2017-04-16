@@ -25,7 +25,7 @@ To include it in your project, add this to your module's `build.gradle` file:
 ```groovy
 dependencies {
 	...
-	compile 'com.klinkerapps:article_viewer:0.22.2'
+	compile 'com.klinkerapps:article_viewer:0.22.3'
 }
 ```
 
