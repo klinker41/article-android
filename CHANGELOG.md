@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.22.3
+- Method for getting a single source from the database
+
 ### v0.22.2
 - Add method to update article timestamp in database
 

@@ -316,6 +316,21 @@ public class DataSourceTest extends ArticleRobolectricSuite {
     }
 
     @Test
+    public void getSource() {
+        when(database.query(
+                anyString(),
+                any(String[].class),
+                eq("s._id=?"),
+                eq(new String[] {"1"}),
+                eq((String) null),
+                eq((String) null),
+                eq((String) null)))
+                .thenReturn(cursor);
+        when(cursor.moveToFirst()).thenReturn(true);
+        assertNotNull(source.getSource(1));
+    }
+
+    @Test
     public void getCategoriesCount() {
         when(database.query(
                 anyString(),

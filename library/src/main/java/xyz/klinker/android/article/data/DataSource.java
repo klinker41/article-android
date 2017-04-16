@@ -477,6 +477,40 @@ public class DataSource {
     }
 
     /**
+     * Gets a single source from the database.
+     *
+     * @param id the id of the source to grab.
+     * @return the source.
+     */
+    public Source getSource(long id) {
+        Cursor cursor = database.query(
+                SourceModel.TABLE + " s left outer join " + CategoryModel.TABLE + " c on " +
+                        "s." + SourceModel.COLUMN_CATEGORY_ID + " = " +
+                        "c." + CategoryModel.COLUMN_ID,
+                new String[] {
+                        "s." + SourceModel.COLUMN_ID + " as s" + SourceModel.COLUMN_ID,
+                        "s." + SourceModel.COLUMN_NAME + " as s" + SourceModel.COLUMN_NAME,
+                        "s." + SourceModel.COLUMN_IMAGE_URL + " as s" + SourceModel.COLUMN_IMAGE_URL,
+                        "s." + SourceModel.COLUMN_REMOTE_ID + " as s" + SourceModel.COLUMN_REMOTE_ID,
+                        "c." + CategoryModel.COLUMN_ID + " as c" + CategoryModel.COLUMN_ID,
+                        "c." + CategoryModel.COLUMN_NAME + " as c" + CategoryModel.COLUMN_NAME
+                },
+                "s." + SourceModel.COLUMN_ID + "=?",
+                new String[] {Long.toString(id)},
+                null,
+                null,
+                null);
+
+        if (cursor.moveToFirst()) {
+            Source source = new Source(cursor);
+            cursor.close();
+            return source;
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Gets a list of categories and the number of articles that each contains, since the provided
      * timestamp.
      *
