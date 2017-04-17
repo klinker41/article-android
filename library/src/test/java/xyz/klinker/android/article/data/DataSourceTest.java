@@ -320,7 +320,7 @@ public class DataSourceTest extends ArticleRobolectricSuite {
         when(database.query(
                 anyString(),
                 any(String[].class),
-                eq("s._id=?"),
+                eq("s.remote_id=?"),
                 eq(new String[] {"1"}),
                 eq((String) null),
                 eq((String) null),
