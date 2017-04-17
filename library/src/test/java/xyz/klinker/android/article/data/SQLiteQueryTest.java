@@ -227,7 +227,7 @@ public class SQLiteQueryTest extends ArticleRealDataSuite {
 
     @Test
     public void getSource() {
-        Source s = source.getSource(1);
+        Source s = source.getSource(100);
         assertNotNull(s);
         assertEquals(100L, s.remoteId);
         assertEquals("test 1", s.name);

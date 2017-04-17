@@ -479,10 +479,10 @@ public class DataSource {
     /**
      * Gets a single source from the database.
      *
-     * @param id the id of the source to grab.
+     * @param remoteId the remote id of the source to grab.
      * @return the source.
      */
-    public Source getSource(long id) {
+    public Source getSource(long remoteId) {
         Cursor cursor = database.query(
                 SourceModel.TABLE + " s left outer join " + CategoryModel.TABLE + " c on " +
                         "s." + SourceModel.COLUMN_CATEGORY_ID + " = " +
@@ -495,8 +495,8 @@ public class DataSource {
                         "c." + CategoryModel.COLUMN_ID + " as c" + CategoryModel.COLUMN_ID,
                         "c." + CategoryModel.COLUMN_NAME + " as c" + CategoryModel.COLUMN_NAME
                 },
-                "s." + SourceModel.COLUMN_ID + "=?",
-                new String[] {Long.toString(id)},
+                "s." + SourceModel.COLUMN_REMOTE_ID + "=?",
+                new String[] {Long.toString(remoteId)},
                 null,
                 null,
                 null);

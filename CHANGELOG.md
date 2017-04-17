@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.22.4
+- Switch get source method to finding by remote id
+
 ### v0.22.3
 - Method for getting a single source from the database
 
