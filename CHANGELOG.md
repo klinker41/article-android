@@ -1,5 +1,10 @@
 # Changelog
 
+### v0.22.5
+- Update drag dismiss to v1.4.1 for improved scrolling performance
+- Update support libs to 26.0.0-beta2
+- Target SDK 26
+
 ### v0.22.4
 - Switch get source method to finding by remote id
 
