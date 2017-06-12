@@ -65,7 +65,7 @@ public final class ArticleActivity extends DragDismissRecyclerViewActivity
     private int textSize;
 
     @Override
-    protected void setupRecyclerView(RecyclerView recyclerView) {
+    public void setupRecyclerView(RecyclerView recyclerView) {
         this.url = getIntent().getDataString();
 
         if (DEBUG) {
