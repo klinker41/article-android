@@ -191,6 +191,10 @@ public final class ArticleActivity extends DragDismissRecyclerViewActivity
     }
 
     private void saveArticle() {
+        if (article == null || getIntent().getStringExtra(ArticleIntent.EXTRA_FAVORITE_SERVICE) == null) {
+            return;
+        }
+
         article.saved = !article.saved;
         invalidateOptionsMenu();
 
