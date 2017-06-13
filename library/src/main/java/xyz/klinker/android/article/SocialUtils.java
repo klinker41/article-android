@@ -33,6 +33,10 @@ public class SocialUtils {
      * @param article the article to share.
      */
     public static void shareArticle(Context context, Article article) {
+        if (context == null || article == null) {
+            return;
+        }
+
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, article.url);
