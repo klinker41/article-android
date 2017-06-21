@@ -16,8 +16,10 @@
 
 package xyz.klinker.android.article;
 
+import android.app.assist.AssistContent;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.widget.LinearLayoutManager;
@@ -167,6 +169,14 @@ public final class ArticleActivity extends DragDismissRecyclerViewActivity
         }
 
         return true;
+    }
+
+    @Override
+    public void onProvideAssistContent(AssistContent outContent) {
+        super.onProvideAssistContent(outContent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            outContent.setWebUri(Uri.parse(article.url));
+        }
     }
 
     private void openChromeCustomTab() {
