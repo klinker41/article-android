@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.23.0
+- Provide content such as web URL to assistant applications
+
 ### v0.22.5
 - Update drag dismiss to v1.4.1 for improved scrolling performance
 - Update support libs to 26.0.0-beta2
