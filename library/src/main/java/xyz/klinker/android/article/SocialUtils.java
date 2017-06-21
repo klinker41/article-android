@@ -40,6 +40,7 @@ public class SocialUtils {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, article.url);
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, article.title);
         sendIntent.setType("text/plain");
         context.startActivity(Intent.createChooser(sendIntent,
                 context.getResources().getText(R.string.article_share_with)));
