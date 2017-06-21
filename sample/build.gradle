@@ -62,6 +62,6 @@ android {
 }
 
 dependencies {
-    compile "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
-    compile project(":library")
+    implementation "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
+    implementation project(":library")
 }
