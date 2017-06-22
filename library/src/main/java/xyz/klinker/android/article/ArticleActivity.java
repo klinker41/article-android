@@ -30,6 +30,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.select.Elements;
 
 import xyz.klinker.android.article.data.Article;
@@ -176,13 +178,17 @@ public final class ArticleActivity extends DragDismissRecyclerViewActivity
         super.onProvideAssistContent(outContent);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             outContent.setWebUri(Uri.parse(article.url));
-            
-            String structuredJson = new JSONObject()
-                .put("@type", "Article")
-                .put("name", article.title)
-                .put("identifier", article.domain)
-                .toString();
-            outContent.setStructuredData(structuredJson);
+
+            try {
+                String structuredJson = new JSONObject()
+                        .put("@type", "Article")
+                        .put("name", article.title)
+                        .put("identifier", article.domain)
+                        .toString();
+                outContent.setStructuredData(structuredJson);
+            } catch(JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
