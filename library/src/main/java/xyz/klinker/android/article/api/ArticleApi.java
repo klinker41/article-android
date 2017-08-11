@@ -57,21 +57,21 @@ public class ArticleApi {
 
     private static CallAdapter.Factory callAdapterFactory = new CallAdapter.Factory() {
         @Override
-        public CallAdapter<Object> get(final Type returnType, Annotation[] annotations,
+        public CallAdapter<Object, Object> get(final Type returnType, Annotation[] annotations,
                                        Retrofit retrofit) {
             // if returnType is retrofit2.Call, do nothing
             if (returnType.getClass().getPackage().getName().contains("retrofit2.Call")) {
                 return null;
             }
 
-            return new CallAdapter<Object>() {
+            return new CallAdapter<Object, Object>() {
                 @Override
                 public Type responseType() {
                     return returnType;
                 }
 
                 @Override
-                public <R> Object adapt(Call<R> call) {
+                public Object adapt(Call call) {
                     try {
                         Response response = call.execute();
                         return response.body();
