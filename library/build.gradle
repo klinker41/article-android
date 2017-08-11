@@ -40,6 +40,12 @@ android {
         consumerProguardFiles 'proguard-rules.pro'
     }
 
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
     resourcePrefix "article_"
 }
 
@@ -57,7 +63,7 @@ dependencies {
     implementation 'com.klinkerapps:drag-dismiss-activity:1.4.1'
 
     testImplementation 'junit:junit:4.12'
-    testImplementation "org.robolectric:robolectric:3.3.2"
+    testImplementation "org.robolectric:robolectric:3.4.2"
     testImplementation 'org.mockito:mockito-all:1.10.8'
     testImplementation 'org.powermock:powermock-mockito-release-full:1.6.1'
     testImplementation 'org.powermock:powermock-module-junit4-rule:1.6.0'
