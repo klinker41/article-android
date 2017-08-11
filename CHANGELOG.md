@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.23.2
+- Update support library
+
 ### v0.23.0
 - Provide content such as web URL to assistant applications
 
