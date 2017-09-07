@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.24.0
+- Update to Glide 4.0.0
+
 ### v0.23.2
 - Update support library
 
