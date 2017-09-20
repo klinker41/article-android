@@ -331,7 +331,7 @@ public final class ArticleUtils {
         for (int i = 0; i < elements.size(); i++) {
             Element element = elements.get(i);
 
-            if (i == 0 && (!element.tagName().equals("p") || element.text().contains(article.title))) {
+            if (i == 0 && (!element.tagName().equals("p") || element.text() == null || element.text().contains(article.title))) {
                 elements.remove(i--);
                 continue;
             }
