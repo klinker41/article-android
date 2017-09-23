@@ -28,7 +28,7 @@ android {
     }
 
     lintOptions {
-        abortOnError true
+        abortOnError false
         warningsAsErrors true
         lintConfig file('../lint.xml')
         textOutput 'stdout'
