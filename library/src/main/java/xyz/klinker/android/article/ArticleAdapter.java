@@ -20,12 +20,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.net.Uri;
-import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -36,21 +34,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.GenericRequestBuilder;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.Options;
 import com.bumptech.glide.load.ResourceDecoder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.Resource;
+import com.bumptech.glide.load.model.StreamEncoder;
+import com.bumptech.glide.load.model.stream.StreamStringLoader;
 import com.bumptech.glide.load.resource.SimpleResource;
-import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import xyz.klinker.android.article.data.Article;
 import xyz.klinker.android.drag_dismiss.DragDismissIntentBuilder;
@@ -89,6 +89,8 @@ final class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private Article article;
     private Elements elements;
+    private GenericRequestBuilder<String, InputStream, BitmapFactory.Options, BitmapFactory.Options>
+            sizeRequest;
     private int accentColor;
     private int textSize;
     private int theme;
@@ -114,6 +116,15 @@ final class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         imageHeight = resources.getDimensionPixelSize(R.dimen.article_imageParallax) +
                 resources.getDimensionPixelSize(R.dimen.article_imageHeight);
+
+        sizeRequest = Glide
+                .with(context)
+                .using(new StreamStringLoader(context), InputStream.class)
+                .from(String.class)
+                .as(BitmapFactory.Options.class)
+                .sourceEncoder(new StreamEncoder())
+                .cacheDecoder(new BitmapSizeDecoder())
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE);
     }
 
     void addElements(Elements elements) {
@@ -204,28 +215,31 @@ final class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     params.bottomMargin = 0;
                 }
 
-                Log.v("ArticleAdapter", "loading url at " + src);
+                if (sizeRequest == null) {
+                    initSizeRequest(image.getContext());
+                }
 
-                ((ImageViewHolder) holder).url = src;
-                Glide.with(image.getContext()).clear(image);
-                Glide.with(image.getContext())
-                        .asBitmap()
-                        .load(src)
-                        .apply(new RequestOptions()
-                                .override(imageWidth, imageHeight)
-                                .placeholder(R.color.article_imageBackground)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL))
-                        .into(new SimpleTarget<Bitmap>() {
+                sizeRequest.load(src)
+                        .into(new SimpleTarget<BitmapFactory.Options>() {
                             @Override
-                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                                if (resource.getWidth() < MIN_IMAGE_WIDTH ||
-                                        resource.getHeight() < MIN_IMAGE_HEIGHT) {
+                            public void onResourceReady(BitmapFactory.Options resource,
+                                                        GlideAnimation<? super BitmapFactory.Options> glideAnimation) {
+                                if (resource.outWidth < MIN_IMAGE_WIDTH ||
+                                        resource.outHeight < MIN_IMAGE_HEIGHT) {
                                     image.setVisibility(View.GONE);
-                                } else {
-                                    image.setImageBitmap(resource);
                                 }
                             }
                         });
+
+                Log.v("ArticleAdapter", "loading url at " + src);
+
+                ((ImageViewHolder) holder).url = src;
+                Glide.with(image.getContext())
+                        .load(src)
+                        .override(imageWidth, imageHeight)
+                        .placeholder(R.color.article_imageBackground)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(image);
 
             } else if (holder instanceof TextViewHolder) {
                 String text = elements.get(position - topItemCount).text().trim();
@@ -247,14 +261,17 @@ final class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             if (holder instanceof HeaderImageViewHolder) {
                 ImageView image = ((HeaderImageViewHolder) holder).image;
 
+                if (sizeRequest == null) {
+                    initSizeRequest(image.getContext());
+                }
+
                 String src = ArticleUtils.decodeImageUrl(article.image);
                 ((HeaderImageViewHolder) holder).url = src;
                 Glide.with(image.getContext())
                         .load(src)
-                        .apply(new RequestOptions()
-                                .override(imageWidth, imageHeight)
-                                .placeholder(R.color.article_imageBackground)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL))
+                        .override(imageWidth, imageHeight)
+                        .placeholder(R.color.article_imageBackground)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(image);
             } else if (holder instanceof TitleTextViewHolder) {
                 ((TitleTextViewHolder) holder).text.setText(article.title);
@@ -425,20 +442,19 @@ final class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     private class BitmapSizeDecoder implements ResourceDecoder<File, BitmapFactory.Options> {
-
         @Override
-        public boolean handles(File source, Options options) throws IOException {
-            return true;
+        public Resource<BitmapFactory.Options> decode(File source,
+                                                      int width,
+                                                      int height) throws IOException {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(source.getAbsolutePath(), options);
+            return new SimpleResource<>(options);
         }
 
-        @Nullable
         @Override
-        public Resource<BitmapFactory.Options> decode(File source, int width, int height, Options options) throws IOException {
-            BitmapFactory.Options bfOptions = new BitmapFactory.Options();
-            bfOptions.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(source.getAbsolutePath(), bfOptions);
-
-            return new SimpleResource<>(bfOptions);
+        public String getId() {
+            return getClass().getName();
         }
     }
 

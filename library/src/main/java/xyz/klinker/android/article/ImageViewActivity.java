@@ -26,7 +26,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 
 import xyz.klinker.android.drag_dismiss.activity.DragDismissActivity;
 
@@ -46,7 +45,7 @@ public final class ImageViewActivity extends DragDismissActivity {
 
         Glide.with(this)
                 .load(url)
-                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView);
 
         statusBar.setBackgroundColor(Color.BLACK);
