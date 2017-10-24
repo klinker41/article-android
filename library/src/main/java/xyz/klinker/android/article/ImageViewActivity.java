@@ -16,7 +16,9 @@
 
 package xyz.klinker.android.article;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -37,6 +39,10 @@ public final class ImageViewActivity extends DragDismissActivity {
 
     @Override
     public View onCreateContent(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            getWindow().setColorMode(ActivityInfo.COLOR_MODE_WIDE_COLOR_GAMUT);
+        }
+
         View root = inflater.inflate(R.layout.article_activity_image_view, parent, false);
 
         ImageView imageView = (ImageView) root.findViewById(R.id.article_image_view);
