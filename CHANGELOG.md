@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.24.2
+- Add wide color gamut support to the image viewer, on Android Oreo
+
 ### v0.24.1
 - Update dependencies
 
