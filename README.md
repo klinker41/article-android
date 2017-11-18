@@ -9,7 +9,7 @@ To include it in your project:
 ```groovy
 dependencies {
 	...
-	compile 'com.klinkerapps:article_viewer-glide3:0.24.3'
+	compile 'com.klinkerapps:article_viewer-glide3:0.24.4'
 }
 ```
 
