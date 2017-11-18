@@ -1,5 +1,9 @@
 # Changelog
 
+### v0.24.3
+- Update dependencies
+- Fix PhotoView crash
+
 ### v0.24.2
 - Add wide color gamut support to the image viewer, on Android Oreo
 

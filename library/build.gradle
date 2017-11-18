@@ -62,8 +62,7 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.10.2'
     implementation 'com.fmsirvent:parallaxeverywhere:1.0.4'
     implementation 'com.klinkerapps:drag-dismiss-activity:1.5.0'
-
-    implementation(name: 'photoview-1.3.1', ext: 'aar')
+    implementation 'com.klinkerapps:photo_view:1.3.1'
 
     //noinspection GradleDependency
     testImplementation 'org.mockito:mockito-all:1.10.8'
