@@ -1,5 +1,9 @@
 # Changelog
 
+### v0.24.6
+- Update dependencies
+- Fix crash
+
 ### v0.24.3
 - Update dependencies
 - Fix PhotoView crash
