@@ -17,6 +17,7 @@
 package xyz.klinker.android.article;
 
 import android.app.assist.AssistContent;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -207,6 +208,8 @@ public final class ArticleActivity extends DragDismissRecyclerViewActivity
             // this throws an exception on Android Wear (yes you can use this library on android wear)
             // since webkit is not supported, and there is no Google Chrome on Wear.
             Toast.makeText(this, R.string.article_not_supported, Toast.LENGTH_SHORT).show();
+        } catch (ActivityNotFoundException e) {
+            // the user doesn't have Chrome
         }
 
         // finish the current activity so that the back button takes us back
