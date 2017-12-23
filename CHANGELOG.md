@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.24.7
+- Update dependencies
+
 ### v0.24.6
 - Update dependencies
 - Fix crash
