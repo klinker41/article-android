@@ -201,7 +201,7 @@ public final class ArticleActivity extends DragDismissRecyclerViewActivity
         } else {
             openedChromeCustomTab = true;
         }
-        
+
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         CustomTabsIntent intent = builder.build();
 

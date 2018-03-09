@@ -1,5 +1,9 @@
 # Changelog
 
+### v0.24.8
+- Only open the Chrome Custom Tab a single time
+- Update dependencies
+
 ### v0.24.7
 - Update dependencies
 
