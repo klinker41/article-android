@@ -69,6 +69,8 @@ public final class ArticleActivity extends DragDismissRecyclerViewActivity
     private int accentColor;
     private int textSize;
 
+    private boolean openedChromeCustomTab = false;
+
     @Override
     public void setupRecyclerView(RecyclerView recyclerView) {
         this.url = getIntent().getDataString();
@@ -194,6 +196,12 @@ public final class ArticleActivity extends DragDismissRecyclerViewActivity
     }
 
     private void openChromeCustomTab() {
+        if (openedChromeCustomTab) {
+            return;
+        } else {
+            openedChromeCustomTab = true;
+        }
+
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         CustomTabsIntent intent = builder.build();
 
