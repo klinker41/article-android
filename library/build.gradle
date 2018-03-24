@@ -67,7 +67,7 @@ dependencies {
     //noinspection GradleDependency
     testImplementation 'org.mockito:mockito-all:1.10.8'
     testImplementation 'junit:junit:4.12'
-    testImplementation "org.robolectric:robolectric:3.5.1"
+    testImplementation "org.robolectric:robolectric:3.6.1"
     testImplementation 'org.powermock:powermock-mockito-release-full:1.6.1'
     testImplementation 'org.powermock:powermock-module-junit4-rule:1.6.0'
     testImplementation 'org.powermock:powermock-api-mockito:1.6.1'
