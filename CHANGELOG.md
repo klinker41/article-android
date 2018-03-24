@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.24.9
+- Smooth out drag-dismiss functionality: https://github.com/klinker24/Android-DragDismissActivity/releases/tag/v1.5.1
+
 ### v0.24.8
 - Only open the Chrome Custom Tab a single time
 - Update dependencies
