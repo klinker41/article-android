@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.25.0
+- Update dependencies and Jetify
+
 ### v0.24.9
 - Smooth out drag-dismiss functionality: https://github.com/klinker24/Android-DragDismissActivity/releases/tag/v1.5.1
 

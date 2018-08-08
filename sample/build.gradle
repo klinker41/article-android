@@ -22,7 +22,6 @@ apiKeys.load(new FileInputStream(propsFile))
 
 android {
     compileSdkVersion Integer.parseInt(project.COMPILE_SDK)
-    buildToolsVersion project.BUILD_TOOLS_VERSION
 
     defaultConfig {
         minSdkVersion Integer.parseInt(project.MIN_SDK)
@@ -62,6 +61,6 @@ android {
 }
 
 dependencies {
-    implementation "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
+    implementation "androidx.appcompat:appcompat:$ANDROID_X_VERSION"
     implementation project(":library")
 }
