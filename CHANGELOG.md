@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.25.1
+- Update text color for articles
+
 ### v0.25.0
 - Update dependencies and Jetify
 
