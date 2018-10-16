@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.25.2
+- Update background color for the dark theme
+
 ### v0.25.1
 - Update text color for articles
 
