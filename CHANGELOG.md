@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.25.3
+- Improve pre-cache support
+
 ### v0.25.2
 - Update background color for the dark theme
 

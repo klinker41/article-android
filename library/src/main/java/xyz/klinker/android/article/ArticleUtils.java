@@ -146,7 +146,7 @@ public final class ArticleUtils {
     public Article fetchArticle(final Context context, final String url, final DataSource source) {
         final Article article = loadArticleSync(url, source, null, null);
         if (article != null && article.isArticle && article.content != null) {
-            parseArticleContent(article, new ArticleParsedListener() {
+            parseArticleContent(article, null, new ArticleParsedListener() {
                 @Override
                 public void onArticleParsed(final Elements elements) {
                     cacheImages(context, article, elements);
@@ -303,7 +303,17 @@ public final class ArticleUtils {
      */
     void parseArticleContent(final Article article, final ArticleParsedListener callback) {
         final Handler handler = new Handler();
-        
+        parseArticleContent(article, handler, callback);
+    }
+
+    /**
+     * Parses the article content into a elements object using jsoup and the @link{SELECTOR}.
+     *
+     * @param article the article to parse content from.
+     * @param handler the handler to use to provide the article back to the callback.
+     * @param callback the callback to receive after parsing completes.
+     */
+    void parseArticleContent(final Article article, final Handler handler, final ArticleParsedListener callback) {
         if (article.content == null) {
             return;
         }
@@ -314,7 +324,7 @@ public final class ArticleUtils {
                 Document doc = Jsoup.parse(article.content);
                 final Elements elements = removeUnnecessaryElements(doc.select(SELECTOR), article);
 
-                if (callback != null) {
+                if (callback != null && handler != null) {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
