@@ -1,0 +1,8 @@
+<resources>
+    <string name="article_open_in_chrome">Otwórz w przeglądarce</string>
+    <string name="article_share">Dzielić…</string>
+    <string name="article_share_with">Udostępnij za pomocą…</string>
+    <string name="article_bullet_point">•</string>
+    <string name="article_save_title">Zapisać</string>
+    <string name="article_not_supported">Nieobsługiwane na Androidzie Wear</string>
+</resources>
