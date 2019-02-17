@@ -52,12 +52,12 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:4.9.0"
     implementation "com.github.bumptech.glide:glide:4.9.0"
 
-    implementation "androidx.appcompat:appcompat:$ANDROID_X_VERSION"
+    implementation "androidx.appcompat:appcompat:1.0.2"
     implementation "com.google.android.material:material:$ANDROID_X_VERSION"
     implementation "androidx.recyclerview:recyclerview:$ANDROID_X_VERSION"
     implementation "androidx.browser:browser:$ANDROID_X_VERSION"
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'org.jsoup:jsoup:1.10.2'
     implementation 'com.fmsirvent:parallaxeverywhere:1.0.4'
     implementation 'com.klinkerapps:drag-dismiss-activity:1.6.1'

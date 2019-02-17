@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.25.4
+- Dependency updates
+
 ### v0.25.3
 - Improve pre-cache support
 
