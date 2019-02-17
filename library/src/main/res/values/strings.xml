@@ -16,10 +16,10 @@
   -->
 
 <resources>
-    <string name="article_open_in_chrome">Open in Chrome</string>
+    <string name="article_open_in_chrome">Open in Browser</string>
     <string name="article_share">Share…</string>
     <string name="article_share_with">Share with…</string>
     <string name="article_bullet_point">•</string>
     <string name="article_save_title">Save</string>
-    <string name="article_not_supported">Not supported on Android Wear</string>
+    <string name="article_not_supported">Not supported on Wear OS</string>
 </resources>
