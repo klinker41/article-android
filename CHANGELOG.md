@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.26.0
+- Update DragDismiss library for Android Q improvements: dark theme and edge-to-edge
+
 ### v0.25.4
 - Dependency updates
 

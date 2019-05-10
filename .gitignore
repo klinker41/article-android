@@ -6,3 +6,6 @@ local.properties
 .idea/
 *.log
 api_keys.properties
+**/.project
+**/.classpath
+**/.settings

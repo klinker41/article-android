@@ -30,7 +30,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = {16, 19, 21, 25}, constants = BuildConfig.class)
+@Config(sdk = {16, 19, 21, 25})
 public abstract class ArticleRobolectricSuite {
 
     @Before
