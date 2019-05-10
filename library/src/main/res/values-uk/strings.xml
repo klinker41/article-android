@@ -1,0 +1,8 @@
+<resources>
+    <string name="article_open_in_chrome">Відкрити в браузері</string>
+    <string name="article_share">Поділитись…</string>
+    <string name="article_share_with">Поділитись за допомогою…</string>
+    <string name="article_bullet_point">•</string>
+    <string name="article_save_title">Зберегти</string>
+    <string name="article_not_supported">Не підтримується на Android Wear</string>
+</resources>

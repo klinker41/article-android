@@ -291,6 +291,11 @@ public final class ArticleIntent {
     public static final int THEME_AUTO = 4;
 
     /**
+     * Use an system default theme.
+     */
+    public static final int THEME_SYSTEM_DEFAULT= 5;
+
+    /**
      * An {@link Intent} used to start the Custom Tabs Activity.
      */
     @NonNull
@@ -658,8 +663,8 @@ public final class ArticleIntent {
     /**
      * Converts the ArticleIntent integer theme to a DragDismiss theme
      *
-     * @param themeInt One of {@link #THEME_LIGHT}, {@link #THEME_DARK}, {@link #THEME_BLACK} or
-     *                  {@link #THEME_AUTO}.
+     * @param themeInt One of {@link #THEME_LIGHT}, {@link #THEME_DARK}, {@link #THEME_BLACK},
+     *                  {@link #THEME_AUTO}, or {@link #THEME_SYSTEM_DEFAULT}.
      * @return the corresponding DragDismiss theme
      */
     static DragDismissIntentBuilder.Theme convertIntToTheme(int themeInt) {
@@ -670,6 +675,8 @@ public final class ArticleIntent {
                 return DragDismissIntentBuilder.Theme.DARK;
             case THEME_BLACK:
                 return DragDismissIntentBuilder.Theme.BLACK;
+            case THEME_SYSTEM_DEFAULT:
+                return DragDismissIntentBuilder.Theme.SYSTEM_DEFAULT;
             default:
                 return DragDismissIntentBuilder.Theme.DAY_NIGHT;
         }
