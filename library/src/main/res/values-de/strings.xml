@@ -1,6 +1,6 @@
 <resources>
     <string name="article_open_in_chrome">Im Browser öffnen</string>
-    <string name="article_share">Aktie…</string>
+    <string name="article_share">Teilen…</string>
     <string name="article_share_with">Teilen mit…</string>
     <string name="article_bullet_point">•</string>
     <string name="article_save_title">Sparen</string>
